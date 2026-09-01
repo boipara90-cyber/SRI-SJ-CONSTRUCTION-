@@ -12,14 +12,16 @@ import {
   Twitter, 
   Instagram, 
   Youtube,
-  ShieldCheck
+  ShieldCheck,
+  Lock
 } from 'lucide-react';
 
 interface FooterProps {
   onOpenQuoteModal: () => void;
+  onOpenAdminModal?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
+export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal, onOpenAdminModal }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -93,6 +95,17 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
                   </a>
                 </li>
               ))}
+              {onOpenAdminModal && (
+                <li className="pt-1 border-t border-slate-800">
+                  <button
+                    onClick={onOpenAdminModal}
+                    className="text-slate-400 hover:text-amber-400 transition-colors flex items-center gap-1.5 py-1 text-xs font-semibold cursor-pointer"
+                  >
+                    <Lock className="w-3 h-3 text-amber-500" />
+                    <span>Admin Sign-Up / Login</span>
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
 
@@ -173,7 +186,19 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
             <span className="text-slate-300">Haldia, West Bengal – 721635, India</span>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            {onOpenAdminModal && (
+              <button
+                onClick={onOpenAdminModal}
+                id="footer-admin-login-btn"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-amber-400 border border-slate-700 hover:border-amber-500/40 transition-colors cursor-pointer font-bold text-xs shadow-sm"
+                title="Master Admin Portal — Bookings & Inquiry Management"
+              >
+                <Lock className="w-3.5 h-3.5 text-amber-400" />
+                <span>Admin Sign-Up / Login</span>
+              </button>
+            )}
+
             <button
               onClick={scrollToTop}
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 transition-colors cursor-pointer font-medium"

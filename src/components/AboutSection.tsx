@@ -85,13 +85,13 @@ export const AboutSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-16">
           
           {/* Main Story & Values (8 cols) */}
-          <div className="lg:col-span-8 bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 space-y-6 shadow-md">
+          <div className="lg:col-span-8 bg-slate-100/90 rounded-2xl border border-slate-300 p-6 sm:p-8 space-y-6 shadow-md">
             <h3 className="text-xl font-bold text-slate-950 font-['Space_Grotesk'] flex items-center gap-2">
               <span className="w-2.5 h-2.5 bg-amber-500 rounded-sm" />
               Our Commitment to Ground Engineering &amp; Civil Excellence
             </h3>
 
-            <div className="space-y-4 text-slate-600 text-sm sm:text-base leading-relaxed">
+            <div className="space-y-4 text-slate-700 text-sm sm:text-base leading-relaxed">
               <p>
                 From our inception in 2013 in the vital industrial corridor of Haldia, Sri SJ Construction Private Limited 
                 has focused on mastering challenging subterranean geotechnical conditions. Deep foundations require exact 
@@ -109,16 +109,16 @@ export const AboutSection: React.FC = () => {
             </div>
 
             {/* Quick Location Snapshot */}
-            <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-2 text-slate-700 text-sm">
+            <div className="pt-4 border-t border-slate-300 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-2 text-slate-800 text-sm">
                 <MapPin className="w-4 h-4 text-amber-600 shrink-0" />
                 <span>Operating from: <strong>Nandarampur, Sutahata, Haldia, West Bengal – 721635</strong></span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-amber-50 text-amber-900 border border-amber-200">
+                <span className="text-xs font-mono font-bold px-2.5 py-1 rounded bg-amber-100 text-amber-950 border border-amber-300">
                   GSTIN: 19AFUPK0762L1ZS
                 </span>
-                <span className="text-xs font-bold px-2.5 py-1 rounded bg-slate-100 text-slate-700 border border-slate-200">
+                <span className="text-xs font-bold px-2.5 py-1 rounded bg-slate-200 text-slate-800 border border-slate-300">
                   Estd. 2013
                 </span>
               </div>
@@ -175,18 +175,18 @@ export const AboutSection: React.FC = () => {
               return (
                 <div 
                   key={idx}
-                  className="p-5 rounded-xl bg-white border border-slate-200/90 hover:border-amber-400 hover:shadow-md transition-all duration-200 group"
+                  className="p-5 rounded-xl bg-slate-100 border border-slate-300 hover:border-amber-400 hover:shadow-md transition-all duration-200 group"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-600 flex items-center justify-center mb-3.5 group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-700 flex items-center justify-center mb-3.5 group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
                     <IconComp className="w-5 h-5" />
                   </div>
-                  <h4 className="text-base font-bold text-slate-900 group-hover:text-amber-600 transition-colors font-['Space_Grotesk']">
+                  <h4 className="text-base font-bold text-slate-900 group-hover:text-amber-700 transition-colors font-['Space_Grotesk']">
                     {pillar.title}
                   </h4>
-                  <p className="text-slate-600 text-xs sm:text-sm mt-2 leading-relaxed">
+                  <p className="text-slate-700 text-xs sm:text-sm mt-2 leading-relaxed">
                     {pillar.desc}
                   </p>
-                  <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between">
+                  <div className="mt-3 pt-2.5 border-t border-slate-200 flex items-center justify-between">
                     <span className="text-[10px] font-bold text-amber-700 uppercase tracking-wider">
                       SRI SJ CONSTRUCTION PRIVATE LIMITED
                     </span>
@@ -198,7 +198,7 @@ export const AboutSection: React.FC = () => {
         </div>
 
         {/* Ending Summary Note */}
-        <div className="mt-12 p-6 rounded-2xl bg-white border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm text-center md:text-left">
+        <div className="mt-12 p-6 rounded-2xl bg-slate-100 border border-slate-300 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm text-center md:text-left">
           <div className="flex items-center gap-3">
             <ShieldCheck className="w-6 h-6 text-amber-600 shrink-0" />
             <p className="text-xs sm:text-sm text-slate-700 font-medium">

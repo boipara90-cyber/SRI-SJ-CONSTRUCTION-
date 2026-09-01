@@ -67,10 +67,10 @@ export const EquipmentSection: React.FC<EquipmentSectionProps> = ({ onOpenQuoteM
             <div
               key={item.id}
               id={`equipment-card-${item.id}`}
-              className="rounded-xl bg-white border border-slate-200 hover:border-amber-400 hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between group shadow-md"
+              className="rounded-xl bg-slate-100 border border-slate-300 hover:border-amber-400 hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between group shadow-md"
             >
               {/* Photo Area */}
-              <div className="relative h-48 bg-slate-100 overflow-hidden">
+              <div className="relative h-48 bg-slate-200 overflow-hidden">
                 <img
                   src={item.imageUrl}
                   alt={item.name}
@@ -96,31 +96,31 @@ export const EquipmentSection: React.FC<EquipmentSectionProps> = ({ onOpenQuoteM
               {/* Machinery Details */}
               <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-amber-600 transition-colors font-['Space_Grotesk']">
+                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-amber-700 transition-colors font-['Space_Grotesk']">
                     {item.name}
                   </h3>
 
-                  <div className="space-y-1.5 mt-3 pt-3 border-t border-slate-100 text-xs">
-                    <div className="text-slate-700">
-                      <span className="text-slate-500 font-medium">Specs: </span>
+                  <div className="space-y-1.5 mt-3 pt-3 border-t border-slate-200 text-xs">
+                    <div className="text-slate-800">
+                      <span className="text-slate-600 font-medium">Specs: </span>
                       <span>{item.specification}</span>
                     </div>
-                    <div className="text-slate-700">
-                      <span className="text-slate-500 font-medium">Capacity: </span>
+                    <div className="text-slate-800">
+                      <span className="text-slate-600 font-medium">Capacity: </span>
                       <span className="font-bold text-amber-700">{item.capacity}</span>
                     </div>
                   </div>
 
-                  <p className="text-slate-600 text-xs mt-3 leading-relaxed">
+                  <p className="text-slate-700 text-xs mt-3 leading-relaxed">
                     {item.description}
                   </p>
                 </div>
 
                 {/* Action Buttons */}
-                <div className="grid grid-cols-2 gap-2 pt-3 border-t border-slate-100">
+                <div className="grid grid-cols-2 gap-2 pt-3 border-t border-slate-200">
                   <button
                     onClick={() => setSelectedEquipment(item)}
-                    className="w-full py-2 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors cursor-pointer"
+                    className="w-full py-2 px-3 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold transition-colors cursor-pointer border border-slate-300"
                   >
                     View Specs
                   </button>

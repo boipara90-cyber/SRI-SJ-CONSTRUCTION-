@@ -68,7 +68,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenQuoteMod
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer shadow-xs ${
                   filter === tab.id
                     ? 'bg-amber-500 text-slate-950 ring-2 ring-amber-500/40 shadow-sm'
-                    : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-300'
+                    : 'bg-slate-200 text-slate-800 hover:bg-slate-300 border border-slate-300'
                 }`}
               >
                 {tab.isLive && (
@@ -77,7 +77,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenQuoteMod
                 <span>{tab.label}</span>
                 {tab.count !== undefined && (
                   <span className={`text-[10px] px-1.5 py-0.2 rounded font-extrabold ${
-                    filter === tab.id ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-600'
+                    filter === tab.id ? 'bg-slate-950 text-white' : 'bg-slate-300 text-slate-800'
                   }`}>
                     {tab.count}
                   </span>
@@ -88,7 +88,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenQuoteMod
         </div>
 
         {/* Prestigious Clients & Industry Track Record Banner */}
-        <div className="mb-10 p-6 rounded-2xl bg-white border border-slate-200 shadow-sm">
+        <div className="mb-10 p-6 rounded-2xl bg-slate-100 border border-slate-300 shadow-sm">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
             <div className="space-y-1">
               <div className="flex items-center gap-2 text-xs font-bold text-amber-700 uppercase tracking-wider">
@@ -102,9 +102,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenQuoteMod
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
               {MAJOR_CLIENTS.map((client, idx) => (
-                <div key={idx} className="p-2.5 rounded-xl bg-[#f0f4f8] border border-slate-200 text-center hover:border-amber-400 transition-colors">
+                <div key={idx} className="p-2.5 rounded-xl bg-slate-200 border border-slate-300 text-center hover:border-amber-400 transition-colors">
                   <span className="block text-xs font-black text-slate-900 font-['Space_Grotesk']">{client.short}</span>
-                  <span className="block text-[9px] text-slate-600 font-medium truncate mt-0.5" title={client.highlight}>{client.highlight}</span>
+                  <span className="block text-[9px] text-slate-700 font-bold truncate mt-0.5" title={client.highlight}>{client.highlight}</span>
                 </div>
               ))}
             </div>
@@ -117,12 +117,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenQuoteMod
             <div
               key={project.id}
               id={`project-card-${project.id}`}
-              className={`rounded-2xl bg-white border transition-all duration-300 overflow-hidden flex flex-col justify-between group shadow-md ${
-                project.status === 'Ongoing' ? 'border-amber-400/80 ring-1 ring-amber-400/20' : 'border-slate-200'
+              className={`rounded-2xl bg-slate-100 border transition-all duration-300 overflow-hidden flex flex-col justify-between group shadow-md ${
+                project.status === 'Ongoing' ? 'border-amber-400/80 ring-1 ring-amber-400/20' : 'border-slate-300'
               } hover:border-amber-500 hover:shadow-xl`}
             >
               {/* Image & Badges */}
-              <div className="relative h-48 bg-slate-100 overflow-hidden">
+              <div className="relative h-48 bg-slate-200 overflow-hidden">
                 <img
                   src={project.imageUrl}
                   alt={project.title}

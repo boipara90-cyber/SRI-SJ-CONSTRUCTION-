@@ -51,41 +51,41 @@ export const WhyChooseUs: React.FC = () => {
           {WHY_CHOOSE_US.map((item, index) => (
             <div
               key={index}
-              className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-amber-400 hover:shadow-lg transition-all duration-300 group flex flex-col justify-between shadow-sm"
+              className="p-6 rounded-2xl bg-slate-100 border border-slate-300 hover:border-amber-400 hover:shadow-lg transition-all duration-300 group flex flex-col justify-between shadow-sm"
             >
               <div>
                 {/* Icon & Count */}
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-600 flex items-center justify-center group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors shadow-sm">
+                  <div className="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-700 flex items-center justify-center group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors shadow-sm">
                     {getIcon(item.iconName)}
                   </div>
-                  <span className="text-xs font-bold text-slate-400 font-mono">
+                  <span className="text-xs font-bold text-slate-500 font-mono">
                     0{index + 1}
                   </span>
                 </div>
 
-                <h3 className="text-lg font-bold text-slate-900 group-hover:text-amber-600 transition-colors font-['Space_Grotesk']">
+                <h3 className="text-lg font-bold text-slate-900 group-hover:text-amber-700 transition-colors font-['Space_Grotesk']">
                   {item.title}
                 </h3>
 
-                <p className="text-slate-600 text-xs sm:text-sm mt-2.5 leading-relaxed">
+                <p className="text-slate-700 text-xs sm:text-sm mt-2.5 leading-relaxed">
                   {item.description}
                 </p>
               </div>
 
               {/* Bottom Subtle Bar */}
-              <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+              <div className="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between">
                 <span className="text-[11px] font-black text-amber-700 group-hover:text-amber-600 flex items-center gap-1">
                   <span>SRI SJ CONSTRUCTION PVT LTD</span>
                 </span>
-                <span className="text-[10px] text-slate-500 font-semibold">Standard of Practice</span>
+                <span className="text-[10px] text-slate-600 font-semibold">Standard of Practice</span>
               </div>
             </div>
           ))}
         </div>
 
         {/* Quality & Safety Commitment Banner */}
-        <div className="mt-14 p-6 sm:p-8 rounded-2xl bg-white border border-amber-500/30 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
+        <div className="mt-14 p-6 sm:p-8 rounded-2xl bg-slate-100 border border-amber-500/40 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
           <div className="space-y-1 text-center md:text-left">
             <div className="text-xs font-black uppercase text-amber-700 tracking-wider">
               SRI SJ CONSTRUCTION PRIVATE LIMITED
@@ -93,7 +93,7 @@ export const WhyChooseUs: React.FC = () => {
             <h4 className="text-lg font-black text-slate-950 font-['Space_Grotesk']">
               Strict Adherence to Indian Engineering Codes (IS 2911 &amp; IS 456)
             </h4>
-            <p className="text-xs sm:text-sm text-slate-600">
+            <p className="text-xs sm:text-sm text-slate-700">
               Every piling and civil contract undertaken by <strong className="text-slate-900">SRI SJ CONSTRUCTION PRIVATE LIMITED</strong> complies with national safety and structural standards.
             </p>
           </div>

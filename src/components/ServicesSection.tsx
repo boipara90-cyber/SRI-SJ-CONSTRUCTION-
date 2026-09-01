@@ -93,7 +93,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
                 className={`px-4 py-2 text-xs sm:text-sm font-bold rounded-lg transition-all whitespace-nowrap cursor-pointer ${
                   activeCategory === cat.id
                     ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
-                    : 'bg-white text-slate-700 hover:bg-slate-50 hover:text-slate-950 border border-slate-300'
+                    : 'bg-slate-200 text-slate-800 hover:bg-slate-300 border border-slate-300'
                 }`}
               >
                 {cat.label}
@@ -108,10 +108,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
             <div
               key={service.id}
               id={`service-card-${service.id}`}
-              className="rounded-xl bg-white border border-slate-200 hover:border-amber-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden group shadow-md"
+              className="rounded-xl bg-slate-100 border border-slate-300 hover:border-amber-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden group shadow-md"
             >
               {/* Image Container with Top Icon Overlay */}
-              <div className="relative h-48 w-full overflow-hidden bg-slate-100">
+              <div className="relative h-48 w-full overflow-hidden bg-slate-200">
                 <img
                   src={service.imageUrl}
                   alt={`${service.title} by Sri SJ Construction`}
@@ -136,18 +136,18 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
               {/* Service Card Content */}
               <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                 <div>
-                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-amber-600 transition-colors font-['Space_Grotesk']">
+                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors font-['Space_Grotesk']">
                     {service.title}
                   </h3>
-                  <p className="text-slate-600 text-sm mt-2 leading-relaxed">
+                  <p className="text-slate-700 text-sm mt-2 leading-relaxed">
                     {service.shortDescription}
                   </p>
                 </div>
 
                 {/* Key Features Pill List */}
-                <div className="space-y-1.5 pt-2 border-t border-slate-100">
+                <div className="space-y-1.5 pt-2 border-t border-slate-200">
                   {service.features.slice(0, 2).map((feat, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-xs text-slate-600">
+                    <div key={idx} className="flex items-center gap-2 text-xs text-slate-700 font-medium">
                       <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                       <span className="truncate">{feat}</span>
                     </div>
@@ -158,7 +158,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
                 <div className="grid grid-cols-2 gap-2 pt-2">
                   <button
                     onClick={() => setSelectedService(service)}
-                    className="w-full py-2 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                    className="w-full py-2 px-3 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-900 text-xs font-bold transition-colors flex items-center justify-center gap-1.5 cursor-pointer border border-slate-300"
                   >
                     <span>View Specs</span>
                   </button>
@@ -171,8 +171,8 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
                   </button>
                 </div>
 
-                <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-slate-500">Contractor:</span>
+                <div className="pt-2 border-t border-slate-200 flex items-center justify-between">
+                  <span className="text-[10px] font-bold text-slate-600">Contractor:</span>
                   <span className="text-[10px] font-black text-amber-800 uppercase">SRI SJ CONSTRUCTION PVT LTD</span>
                 </div>
               </div>

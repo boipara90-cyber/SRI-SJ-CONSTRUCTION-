@@ -16,11 +16,14 @@ import {
   Layers,
   Radio,
   Clock,
-  Sparkles
+  Sparkles,
+  Calendar,
+  Database
 } from 'lucide-react';
 
 interface HeroProps {
   onOpenQuoteModal: () => void;
+  onOpenAppointmentModal?: (prefillService?: string) => void;
 }
 
 interface HeroSlide {
@@ -83,7 +86,7 @@ const HERO_SLIDES: HeroSlide[] = [
   }
 ];
 
-export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal }) => {
+export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentModal }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
@@ -200,6 +203,18 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal }) => {
                 <ArrowRight className="w-4 h-4" />
               </button>
 
+              {onOpenAppointmentModal && (
+                <button
+                  type="button"
+                  onClick={() => onOpenAppointmentModal()}
+                  id="hero-appointment-btn"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm sm:text-base shadow-md transition-all duration-200 cursor-pointer border border-slate-700"
+                >
+                  <Calendar className="w-4 h-4 text-amber-400" />
+                  <span>Book Site Visit / Appointment</span>
+                </button>
+              )}
+
               <a
                 href="#projects"
                 id="hero-projects-btn"
@@ -212,9 +227,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal }) => {
               <a
                 href="#contact"
                 id="hero-contact-btn"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm sm:text-base shadow-sm transition-all duration-200"
+                className="inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-sm sm:text-base border border-slate-300 transition-all duration-200"
               >
-                <PhoneCall className="w-4 h-4 text-amber-400" />
+                <PhoneCall className="w-4 h-4 text-amber-600" />
                 <span>Contact Desk</span>
               </a>
             </div>
@@ -404,16 +419,16 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal }) => {
         </div>
       </div>
 
-      {/* CENTER POINT / MIDDLE POINT: BIG STATISTICAL HEADLINE SECTION */}
+      {/* CENTER POINT / MIDDLE POINT: BIG STATISTICAL HEADLINE SECTION (GREY BACKGROUND & BLUE LETTERS) */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8 md:my-12 w-full">
-        <div className="w-full bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 p-6 sm:p-8 md:p-10 rounded-3xl shadow-2xl border-2 border-amber-500/50">
+        <div className="w-full bg-slate-200/90 p-6 sm:p-8 md:p-10 rounded-3xl shadow-xl border-2 border-blue-500/40 backdrop-blur-sm">
           
           <div className="text-center mb-6">
-            <div className="inline-flex items-center justify-center gap-2 px-4 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-400 text-xs sm:text-sm font-black uppercase tracking-widest font-['Space_Grotesk']">
-              <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping" />
-              COMPANY TRACK RECORD &amp; EXECUTION SCALE
+            <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-blue-100 border border-blue-300 text-blue-800 text-xs sm:text-sm font-black uppercase tracking-widest font-['Space_Grotesk'] shadow-sm">
+              <span className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-ping" />
+              <span>COMPANY TRACK RECORD &amp; EXECUTION SCALE</span>
             </div>
-            <p className="text-slate-400 text-xs sm:text-sm mt-2 font-medium">
+            <p className="text-blue-950 font-semibold text-xs sm:text-sm mt-2">
               Proven civil engineering and deep foundation achievements across industrial and infrastructure projects
             </p>
           </div>
@@ -421,53 +436,53 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal }) => {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             
             {/* 100+ Clients */}
-            <div className="bg-slate-900/90 hover:bg-slate-800/90 transition-all p-5 sm:p-6 rounded-2xl border-2 border-amber-500/30 text-center flex flex-col items-center justify-center shadow-lg group hover:border-amber-500">
-              <div className="text-4xl sm:text-6xl md:text-7xl font-black text-amber-400 font-['Space_Grotesk'] tracking-tight drop-shadow-md group-hover:scale-105 transition-transform">
+            <div className="bg-slate-100/90 hover:bg-slate-50 transition-all p-5 sm:p-6 rounded-2xl border-2 border-blue-300 hover:border-blue-600 text-center flex flex-col items-center justify-center shadow-md group">
+              <div className="text-4xl sm:text-6xl md:text-7xl font-black text-blue-600 font-['Space_Grotesk'] tracking-tight drop-shadow-sm group-hover:scale-105 transition-transform">
                 100+
               </div>
-              <div className="text-base sm:text-xl md:text-2xl font-extrabold uppercase text-white tracking-wider mt-2 font-['Space_Grotesk']">
+              <div className="text-base sm:text-xl md:text-2xl font-black uppercase text-blue-950 tracking-wider mt-2 font-['Space_Grotesk']">
                 CLIENTS
               </div>
-              <div className="text-xs sm:text-sm text-slate-400 font-semibold mt-1">
+              <div className="text-xs sm:text-sm text-blue-700 font-bold mt-1">
                 L&amp;T, TATA, JINDAL, PGCIL
               </div>
             </div>
 
             {/* 500+ Projects */}
-            <div className="bg-slate-900/90 hover:bg-slate-800/90 transition-all p-5 sm:p-6 rounded-2xl border-2 border-amber-500/30 text-center flex flex-col items-center justify-center shadow-lg group hover:border-amber-500">
-              <div className="text-4xl sm:text-6xl md:text-7xl font-black text-amber-400 font-['Space_Grotesk'] tracking-tight drop-shadow-md group-hover:scale-105 transition-transform">
+            <div className="bg-slate-100/90 hover:bg-slate-50 transition-all p-5 sm:p-6 rounded-2xl border-2 border-blue-300 hover:border-blue-600 text-center flex flex-col items-center justify-center shadow-md group">
+              <div className="text-4xl sm:text-6xl md:text-7xl font-black text-blue-600 font-['Space_Grotesk'] tracking-tight drop-shadow-sm group-hover:scale-105 transition-transform">
                 500+
               </div>
-              <div className="text-base sm:text-xl md:text-2xl font-extrabold uppercase text-white tracking-wider mt-2 font-['Space_Grotesk']">
+              <div className="text-base sm:text-xl md:text-2xl font-black uppercase text-blue-950 tracking-wider mt-2 font-['Space_Grotesk']">
                 PROJECTS
               </div>
-              <div className="text-xs sm:text-sm text-slate-400 font-semibold mt-1">
+              <div className="text-xs sm:text-sm text-blue-700 font-bold mt-1">
                 Completed &amp; Live Sites
               </div>
             </div>
 
             {/* 200+ Employees */}
-            <div className="bg-slate-900/90 hover:bg-slate-800/90 transition-all p-5 sm:p-6 rounded-2xl border-2 border-emerald-500/30 text-center flex flex-col items-center justify-center shadow-lg group hover:border-emerald-400">
-              <div className="text-4xl sm:text-6xl md:text-7xl font-black text-emerald-400 font-['Space_Grotesk'] tracking-tight drop-shadow-md group-hover:scale-105 transition-transform">
+            <div className="bg-slate-100/90 hover:bg-slate-50 transition-all p-5 sm:p-6 rounded-2xl border-2 border-blue-300 hover:border-blue-600 text-center flex flex-col items-center justify-center shadow-md group">
+              <div className="text-4xl sm:text-6xl md:text-7xl font-black text-blue-600 font-['Space_Grotesk'] tracking-tight drop-shadow-sm group-hover:scale-105 transition-transform">
                 200+
               </div>
-              <div className="text-base sm:text-xl md:text-2xl font-extrabold uppercase text-white tracking-wider mt-2 font-['Space_Grotesk']">
+              <div className="text-base sm:text-xl md:text-2xl font-black uppercase text-blue-950 tracking-wider mt-2 font-['Space_Grotesk']">
                 EMPLOYEES
               </div>
-              <div className="text-xs sm:text-sm text-slate-400 font-semibold mt-1">
+              <div className="text-xs sm:text-sm text-blue-700 font-bold mt-1">
                 Engineers &amp; Rig Operators
               </div>
             </div>
 
             {/* 10000+ Piles */}
-            <div className="bg-slate-900/90 hover:bg-slate-800/90 transition-all p-5 sm:p-6 rounded-2xl border-2 border-cyan-400/30 text-center flex flex-col items-center justify-center shadow-lg group hover:border-cyan-400">
-              <div className="text-4xl sm:text-6xl md:text-7xl font-black text-cyan-300 font-['Space_Grotesk'] tracking-tight drop-shadow-md group-hover:scale-105 transition-transform">
+            <div className="bg-slate-100/90 hover:bg-slate-50 transition-all p-5 sm:p-6 rounded-2xl border-2 border-blue-300 hover:border-blue-600 text-center flex flex-col items-center justify-center shadow-md group">
+              <div className="text-4xl sm:text-6xl md:text-7xl font-black text-blue-600 font-['Space_Grotesk'] tracking-tight drop-shadow-sm group-hover:scale-105 transition-transform">
                 10,000+
               </div>
-              <div className="text-base sm:text-xl md:text-2xl font-extrabold uppercase text-white tracking-wider mt-2 font-['Space_Grotesk']">
+              <div className="text-base sm:text-xl md:text-2xl font-black uppercase text-blue-950 tracking-wider mt-2 font-['Space_Grotesk']">
                 PILES
               </div>
-              <div className="text-xs sm:text-sm text-slate-400 font-semibold mt-1">
+              <div className="text-xs sm:text-sm text-blue-700 font-bold mt-1">
                 Cast-in-situ &amp; Driven Piling
               </div>
             </div>

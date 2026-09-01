@@ -252,10 +252,10 @@ export const GoogleMapsGallerySection: React.FC<GoogleMapsGallerySectionProps> =
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer ${
                   selectedLocation.id === loc.id
                     ? 'bg-slate-900 text-amber-400 ring-2 ring-amber-500 shadow-sm'
-                    : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200'
+                    : 'bg-slate-200 text-slate-800 hover:bg-slate-300 border border-slate-300'
                 }`}
               >
-                <MapPin className={`w-3 h-3 ${selectedLocation.id === loc.id ? 'text-amber-400' : 'text-slate-400'}`} />
+                <MapPin className={`w-3 h-3 ${selectedLocation.id === loc.id ? 'text-amber-400' : 'text-slate-500'}`} />
                 <span>{loc.name.split(' (')[0]}</span>
               </button>
             ))}
@@ -279,9 +279,9 @@ export const GoogleMapsGallerySection: React.FC<GoogleMapsGallerySectionProps> =
             </div>
 
             {/* Site Engineering Overview Card */}
-            <div className="lg:col-span-4 p-6 bg-slate-50 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-slate-200">
+            <div className="lg:col-span-4 p-6 bg-slate-100 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-slate-300">
               <div className="space-y-4">
-                <div className="relative h-32 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
+                <div className="relative h-32 rounded-xl overflow-hidden border border-slate-300 shadow-sm">
                   <img
                     src={selectedLocation.sitePhoto}
                     alt={selectedLocation.name}
@@ -294,21 +294,21 @@ export const GoogleMapsGallerySection: React.FC<GoogleMapsGallerySectionProps> =
                 </div>
 
                 <div>
-                  <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block mb-1">
+                  <span className="text-[10px] font-black text-slate-600 uppercase tracking-wider block mb-1">
                     Scope of Engineering Execution
                   </span>
-                  <p className="text-xs text-slate-800 font-medium leading-relaxed">
+                  <p className="text-xs text-slate-900 font-medium leading-relaxed">
                     {selectedLocation.scopeOfWork}
                   </p>
                 </div>
 
                 <div>
-                  <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block mb-1.5">
+                  <span className="text-[10px] font-black text-slate-600 uppercase tracking-wider block mb-1.5">
                     Key Highlights
                   </span>
                   <div className="flex flex-wrap gap-1.5">
                     {selectedLocation.highlights.map((h, i) => (
-                      <span key={i} className="text-[11px] font-semibold px-2 py-0.5 rounded bg-white text-slate-800 border border-slate-200">
+                      <span key={i} className="text-[11px] font-semibold px-2 py-0.5 rounded bg-slate-200 text-slate-900 border border-slate-300">
                         ✓ {h}
                       </span>
                     ))}
@@ -390,14 +390,14 @@ export const GoogleMapsGallerySection: React.FC<GoogleMapsGallerySectionProps> =
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer shadow-xs ${
                   activeCategory === tab.id
                     ? 'bg-amber-500 text-slate-950 ring-2 ring-amber-500/40'
-                    : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-300'
+                    : 'bg-slate-200 text-slate-800 hover:bg-slate-300 border border-slate-300'
                 }`}
               >
                 {tab.isCustom && <UploadCloud className="w-3.5 h-3.5 text-amber-700" />}
                 <span>{tab.label}</span>
                 {tab.count !== undefined && (
                   <span className={`text-[10px] px-1.5 py-0.2 rounded font-extrabold ${
-                    activeCategory === tab.id ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-600'
+                    activeCategory === tab.id ? 'bg-slate-950 text-white' : 'bg-slate-300 text-slate-800'
                   }`}>
                     {tab.count}
                   </span>
@@ -408,10 +408,10 @@ export const GoogleMapsGallerySection: React.FC<GoogleMapsGallerySectionProps> =
 
           {/* Photo Cards Grid */}
           {filteredPhotos.length === 0 ? (
-            <div className="p-12 text-center rounded-2xl bg-white border border-slate-200">
-              <ImageIcon className="w-10 h-10 text-slate-400 mx-auto mb-3" />
-              <h4 className="text-base font-black text-slate-800 font-['Space_Grotesk']">No photographs match your filter</h4>
-              <p className="text-xs text-slate-500 mt-1">Try clearing your search query or uploading a new photo from the site.</p>
+            <div className="p-12 text-center rounded-2xl bg-slate-100 border border-slate-300">
+              <ImageIcon className="w-10 h-10 text-slate-500 mx-auto mb-3" />
+              <h4 className="text-base font-black text-slate-900 font-['Space_Grotesk']">No photographs match your filter</h4>
+              <p className="text-xs text-slate-600 mt-1">Try clearing your search query or uploading a new photo from the site.</p>
               <button
                 onClick={() => { setActiveCategory('all'); setSearchQuery(''); }}
                 className="mt-4 px-4 py-2 rounded-lg bg-amber-500 text-slate-950 font-bold text-xs"
@@ -426,7 +426,7 @@ export const GoogleMapsGallerySection: React.FC<GoogleMapsGallerySectionProps> =
                   key={photo.id}
                   id={`photo-card-${photo.id}`}
                   onClick={() => setActivePhotoModal(photo)}
-                  className="group rounded-2xl bg-white border border-slate-200 hover:border-amber-400 hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between shadow-md cursor-pointer"
+                  className="group rounded-2xl bg-slate-100 border border-slate-300 hover:border-amber-400 hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between shadow-md cursor-pointer"
                 >
                   <div className="relative h-52 bg-slate-900 overflow-hidden">
                     <img

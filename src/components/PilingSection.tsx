@@ -74,14 +74,14 @@ export const PilingSection: React.FC<PilingSectionProps> = ({ onOpenQuoteModal }
                   id={`piling-tab-${cap.id}`}
                   className={`w-full p-4 rounded-xl text-left transition-all duration-200 border flex items-start gap-4 cursor-pointer ${
                     isSelected
-                      ? 'bg-white border-amber-500 shadow-md ring-1 ring-amber-500/30'
-                      : 'bg-white/80 border-slate-200 hover:border-slate-300 hover:bg-white'
+                      ? 'bg-slate-100 border-amber-500 shadow-md ring-1 ring-amber-500/30'
+                      : 'bg-slate-100/70 border-slate-300 hover:border-slate-400 hover:bg-slate-100'
                   }`}
                 >
                   <div className={`p-2.5 rounded-lg shrink-0 transition-colors ${
                     isSelected 
                       ? 'bg-amber-500 text-slate-950' 
-                      : 'bg-slate-100 text-slate-700'
+                      : 'bg-slate-200 text-slate-800'
                   }`}>
                     {getPilingIcon(cap.iconName)}
                   </div>
@@ -99,7 +99,7 @@ export const PilingSection: React.FC<PilingSectionProps> = ({ onOpenQuoteModal }
                         </span>
                       )}
                     </div>
-                    <p className="text-xs sm:text-sm text-slate-600 mt-1 line-clamp-2">
+                    <p className="text-xs sm:text-sm text-slate-700 mt-1 line-clamp-2">
                       {cap.description}
                     </p>
                   </div>
@@ -110,10 +110,10 @@ export const PilingSection: React.FC<PilingSectionProps> = ({ onOpenQuoteModal }
 
           {/* Right 6 Cols: Detailed Spec Card + Site Photography */}
           <div className="lg:col-span-6">
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xl space-y-6">
+            <div className="bg-slate-100 rounded-2xl border border-slate-300 p-6 sm:p-8 shadow-xl space-y-6">
               
               {/* Photo Banner with Piling Overlay */}
-              <div className="relative h-56 rounded-xl overflow-hidden bg-slate-100 border border-slate-200">
+              <div className="relative h-56 rounded-xl overflow-hidden bg-slate-200 border border-slate-300">
                 <img
                   src="https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&w=1000&q=80"
                   alt="Bored Piling Rig Operation on Indian Industrial Site"
@@ -138,7 +138,7 @@ export const PilingSection: React.FC<PilingSectionProps> = ({ onOpenQuoteModal }
                 <h3 className="text-2xl font-black text-slate-950 font-['Space_Grotesk'] mt-1">
                   {currentCapability.title}
                 </h3>
-                <p className="text-slate-600 text-sm mt-3 leading-relaxed">
+                <p className="text-slate-700 text-sm mt-3 leading-relaxed">
                   {currentCapability.description}
                 </p>
               </div>
@@ -146,22 +146,22 @@ export const PilingSection: React.FC<PilingSectionProps> = ({ onOpenQuoteModal }
               {/* Technical Attributes Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                 {currentCapability.diameterRange && (
-                  <div className="p-3 rounded-lg bg-[#f0f4f8] border border-slate-200">
-                    <span className="text-[11px] font-bold text-slate-500 uppercase">Pile Diameters</span>
+                  <div className="p-3 rounded-lg bg-slate-200 border border-slate-300">
+                    <span className="text-[11px] font-bold text-slate-600 uppercase">Pile Diameters</span>
                     <p className="text-sm font-black text-amber-700 mt-0.5">{currentCapability.diameterRange}</p>
                   </div>
                 )}
                 {currentCapability.depthRange && (
-                  <div className="p-3 rounded-lg bg-[#f0f4f8] border border-slate-200">
-                    <span className="text-[11px] font-bold text-slate-500 uppercase">Drilling Depth</span>
+                  <div className="p-3 rounded-lg bg-slate-200 border border-slate-300">
+                    <span className="text-[11px] font-bold text-slate-600 uppercase">Drilling Depth</span>
                     <p className="text-sm font-black text-slate-900 mt-0.5">{currentCapability.depthRange}</p>
                   </div>
                 )}
               </div>
 
-              <div className="p-3.5 rounded-lg bg-[#f0f4f8] border border-slate-200">
-                <span className="text-[11px] font-bold text-slate-500 uppercase">Recommended Applications:</span>
-                <p className="text-xs sm:text-sm text-slate-800 mt-1 font-medium">{currentCapability.bestFor}</p>
+              <div className="p-3.5 rounded-lg bg-slate-200 border border-slate-300">
+                <span className="text-[11px] font-bold text-slate-600 uppercase">Recommended Applications:</span>
+                <p className="text-xs sm:text-sm text-slate-900 mt-1 font-medium">{currentCapability.bestFor}</p>
               </div>
 
               {/* Action Button */}
@@ -177,7 +177,7 @@ export const PilingSection: React.FC<PilingSectionProps> = ({ onOpenQuoteModal }
         </div>
 
         {/* Piling Methodology / Step-by-Step Flow */}
-        <div className="mt-16 bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-md">
+        <div className="mt-16 bg-slate-100 rounded-2xl border border-slate-300 p-6 sm:p-8 shadow-md">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <h3 className="text-2xl font-black text-slate-950 font-['Space_Grotesk']">
               Standard Bored Cast-In-Situ Piling Workflow
@@ -191,7 +191,7 @@ export const PilingSection: React.FC<PilingSectionProps> = ({ onOpenQuoteModal }
             {PILING_PROCESS_STEPS.map((step, idx) => (
               <div 
                 key={idx}
-                className="p-4 rounded-xl bg-[#f0f4f8] border border-slate-200 flex flex-col justify-between relative group hover:border-amber-400 transition-colors shadow-sm"
+                className="p-4 rounded-xl bg-slate-200 border border-slate-300 flex flex-col justify-between relative group hover:border-amber-400 transition-colors shadow-sm"
               >
                 <div>
                   <div className="text-2xl font-black text-amber-600 font-['Space_Grotesk'] mb-2">
@@ -200,11 +200,11 @@ export const PilingSection: React.FC<PilingSectionProps> = ({ onOpenQuoteModal }
                   <h4 className="text-sm font-bold text-slate-900 leading-snug font-['Space_Grotesk']">
                     {step.title}
                   </h4>
-                  <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+                  <p className="text-xs text-slate-700 mt-2 leading-relaxed">
                     {step.description}
                   </p>
                 </div>
-                <div className="mt-3 pt-2 border-t border-slate-200/80">
+                <div className="mt-3 pt-2 border-t border-slate-300">
                   <span className="text-[10px] font-bold text-amber-700 uppercase tracking-wider">
                     SRI SJ CONSTRUCTION PVT LTD
                   </span>
@@ -213,7 +213,7 @@ export const PilingSection: React.FC<PilingSectionProps> = ({ onOpenQuoteModal }
             ))}
           </div>
 
-          <div className="mt-8 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600">
+          <div className="mt-8 pt-4 border-t border-slate-300 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600">
             <span>Engineering Standard: IS 2911 (Part 1/Sec 2) Bored Cast-In-Situ Piling Execution</span>
             <span className="font-black text-slate-900">SRI SJ CONSTRUCTION PRIVATE LIMITED • HALDIA</span>
           </div>

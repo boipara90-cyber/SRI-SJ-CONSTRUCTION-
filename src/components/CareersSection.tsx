@@ -3,6 +3,10 @@ import { JOB_OPENINGS } from '../data/companyData';
 import { CareerApplication, JobOpening } from '../types';
 import { notifyCareerApplication, ADMIN_NOTIFICATION_EMAIL } from '../services/gmailNotificationService';
 import { 
+  saveCareerApplicationToSupabase, 
+  SUPABASE_PROJECT_ID 
+} from '../services/supabaseClient';
+import { 
   Briefcase, 
   User, 
   Phone, 
@@ -18,7 +22,8 @@ import {
   ShieldCheck,
   HelpCircle,
   X,
-  Printer
+  Printer,
+  Database
 } from 'lucide-react';
 
 export const CareersSection: React.FC = () => {
@@ -63,7 +68,10 @@ export const CareersSection: React.FC = () => {
     setSubmittedRefId(randomId);
 
     try {
-      // Trigger instant Gmail notification to boipara90@gmail.com with candidate particulars and attached CV name
+      // 1. Save to Supabase Backend
+      await saveCareerApplicationToSupabase(formData, randomId);
+
+      // 2. Trigger instant Gmail notification to boipara90@gmail.com with candidate particulars and attached CV name
       await notifyCareerApplication({
         fullName: formData.fullName,
         fatherName: formData.fatherName,
@@ -128,7 +136,7 @@ export const CareersSection: React.FC = () => {
             {JOB_OPENINGS.map((job) => (
               <div
                 key={job.id}
-                className="p-5 rounded-xl bg-white border border-slate-200 hover:border-amber-400 hover:shadow-md transition-all flex flex-col justify-between space-y-4 shadow-sm"
+                className="p-5 rounded-xl bg-slate-100 border border-slate-300 hover:border-amber-400 hover:shadow-md transition-all flex flex-col justify-between space-y-4 shadow-sm"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-2">
@@ -160,7 +168,7 @@ export const CareersSection: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+                <div className="pt-3 border-t border-slate-200 flex items-center justify-between gap-2">
                   <button
                     onClick={() => setSelectedJob(job)}
                     className="text-xs text-slate-600 hover:text-slate-900 font-semibold cursor-pointer"
@@ -180,7 +188,7 @@ export const CareersSection: React.FC = () => {
         </div>
 
         {/* Application Form Section */}
-        <div id="career-application-form" className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-10 shadow-xl">
+        <div id="career-application-form" className="bg-slate-100 rounded-2xl border border-slate-300 p-6 sm:p-10 shadow-xl">
           
           <div className="max-w-3xl mb-8">
             <h3 className="text-2xl font-black text-slate-950 font-['Space_Grotesk']">
@@ -559,10 +567,17 @@ export const CareersSection: React.FC = () => {
                 <span className="text-emerald-700 font-bold">{formData.cvFileName || 'Uploaded to Portal'}</span>
               </div>
               <div className="flex justify-between items-center text-xs">
-                <span className="text-slate-600 font-medium">Gmail Notification Dispatched:</span>
+                <span className="text-slate-600 font-medium">Application Status:</span>
+                <span className="text-emerald-700 font-semibold flex items-center gap-1">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                  Submitted &amp; Registered
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-slate-600 font-medium">Notification:</span>
                 <span className="text-slate-900 font-bold flex items-center gap-1">
                   <Mail className="w-3.5 h-3.5 text-amber-600" />
-                  {ADMIN_NOTIFICATION_EMAIL}
+                  Sent to HR Desk
                 </span>
               </div>
             </div>

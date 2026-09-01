@@ -3,6 +3,10 @@ import { SERVICES, COMPANY_INFO } from '../data/companyData';
 import { QuoteRequest } from '../types';
 import { notifyQuoteSubmission, ADMIN_NOTIFICATION_EMAIL } from '../services/gmailNotificationService';
 import { 
+  saveQuoteRequestToSupabase, 
+  SUPABASE_PROJECT_ID 
+} from '../services/supabaseClient';
+import { 
   X, 
   Sparkles, 
   Send, 
@@ -12,19 +16,22 @@ import {
   MapPin, 
   ShieldCheck,
   Calculator,
-  Mail
+  Mail,
+  Database
 } from 'lucide-react';
 
 interface QuoteModalProps {
   isOpen: boolean;
   onClose: () => void;
   prefillService?: string;
+  onOpenAppointmentModal?: (prefillService?: string) => void;
 }
 
 export const QuoteModal: React.FC<QuoteModalProps> = ({
   isOpen,
   onClose,
-  prefillService
+  prefillService,
+  onOpenAppointmentModal
 }) => {
   const [formData, setFormData] = useState<QuoteRequest>({
     name: '',
@@ -40,6 +47,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [gmailNotified, setGmailNotified] = useState(false);
+  const [quoteRefId, setQuoteRefId] = useState('');
 
   useEffect(() => {
     if (prefillService) {
@@ -59,7 +67,11 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
     setIsSubmitting(true);
 
     try {
-      // Dispatch real-time Gmail notification to boipara90@gmail.com
+      // 1. Save directly to Supabase Backend
+      const res = await saveQuoteRequestToSupabase(formData);
+      setQuoteRefId(res.referenceId || 'QT-' + Date.now().toString().slice(-6));
+
+      // 2. Dispatch real-time Gmail notification to boipara90@gmail.com
       await notifyQuoteSubmission({
         name: formData.name,
         companyName: formData.companyName,
@@ -72,13 +84,13 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
       });
       setGmailNotified(true);
     } catch (err) {
-      console.warn('Notification log created:', err);
+      console.warn('Quote notification/database log:', err);
     }
 
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSuccess(true);
-    }, 600);
+    }, 500);
   };
 
   return (
@@ -111,38 +123,61 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
               </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-[#f0f4f8] border border-slate-200 text-xs text-left space-y-2">
-              <div className="flex justify-between">
-                <span className="text-slate-500">Contact Number:</span>
-                <span className="text-slate-900 font-bold">{formData.phone}</span>
+            <div className="p-4 rounded-xl bg-slate-900 text-white border border-slate-800 text-xs text-left space-y-2 shadow-md">
+              <div className="flex justify-between border-b border-slate-800 pb-2">
+                <span className="text-slate-400">Quote Reference ID:</span>
+                <span className="text-amber-400 font-mono font-bold">{quoteRefId}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">Target Timeline:</span>
-                <span className="text-amber-800 font-bold">{formData.estimatedTimeline}</span>
+                <span className="text-slate-400">Contact Number:</span>
+                <span className="text-slate-100 font-bold">{formData.phone}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">Engineering Firm:</span>
-                <span className="text-slate-900 font-black">SRI SJ CONSTRUCTION PVT LTD</span>
+                <span className="text-slate-400">Target Timeline:</span>
+                <span className="text-amber-300 font-bold">{formData.estimatedTimeline}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">GST Registration:</span>
-                <span className="text-amber-800 font-mono font-bold">19AFUPK0762L1ZS</span>
+                <span className="text-slate-400">Engineering Firm:</span>
+                <span className="text-slate-100 font-bold">SRI SJ CONSTRUCTION PVT LTD</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">Gmail Alert Routed:</span>
-                <span className="text-emerald-700 font-bold flex items-center gap-1">
-                  <Mail className="w-3 h-3 text-emerald-600" />
+                <span className="text-slate-400">GST Registration:</span>
+                <span className="text-amber-300 font-mono font-bold">19AFUPK0762L1ZS</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-400">Gmail Alert Routed:</span>
+                <span className="text-emerald-400 font-bold flex items-center gap-1">
+                  <Mail className="w-3 h-3 text-emerald-400" />
                   {ADMIN_NOTIFICATION_EMAIL}
                 </span>
               </div>
             </div>
+
+            {onOpenAppointmentModal && (
+              <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-left flex items-center justify-between gap-3">
+                <div className="text-xs text-amber-900">
+                  <strong>Need an On-Site Soil &amp; Rig Assessment?</strong>
+                  <p className="text-[11px] text-amber-800">Book an engineer site appointment directly on calendar.</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    onOpenAppointmentModal(formData.serviceRequired);
+                  }}
+                  className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shrink-0 cursor-pointer shadow-sm"
+                >
+                  Book Site Visit
+                </button>
+              </div>
+            )}
 
             <button
               onClick={() => {
                 setIsSuccess(false);
                 onClose();
               }}
-              className="w-full py-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider cursor-pointer"
+              className="w-full py-3 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-black text-xs uppercase tracking-wider cursor-pointer"
             >
               Done &amp; Return
             </button>

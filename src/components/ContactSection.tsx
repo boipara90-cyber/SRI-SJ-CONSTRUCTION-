@@ -3,6 +3,10 @@ import { COMPANY_INFO, SERVICES } from '../data/companyData';
 import { QuoteRequest } from '../types';
 import { notifyContactSubmission, ADMIN_NOTIFICATION_EMAIL } from '../services/gmailNotificationService';
 import { 
+  saveContactInquiryToSupabase, 
+  SUPABASE_PROJECT_ID 
+} from '../services/supabaseClient';
+import { 
   MapPin, 
   Phone, 
   Mail, 
@@ -14,14 +18,20 @@ import {
   Sparkles,
   ExternalLink,
   MessageCircle,
-  Bell
+  Bell,
+  Database,
+  Calendar
 } from 'lucide-react';
 
 interface ContactSectionProps {
   onOpenQuoteModal: () => void;
+  onOpenAppointmentModal?: (prefillService?: string) => void;
 }
 
-export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenQuoteModal }) => {
+export const ContactSection: React.FC<ContactSectionProps> = ({ 
+  onOpenQuoteModal,
+  onOpenAppointmentModal 
+}) => {
   const [formData, setFormData] = useState<QuoteRequest>({
     name: '',
     companyName: '',
@@ -34,6 +44,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenQuoteModal
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [inquiryRefId, setInquiryRefId] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -45,7 +56,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenQuoteModal
     setIsSubmitting(true);
 
     try {
-      // Dispatches real-time notification to boipara90@gmail.com
+      // 1. Save directly to Supabase Backend
+      const res = await saveContactInquiryToSupabase(formData);
+      setInquiryRefId(res.referenceId || 'INQ-' + Date.now().toString().slice(-6));
+
+      // 2. Dispatches real-time notification to boipara90@gmail.com
       await notifyContactSubmission({
         name: formData.name,
         companyName: formData.companyName,
@@ -62,7 +77,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenQuoteModal
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSuccess(true);
-    }, 700);
+    }, 600);
   };
 
   const handleWhatsAppClick = () => {
@@ -96,7 +111,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenQuoteModal
           <div className="lg:col-span-5 space-y-6">
             
             {/* Main Company Office Card */}
-            <div className="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 space-y-6 shadow-xl relative overflow-hidden text-slate-800">
+            <div className="p-6 sm:p-8 rounded-2xl bg-slate-100 border border-slate-300 space-y-6 shadow-xl relative overflow-hidden text-slate-800">
               <div className="space-y-1">
                 <div className="flex items-center justify-between gap-2 flex-wrap">
                   <span className="text-xs font-bold uppercase tracking-wider text-amber-700">
@@ -115,9 +130,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenQuoteModal
               </div>
 
               {/* Official Address */}
-              <div className="space-y-4 pt-2 border-t border-slate-100 text-sm">
+              <div className="space-y-4 pt-2 border-t border-slate-200 text-sm">
                 <div className="flex items-start gap-3 text-slate-700">
-                  <div className="p-2.5 rounded-lg bg-[#f0f4f8] border border-slate-200 text-amber-600 shrink-0 mt-0.5">
+                  <div className="p-2.5 rounded-lg bg-slate-200 border border-slate-300 text-amber-600 shrink-0 mt-0.5">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
@@ -131,7 +146,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenQuoteModal
 
                 {/* Phone */}
                 <div className="flex items-start gap-3 text-slate-700">
-                  <div className="p-2.5 rounded-lg bg-[#f0f4f8] border border-slate-200 text-amber-600 shrink-0 mt-0.5">
+                  <div className="p-2.5 rounded-lg bg-slate-200 border border-slate-300 text-amber-600 shrink-0 mt-0.5">
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
@@ -176,32 +191,46 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenQuoteModal
                 </div>
               </div>
 
-              {/* Direct Quick Action Buttons: WhatsApp & Quote */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-slate-100">
-                <button
-                  type="button"
-                  onClick={handleWhatsAppClick}
-                  id="whatsapp-chat-btn"
-                  className="py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  <span>WhatsApp Chat</span>
-                </button>
+              {/* Direct Quick Action Buttons: WhatsApp, Quote & Appointment */}
+              <div className="space-y-2.5 pt-3 border-t border-slate-200">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <button
+                    type="button"
+                    onClick={handleWhatsAppClick}
+                    id="whatsapp-chat-btn"
+                    className="py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    <span>WhatsApp Chat</span>
+                  </button>
 
-                <button
-                  type="button"
-                  onClick={onOpenQuoteModal}
-                  id="contact-quote-modal-btn"
-                  className="py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
-                >
-                  <span>Request a Quote</span>
-                </button>
+                  <button
+                    type="button"
+                    onClick={onOpenQuoteModal}
+                    id="contact-quote-modal-btn"
+                    className="py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
+                  >
+                    <span>Request a Quote</span>
+                  </button>
+                </div>
+
+                {onOpenAppointmentModal && (
+                  <button
+                    type="button"
+                    onClick={() => onOpenAppointmentModal()}
+                    id="contact-book-appointment-btn"
+                    className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-sm cursor-pointer border border-slate-800"
+                  >
+                    <Calendar className="w-4 h-4 text-amber-400" />
+                    <span>Book Engineer Site Visit / Appointment</span>
+                  </button>
+                )}
               </div>
             </div>
 
             {/* Google Maps Section for Haldia / Sutahata / Nandarampur */}
-            <div className="rounded-2xl bg-white border border-slate-200 overflow-hidden shadow-xl">
-              <div className="p-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+            <div className="rounded-2xl bg-slate-100 border border-slate-300 overflow-hidden shadow-xl">
+              <div className="p-3 bg-slate-200 border-b border-slate-300 flex items-center justify-between">
                 <div className="flex items-center gap-2 text-xs font-bold text-slate-800">
                   <MapPin className="w-4 h-4 text-amber-600" />
                   <span>HQ: Sutahata, Haldia (WB 721635)</span>
@@ -226,7 +255,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenQuoteModal
               </div>
 
               {/* Embedded Google Maps View for Haldia/Sutahata/Nandarampur */}
-              <div className="relative h-56 w-full bg-slate-100">
+              <div className="relative h-56 w-full bg-slate-200">
                 <iframe
                   title="Sri SJ Construction Haldia Location Map"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59049.25608678036!2d88.0833!3d22.1287!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a02f06c117d3d25%3A0x86133ffaa33aa2e1!2sSutahata%2C%20Haldia%2C%20West%20Bengal%20721635!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
@@ -241,7 +270,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenQuoteModal
 
           {/* Right 7 Cols: Complete Contact & Quote Form */}
           <div className="lg:col-span-7">
-            <div className="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-xl text-slate-800">
+            <div className="p-6 sm:p-8 rounded-2xl bg-slate-100 border border-slate-300 shadow-xl text-slate-800">
               
               <div className="mb-6">
                 <h3 className="text-xl font-black text-slate-950 font-['Space_Grotesk']">
@@ -266,6 +295,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenQuoteModal
                   <p className="text-xs text-slate-500">
                     Our estimation engineer will contact you at <span className="text-slate-900 font-bold">{formData.phone}</span> or <span className="text-slate-900 font-bold">{formData.email}</span>.
                   </p>
+                  <div className="p-3.5 rounded-xl bg-slate-900 text-white border border-slate-800 text-xs text-left space-y-1.5 max-w-md mx-auto">
+                    <div className="flex justify-between text-[11px]">
+                      <span className="text-slate-400">Tracking Reference:</span>
+                      <span className="text-amber-400 font-mono font-bold">{inquiryRefId}</span>
+                    </div>
+                  </div>
+
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold">
                     <Mail className="w-3.5 h-3.5 text-emerald-600" />
                     <span>Instant Alert Dispatched to {ADMIN_NOTIFICATION_EMAIL}</span>
