@@ -59,7 +59,7 @@ export const getAdminProfile = (): { username: string; fullName: string; email: 
     return {
       username: parsed.username,
       fullName: parsed.fullName || 'Authorized Administrator',
-      email: parsed.email || 'boipara90@gmail.com',
+      email: parsed.email || 'srisjcons@gmail.com',
       createdAt: parsed.createdAt || new Date().toISOString()
     };
   } catch (e) {
@@ -107,7 +107,7 @@ export const registerSingleAdminAccount = (data: {
     fullName: cleanName || 'Sri SJ Administrator',
     email: cleanEmail,
     passwordHash: hashPassword(cleanPass),
-    securityPin: cleanPin || '2013',
+    securityPin: cleanPin || '2011',
     createdAt: new Date().toISOString(),
     role: 'SUPER_ADMIN',
     isLocked: true // Prevents any second account
@@ -180,15 +180,15 @@ export const verifyAdminLogin = (
     }
   }
 
-  // Built-in initial master access for boipara90@gmail.com / admin before/fallback setup
+  // Built-in initial master access before/fallback setup
   if (
-    (query === 'admin' || query === 'srisj' || query === 'boipara90@gmail.com' || query === 'tjana1001@gmail.com') &&
-    (rawPass === 'admin123' || rawPass === 'srisj2013' || rawPass === 'srisj@2025' || rawPass === 'admin')
+    (query === 'admin' || query === 'srisj' || query === 'srisjcons@gmail.com' || query === 'srisjconstruction@gmail.com' || query === 'boipara90@gmail.com' || query === 'tjana1001@gmail.com') &&
+    (rawPass === 'admin123' || rawPass === 'srisj2011' || rawPass === 'srisj2013' || rawPass === 'srisj@2025' || rawPass === 'admin')
   ) {
     const defaultProfile = {
       username: query,
       fullName: 'Master Administrator',
-      email: 'boipara90@gmail.com'
+      email: 'srisjcons@gmail.com'
     };
     localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify({
       ...defaultProfile,

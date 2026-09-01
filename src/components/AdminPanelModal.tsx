@@ -484,7 +484,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({ isOpen, onClos
                         required
                         value={loginUserOrEmail}
                         onChange={(e) => setLoginUserOrEmail(e.target.value)}
-                        placeholder="e.g. boipara90@gmail.com or admin"
+                        placeholder="e.g. srisjcons@gmail.com or admin"
                         className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
                       />
                     </div>
@@ -543,7 +543,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({ isOpen, onClos
                   </button>
 
                   <div className="text-center pt-2 text-[11px] text-slate-500">
-                    Protected geotechnical database for Sri SJ Construction Private Limited.
+                    Protected geotechnical database for Sri SJ Constructions Private Limited.
                   </div>
                 </form>
               )}
@@ -593,7 +593,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({ isOpen, onClos
                       required
                       value={regEmail}
                       onChange={(e) => setRegEmail(e.target.value)}
-                      placeholder="boipara90@gmail.com"
+                      placeholder="srisjcons@gmail.com"
                       className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-amber-500"
                     />
                   </div>
@@ -636,7 +636,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({ isOpen, onClos
                       required
                       value={regSecurityPin}
                       onChange={(e) => setRegSecurityPin(e.target.value)}
-                      placeholder="e.g. 2013 or your secret 4-digit PIN"
+                      placeholder="e.g. 2011 or your secret 4-digit PIN"
                       className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-800 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-amber-500"
                     />
                   </div>
@@ -1113,7 +1113,7 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({ isOpen, onClos
                         </div>
                         <div className="col-span-2 p-3 rounded-xl bg-slate-900 border border-slate-800">
                           <span className="text-slate-500 block text-[10px] uppercase font-bold">Registered Admin Email</span>
-                          <strong className="text-amber-400 font-mono text-sm">{adminProfile?.email || 'boipara90@gmail.com'}</strong>
+                          <strong className="text-emerald-400 font-mono text-sm">{adminProfile?.email || 'srisjcons@gmail.com'}</strong>
                         </div>
                       </div>
                     </div>

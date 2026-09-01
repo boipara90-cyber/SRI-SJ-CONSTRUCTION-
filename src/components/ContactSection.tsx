@@ -60,7 +60,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
       const res = await saveContactInquiryToSupabase(formData);
       setInquiryRefId(res.referenceId || 'INQ-' + Date.now().toString().slice(-6));
 
-      // 2. Dispatches real-time notification to boipara90@gmail.com
+      // 2. Dispatches real-time notification to srisjcons@gmail.com
       await notifyContactSubmission({
         name: formData.name,
         companyName: formData.companyName,
@@ -118,14 +118,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                     Head Office &amp; Central Operations
                   </span>
                   <span className="px-2 py-0.5 rounded bg-emerald-500/15 border border-emerald-500/30 text-emerald-900 font-mono font-bold text-[11px]">
-                    GSTIN: 19AFUPK0762L1ZS
+                    GSTIN: 19ABPCS8304J1ZQ
                   </span>
                 </div>
                 <h3 className="text-xl font-black text-slate-950 font-['Space_Grotesk']">
-                  Sri SJ Construction Private Limited
+                  Sri SJ Constructions Private Limited
                 </h3>
                 <p className="text-xs text-slate-500 font-medium">
-                  Registered under Indian Companies Act (Estd. 2013) • GST Registered Active Taxpayer
+                  Registered under Indian Companies Act (Estd. 2011) • GST Registered Active Taxpayer
                 </p>
               </div>
 

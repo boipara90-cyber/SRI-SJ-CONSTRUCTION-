@@ -101,9 +101,9 @@ export const Header: React.FC<HeaderProps> = ({
               <Phone className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
               <span>{COMPANY_INFO.contact.phone}</span>
             </a>
-            <div className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-semibold text-[11px]" title="GSTIN: 19AFUPK0762L1ZS">
+            <div className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-semibold text-[11px]" title="GSTIN: 19ABPCS8304J1ZQ">
               <HardHat className="w-3 h-3" />
-              <span>GST: 19AFUPK0762L1ZS</span>
+              <span>GST: 19ABPCS8304J1ZQ</span>
             </div>
           </div>
         </div>

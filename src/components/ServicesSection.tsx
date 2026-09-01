@@ -173,7 +173,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
 
                 <div className="pt-2 border-t border-slate-200 flex items-center justify-between">
                   <span className="text-[10px] font-bold text-slate-600">Contractor:</span>
-                  <span className="text-[10px] font-black text-emerald-800 uppercase">SRI SJ CONSTRUCTION PVT LTD</span>
+                  <span className="text-[10px] font-black text-emerald-800 uppercase">SRI SJ CONSTRUCTIONS PVT LTD</span>
                 </div>
               </div>
             </div>
@@ -242,7 +242,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
             </div>
 
             <div className="mb-4 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs text-slate-700 text-center">
-              Civil execution and quality oversight guaranteed by <strong className="text-slate-950">SRI SJ CONSTRUCTION PRIVATE LIMITED</strong> (Haldia, WB).
+              Civil execution and quality oversight guaranteed by <strong className="text-slate-950">SRI SJ CONSTRUCTIONS PRIVATE LIMITED</strong> (Haldia, WB).
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-200">

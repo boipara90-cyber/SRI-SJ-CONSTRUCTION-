@@ -39,7 +39,7 @@ export const WhyChooseUs: React.FC = () => {
             <span>Proven Reliability &amp; Safety</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black text-slate-950 tracking-tight font-['Space_Grotesk']">
-            Why Choose Sri SJ Construction
+            Why Choose Sri SJ Constructions
           </h2>
           <p className="text-slate-600 text-base sm:text-lg mt-3">
             Eight foundational reasons why industrial developers and civil project heads in West Bengal trust our foundation and construction capabilities.
@@ -76,7 +76,7 @@ export const WhyChooseUs: React.FC = () => {
               {/* Bottom Subtle Bar */}
               <div className="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between">
                 <span className="text-[11px] font-black text-emerald-800 group-hover:text-emerald-700 flex items-center gap-1">
-                  <span>SRI SJ CONSTRUCTION PVT LTD</span>
+                  <span>SRI SJ CONSTRUCTIONS PVT LTD</span>
                 </span>
                 <span className="text-[10px] text-slate-600 font-semibold">Standard of Practice</span>
               </div>
@@ -88,13 +88,13 @@ export const WhyChooseUs: React.FC = () => {
         <div className="mt-14 p-6 sm:p-8 rounded-2xl bg-slate-100 border border-emerald-500/40 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
           <div className="space-y-1 text-center md:text-left">
             <div className="text-xs font-black uppercase text-emerald-800 tracking-wider">
-              SRI SJ CONSTRUCTION PRIVATE LIMITED
+              SRI SJ CONSTRUCTIONS PRIVATE LIMITED
             </div>
             <h4 className="text-lg font-black text-slate-950 font-['Space_Grotesk']">
               Strict Adherence to Indian Engineering Codes (IS 2911 &amp; IS 456)
             </h4>
             <p className="text-xs sm:text-sm text-slate-700">
-              Every piling and civil contract undertaken by <strong className="text-slate-900">SRI SJ CONSTRUCTION PRIVATE LIMITED</strong> complies with national safety and structural standards.
+              Every piling and civil contract undertaken by <strong className="text-slate-900">SRI SJ CONSTRUCTIONS PRIVATE LIMITED</strong> complies with national safety and structural standards.
             </p>
           </div>
 

@@ -183,7 +183,7 @@ export const PilingSection: React.FC<PilingSectionProps> = ({ onOpenQuoteModal }
               Standard Bored Cast-In-Situ Piling Workflow
             </h3>
             <p className="text-slate-600 text-xs sm:text-sm mt-1">
-              Rigorous 5-stage geotechnical execution methodology adhered to on every Sri SJ Construction site.
+              Rigorous 5-stage geotechnical execution methodology adhered to on every Sri SJ Constructions site.
             </p>
           </div>
 

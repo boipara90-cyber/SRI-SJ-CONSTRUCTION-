@@ -71,7 +71,7 @@ export const CareersSection: React.FC = () => {
       // 1. Save to Supabase Backend
       await saveCareerApplicationToSupabase(formData, randomId);
 
-      // 2. Trigger instant Gmail notification to boipara90@gmail.com with candidate particulars and attached CV name
+      // 2. Trigger instant Gmail notification to srisjcons@gmail.com with candidate particulars and attached CV name
       await notifyCareerApplication({
         fullName: formData.fullName,
         fatherName: formData.fatherName,

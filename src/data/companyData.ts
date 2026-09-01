@@ -1,15 +1,15 @@
 import { ServiceItem, PilingFeature, ProjectItem, EquipmentItem, JobOpening } from '../types';
 
 export const COMPANY_INFO = {
-  name: "Sri SJ Construction Private Limited",
-  shortName: "Sri SJ Construction",
-  initials: "SJ",
+  name: "Sri SJ Constructions Private Limited",
+  shortName: "Sri SJ Constructions",
+  initials: "SJC",
   tagline: "Strong Foundations. Reliable Construction.",
-  establishedYear: 2013,
-  experienceYears: "13+",
-  gstNumber: "19AFUPK0762L1ZS",
-  gstin: "19AFUPK0762L1ZS",
-  cinPlaceholder: "U45200WB2013PTCXXXXXX",
+  establishedYear: 2011,
+  experienceYears: "15+",
+  gstNumber: "19ABPCS8304J1ZQ",
+  gstin: "19ABPCS8304J1ZQ",
+  cinPlaceholder: "U45200WB2011PTCXXXXXX",
   address: {
     street: "Nandarampur, Sutahata",
     city: "Haldia",
@@ -20,18 +20,18 @@ export const COMPANY_INFO = {
     fullAddress: "Haldia, Sutahata, Nandarampur, West Bengal – 721635, India"
   },
   contact: {
-    phone: "+91 97754 42756",
-    altPhone: "+91 97754 42756",
-    email: "tjana1001@gmail.com",
-    supportEmail: "tjana1001@gmail.com",
-    whatsapp: "+919775442756",
+    phone: "+91 81700 39171",
+    altPhone: "+91 81700 39171",
+    email: "srisjcons@gmail.com",
+    supportEmail: "srisjcons@gmail.com",
+    whatsapp: "+918170039171",
     workingHours: "Monday – Saturday: 9:00 AM – 8:00 PM (IST)",
     emergencySupport: "24/7 Site Equipment & Piling Breakdown Support"
   },
   stats: [
-    { label: "Established Year", value: "2013", detail: "Registered Pvt Ltd" },
-    { label: "GST Registration", value: "19AFUPK0762L1ZS", detail: "Active Verified GSTIN" },
-    { label: "Industry Experience", value: "13+ Years", detail: "Deep Piling & Civil" },
+    { label: "Established Year", value: "2011", detail: "Registered Pvt Ltd" },
+    { label: "GST Registration", value: "19ABPCS8304J1ZQ", detail: "Active Verified GSTIN" },
+    { label: "Industry Experience", value: "15+ Years", detail: "Deep Piling & Civil" },
     { label: "Execution Track", value: "Multiple Projects", detail: "Industrial & Infrastructure" },
     { label: "Operational Hub", value: "Haldia, WB", detail: "Port & Industrial Belt" }
   ]
@@ -43,7 +43,7 @@ export const SERVICES: ServiceItem[] = [
     title: "Piling Work",
     category: "piling",
     shortDescription: "Specialized deep foundation piling solutions designed to transfer heavy structural loads to stable sub-strata.",
-    fullDescription: "Sri SJ Construction provides comprehensive deep foundation piling services tailored for challenging soil strata across coastal and industrial zones of West Bengal. Our experienced teams execute load-bearing piles with rigorous quality testing.",
+    fullDescription: "Sri SJ Constructions provides comprehensive deep foundation piling services tailored for challenging soil strata across coastal and industrial zones of West Bengal. Our experienced teams execute load-bearing piles with rigorous quality testing.",
     features: [
       "Rigid load-bearing deep piles",
       "Hydraulic & rotary boring methods",
@@ -283,7 +283,7 @@ export const PILING_PROCESS_STEPS = [
 
 export const WHY_CHOOSE_US = [
   {
-    title: "Established Since 2013",
+    title: "Established Since 2011",
     description: "Proven operational track record in Haldia and across West Bengal with dedicated focus on civil and deep piling contracting.",
     iconName: "Calendar"
   },

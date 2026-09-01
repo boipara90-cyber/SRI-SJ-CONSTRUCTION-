@@ -55,7 +55,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal, onOpenAdminMod
             </p>
 
             <p className="text-slate-300 text-sm leading-relaxed max-w-sm">
-              Established in 2013, Sri SJ Construction Private Limited is a specialized 
+              Established in 2011, Sri SJ Constructions Private Limited is a specialized 
               piling and construction company based in Haldia, West Bengal, delivering 
               bored cast-in-situ piling, industrial foundations, and turnkey civil structural engineering.
             </p>
@@ -136,7 +136,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal, onOpenAdminMod
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-bold text-white">Sri SJ Construction Private Limited</p>
+                  <p className="font-bold text-white">Sri SJ Constructions Private Limited</p>
                   <p className="text-slate-300 mt-0.5">
                     Haldia, Sutahata, Nandarampur,<br />
                     West Bengal – 721635, India
@@ -160,7 +160,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal, onOpenAdminMod
 
               <div className="pt-1 text-[11px] text-emerald-400 font-mono font-semibold flex items-center gap-1.5">
                 <span className="px-1.5 py-0.5 rounded bg-emerald-500/20 border border-emerald-500/30 text-emerald-300">GSTIN</span>
-                <span>19AFUPK0762L1ZS</span>
+                <span>19ABPCS8304J1ZQ</span>
               </div>
             </div>
 
@@ -179,9 +179,9 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal, onOpenAdminMod
         {/* Bottom Bar: Copyright & Back to Top */}
         <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <div className="flex items-center gap-2 flex-wrap text-center sm:text-left">
-            <span>© 2013 – {new Date().getFullYear()} <strong className="text-white font-black tracking-wide">SRI SJ CONSTRUCTION PRIVATE LIMITED</strong>. All Rights Reserved.</span>
+            <span>© 2011 – {new Date().getFullYear()} <strong className="text-white font-black tracking-wide">SRI SJ CONSTRUCTIONS PRIVATE LIMITED</strong>. All Rights Reserved.</span>
             <span className="hidden md:inline text-emerald-500">•</span>
-            <span className="text-slate-300">GSTIN: <strong className="text-emerald-400 font-mono">19AFUPK0762L1ZS</strong></span>
+            <span className="text-slate-300">GSTIN: <strong className="text-emerald-400 font-mono">19ABPCS8304J1ZQ</strong></span>
             <span className="hidden md:inline text-emerald-500">•</span>
             <span className="text-slate-300">Haldia, West Bengal – 721635, India</span>
           </div>

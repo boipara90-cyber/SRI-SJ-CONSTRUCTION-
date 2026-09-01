@@ -33,7 +33,7 @@ export interface SitePhotoItem {
   specs?: string;
 }
 
-export const GOOGLE_MAPS_OFFICIAL_QUERY = "https://www.google.com/maps/search/?api=1&query=Sri+SJ+Construction+Private+Limited+Sutahata+Haldia+West+Bengal+721635";
+export const GOOGLE_MAPS_OFFICIAL_QUERY = "https://www.google.com/maps/search/?api=1&query=Sri+SJ+Constructions+Private+Limited+Sutahata+Haldia+West+Bengal+721635";
 
 export const MAP_LOCATIONS: MapLocation[] = [
   {
@@ -43,10 +43,10 @@ export const MAP_LOCATIONS: MapLocation[] = [
     address: "Haldia, Sutahata, Nandarampur",
     districtState: "Purba Medinipur, West Bengal – 721635",
     coordinates: { lat: 22.1287, lng: 88.0833 },
-    clientOrFacility: "SRI SJ CONSTRUCTION PRIVATE LIMITED",
+    clientOrFacility: "SRI SJ CONSTRUCTIONS PRIVATE LIMITED",
     scopeOfWork: "Corporate Headquarters, Heavy Piling Rig Yard & Engineering Center",
     status: "Head Office",
-    googleMapsQueryUrl: "https://www.google.com/maps/search/?api=1&query=Sutahata+Haldia+West+Bengal+721635+Sri+SJ+Construction",
+    googleMapsQueryUrl: "https://www.google.com/maps/search/?api=1&query=Sutahata+Haldia+West+Bengal+721635+Sri+SJ+Constructions",
     embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59049.25608678036!2d88.0833!3d22.1287!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a02f06c117d3d25%3A0x86133ffaa33aa2e1!2sSutahata%2C%20Haldia%2C%20West%20Bengal%20721635!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin",
     sitePhoto: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&w=900&q=80",
     highlights: ["Central Rig & Winch Fleet", "Registered CIN Base", "24/7 Deployment Cell"]

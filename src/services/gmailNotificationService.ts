@@ -1,14 +1,14 @@
 /**
- * SRI SJ CONSTRUCTION PRIVATE LIMITED - GMAIL NOTIFICATION SERVICE
+ * SRI SJ CONSTRUCTIONS PRIVATE LIMITED - GMAIL NOTIFICATION SERVICE
  * Dispatches real-time email notifications for:
  * 1. Project Quote Estimates
  * 2. Career Job Applications & CV Submissions
  * 3. General Contact Inquiries
- * Target Recipient: tjana1001@gmail.com
+ * Target Recipient: srisjcons@gmail.com
  */
 
-export const ADMIN_NOTIFICATION_EMAIL = "tjana1001@gmail.com";
-export const ADMIN_WHATSAPP_PHONE = "+919775442756";
+export const ADMIN_NOTIFICATION_EMAIL = "srisjcons@gmail.com";
+export const ADMIN_WHATSAPP_PHONE = "+918170039171";
 export const GMAIL_OAUTH_SCOPES = "https://www.googleapis.com/auth/gmail.send";
 
 export interface QuoteNotificationPayload {
@@ -54,7 +54,7 @@ let tokenClient: any = null;
 
 /**
  * Direct Email Dispatch via FormSubmit Email Gateway
- * Sends real email directly into tjana1001@gmail.com without OAuth popups.
+ * Sends real email directly into srisjcons@gmail.com without OAuth popups.
  */
 export async function sendEmailViaGateway(
   subject: string, 
@@ -67,7 +67,7 @@ export async function sendEmailViaGateway(
       _captcha: 'false',
       'Recipient Inbox': ADMIN_NOTIFICATION_EMAIL,
       ...fields,
-      'Portal System': 'SRI SJ CONSTRUCTION PVT LTD Website',
+      'Portal System': 'SRI SJ CONSTRUCTIONS PVT LTD Website',
       'Alert Generated At': new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
     };
 
@@ -96,10 +96,10 @@ export async function sendEmailViaGateway(
 }
 
 /**
- * Generate instant WhatsApp alert URL to +91 97754 42756
+ * Generate instant WhatsApp alert URL to +91 81700 39171
  */
 export function generateWhatsAppAlertUrl(text: string): string {
-  return `https://wa.me/919775442756?text=${encodeURIComponent(text)}`;
+  return `https://wa.me/918170039171?text=${encodeURIComponent(text)}`;
 }
 
 /**
@@ -248,7 +248,7 @@ async function sendRawGmailMessage(accessToken: string, subject: string, htmlBod
 }
 
 /**
- * 1. Dispatch Quote Notification to tjana1001@gmail.com
+ * 1. Dispatch Quote Notification to srisjcons@gmail.com
  */
 export async function notifyQuoteSubmission(quote: QuoteNotificationPayload): Promise<{ success: boolean; method: string; message?: string }> {
   const refId = quote.referenceId || `SJ-QTE-${Date.now().toString().slice(-6)}`;
@@ -256,7 +256,7 @@ export async function notifyQuoteSubmission(quote: QuoteNotificationPayload): Pr
 
   const subject = `🔔 [NEW QUOTE INQUIRY] ${quote.serviceRequired} - ${quote.name} (${quote.projectLocation})`;
 
-  // 1. Dispatch Real Email directly to tjana1001@gmail.com via FormSubmit Gateway
+  // 1. Dispatch Real Email directly to srisjcons@gmail.com via FormSubmit Gateway
   const gatewayResult = await sendEmailViaGateway(subject, {
     'Reference ID': refId,
     'Client Name': quote.name,
@@ -272,7 +272,7 @@ export async function notifyQuoteSubmission(quote: QuoteNotificationPayload): Pr
   const htmlBody = `
     <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 650px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
       <div style="background-color: #0f172a; padding: 24px; color: #ffffff; border-bottom: 4px solid #f59e0b;">
-        <h1 style="margin: 0; font-size: 20px; color: #f59e0b; letter-spacing: 0.5px;">SRI SJ CONSTRUCTION PRIVATE LIMITED</h1>
+        <h1 style="margin: 0; font-size: 20px; color: #f59e0b; letter-spacing: 0.5px;">SRI SJ CONSTRUCTIONS PRIVATE LIMITED</h1>
         <p style="margin: 4px 0 0 0; font-size: 13px; color: #94a3b8;">New Commercial Project Quote Request • Ref: ${refId}</p>
       </div>
 
@@ -321,7 +321,7 @@ export async function notifyQuoteSubmission(quote: QuoteNotificationPayload): Pr
         ` : ''}
 
         <div style="border-top: 1px solid #e2e8f0; padding-top: 16px; font-size: 12px; color: #64748b; text-align: center;">
-          <p style="margin: 0;">Sri SJ Construction Private Limited • GSTIN: <strong>19AFUPK0762L1ZS</strong> • Haldia, West Bengal – 721635</p>
+          <p style="margin: 0;">Sri SJ Constructions Private Limited • GSTIN: <strong>19ABPCS8304J1ZQ</strong> • Haldia, West Bengal – 721635</p>
           <p style="margin: 4px 0 0 0;">Automatic Notification Engine connected to <strong>${ADMIN_NOTIFICATION_EMAIL}</strong></p>
         </div>
       </div>
@@ -346,13 +346,13 @@ export async function notifyQuoteSubmission(quote: QuoteNotificationPayload): Pr
 }
 
 /**
- * 2. Dispatch Career Application & CV Upload Notification to tjana1001@gmail.com
+ * 2. Dispatch Career Application & CV Upload Notification to srisjcons@gmail.com
  */
 export async function notifyCareerApplication(app: CareerNotificationPayload): Promise<{ success: boolean; method: string; message?: string }> {
   const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
   const subject = `📄 [JOB CV APPLICATION] ${app.positionAppliedFor} - ${app.fullName} (Ref: ${app.referenceId})`;
 
-  // 1. Dispatch Real Email directly to tjana1001@gmail.com via FormSubmit Gateway
+  // 1. Dispatch Real Email directly to srisjcons@gmail.com via FormSubmit Gateway
   const gatewayResult = await sendEmailViaGateway(subject, {
     'Reference ID': app.referenceId,
     'Candidate Name': app.fullName,
@@ -370,7 +370,7 @@ export async function notifyCareerApplication(app: CareerNotificationPayload): P
   const htmlBody = `
     <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 650px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
       <div style="background-color: #0f172a; padding: 24px; color: #ffffff; border-bottom: 4px solid #10b981;">
-        <h1 style="margin: 0; font-size: 20px; color: #10b981; letter-spacing: 0.5px;">SRI SJ CONSTRUCTION PRIVATE LIMITED</h1>
+        <h1 style="margin: 0; font-size: 20px; color: #10b981; letter-spacing: 0.5px;">SRI SJ CONSTRUCTIONS PRIVATE LIMITED</h1>
         <p style="margin: 4px 0 0 0; font-size: 13px; color: #94a3b8;">HR Recruitment Portal • Candidate Application & CV Submission</p>
       </div>
 
@@ -431,7 +431,7 @@ export async function notifyCareerApplication(app: CareerNotificationPayload): P
         ` : ''}
 
         <div style="border-top: 1px solid #e2e8f0; padding-top: 16px; font-size: 12px; color: #64748b; text-align: center;">
-          <p style="margin: 0;">Sri SJ Construction Private Limited Recruitment Cell • Haldia, West Bengal</p>
+          <p style="margin: 0;">Sri SJ Constructions Private Limited Recruitment Cell • Haldia, West Bengal</p>
           <p style="margin: 4px 0 0 0;">HR Notifications Routed to <strong>${ADMIN_NOTIFICATION_EMAIL}</strong> • Timestamp: ${timestamp}</p>
         </div>
       </div>
@@ -455,7 +455,7 @@ export async function notifyCareerApplication(app: CareerNotificationPayload): P
 }
 
 /**
- * 3. Dispatch Contact Form Notification to tjana1001@gmail.com
+ * 3. Dispatch Contact Form Notification to srisjcons@gmail.com
  */
 export async function notifyContactSubmission(contact: ContactNotificationPayload): Promise<{ success: boolean; method: string; message?: string }> {
   const refId = contact.referenceId || `SJ-MSG-${Date.now().toString().slice(-6)}`;
@@ -463,7 +463,7 @@ export async function notifyContactSubmission(contact: ContactNotificationPayloa
 
   const subject = `💬 [CONTACT INQUIRY] ${contact.name} - ${contact.serviceRequired} (${contact.projectLocation})`;
 
-  // 1. Dispatch Real Email directly to tjana1001@gmail.com via FormSubmit Gateway
+  // 1. Dispatch Real Email directly to srisjcons@gmail.com via FormSubmit Gateway
   const gatewayResult = await sendEmailViaGateway(subject, {
     'Reference ID': refId,
     'Sender Name': contact.name,
@@ -478,7 +478,7 @@ export async function notifyContactSubmission(contact: ContactNotificationPayloa
   const htmlBody = `
     <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 650px; margin: 0 auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
       <div style="background-color: #0f172a; padding: 24px; color: #ffffff; border-bottom: 4px solid #3b82f6;">
-        <h1 style="margin: 0; font-size: 20px; color: #3b82f6; letter-spacing: 0.5px;">SRI SJ CONSTRUCTION PRIVATE LIMITED</h1>
+        <h1 style="margin: 0; font-size: 20px; color: #3b82f6; letter-spacing: 0.5px;">SRI SJ CONSTRUCTIONS PRIVATE LIMITED</h1>
         <p style="margin: 4px 0 0 0; font-size: 13px; color: #94a3b8;">General Website Inquiry • Ref: ${refId}</p>
       </div>
 

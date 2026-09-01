@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { COMPANY_INFO } from '../data/companyData';
+import { OfficialCompanyEmblem } from './Logo';
 import { 
   ShieldCheck, 
   ArrowRight, 
@@ -161,7 +162,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
             <div className="flex flex-wrap items-center gap-2.5">
               <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/40 text-emerald-900 text-xs sm:text-sm font-black tracking-wide shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                ESTD. 2013 • HALDIA, WEST BENGAL
+                ESTD. 2011 • HALDIA, WEST BENGAL
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-slate-300 text-slate-700 text-xs font-bold shadow-sm">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
@@ -169,14 +170,28 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
               </span>
             </div>
 
-            {/* Company Name & Tagline */}
-            <div className="space-y-2.5">
-              <div className="inline-block">
-                <h2 className="text-xs sm:text-sm uppercase tracking-widest text-emerald-900 bg-emerald-500/10 px-3 py-1 rounded-md border border-emerald-500/30 font-black font-['Space_Grotesk']">
-                  SRI SJ CONSTRUCTION PRIVATE LIMITED
-                </h2>
+            {/* Company Brand Header */}
+            <div className="flex items-center gap-3.5 p-3 sm:p-3.5 rounded-xl bg-white/90 border border-slate-200 shadow-sm backdrop-blur-sm">
+              <div className="relative w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-lg bg-white shadow-sm border border-slate-200 p-1 overflow-hidden">
+                <OfficialCompanyEmblem className="w-full h-full" />
               </div>
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <h2 className="text-base sm:text-lg font-black text-slate-950 font-['Space_Grotesk'] leading-none">
+                    SRI <span className="text-amber-500">SJ</span> CONSTRUCTIONS
+                  </h2>
+                  <span className="text-[10px] font-black px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-700 border border-amber-500/30">
+                    PVT LTD
+                  </span>
+                </div>
+                <p className="text-xs text-slate-600 font-medium">
+                  Haldia, West Bengal (721635) • GSTIN: <span className="font-mono font-bold text-slate-800">19ABPCS8304J1ZQ</span>
+                </p>
+              </div>
+            </div>
 
+            {/* Headline Tagline */}
+            <div className="space-y-2.5">
               <h1 className="text-3xl sm:text-5xl lg:text-[3.3rem] font-black text-slate-950 tracking-tight leading-[1.1] font-['Space_Grotesk']">
                 Strong Foundations. <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-emerald-500 to-green-700">
@@ -187,7 +202,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
 
             {/* Introduction Narrative */}
             <p className="text-sm sm:text-base text-slate-700 max-w-2xl leading-relaxed font-medium">
-              <strong className="text-slate-950">SRI SJ CONSTRUCTION PRIVATE LIMITED</strong> is an established engineering contractor based in 
+              <strong className="text-slate-950">SRI SJ CONSTRUCTIONS PRIVATE LIMITED</strong> is an established engineering contractor based in 
               <strong className="text-slate-950"> Haldia, Sutahata, Nandarampur, West Bengal (721635)</strong>. 
               We execute high-capacity bored cast-in-situ piling, sheet piling, EHV transmission tower footings, and heavy industrial machine substructures across India.
             </p>
@@ -256,7 +271,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
             {/* Registered Name Proper End of Point */}
             <div className="flex items-center gap-2 text-xs text-slate-600 font-semibold pt-1">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span>All operations executed by <strong className="text-slate-900">SRI SJ CONSTRUCTION PRIVATE LIMITED</strong></span>
+              <span>All operations executed by <strong className="text-slate-900">SRI SJ CONSTRUCTIONS PRIVATE LIMITED</strong></span>
             </div>
           </div>
 
@@ -276,7 +291,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
                     <span>LIVE SITE FEED</span>
                   </div>
                   <span className="text-xs font-bold text-slate-300 truncate font-['Space_Grotesk']">
-                    SRI SJ CONSTRUCTION PVT LTD
+                    SRI SJ CONSTRUCTIONS PVT LTD
                   </span>
                 </div>
 
@@ -407,7 +422,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
                   </div>
 
                   <span className="text-[10px] font-black text-emerald-800 uppercase tracking-wider">
-                    SRI SJ CONSTRUCTION PRIVATE LIMITED
+                    SRI SJ CONSTRUCTIONS PRIVATE LIMITED
                   </span>
                 </div>
 

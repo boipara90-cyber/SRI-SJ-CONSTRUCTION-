@@ -102,7 +102,7 @@ export const GmailNotificationDrawer: React.FC<GmailNotificationDrawerProps> = (
       await notifyQuoteSubmission({
         name: "Test Client Inquiry",
         companyName: "Sri SJ Construction Portal Test",
-        phone: "+91 97754 42756",
+        phone: "+91 81700 39171",
         email: ADMIN_NOTIFICATION_EMAIL,
         serviceRequired: "DMC Piling • System Alert Verification",
         projectLocation: "Haldia Industrial Complex, WB",
@@ -239,13 +239,13 @@ export const GmailNotificationDrawer: React.FC<GmailNotificationDrawerProps> = (
                 </button>
 
                 <a
-                  href={`https://wa.me/919775442756?text=${encodeURIComponent('Hello Sri SJ Construction, testing WhatsApp lead alerts for ' + ADMIN_NOTIFICATION_EMAIL)}`}
+                  href={`https://wa.me/918170039171?text=${encodeURIComponent('Hello Sri SJ Construction, testing WhatsApp lead alerts for ' + ADMIN_NOTIFICATION_EMAIL)}`}
                   target="_blank"
                   rel="noreferrer"
                   className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
                   <MessageCircle className="w-3.5 h-3.5" />
-                  <span>Test WhatsApp Alert (+91 97754 42756)</span>
+                  <span>Test WhatsApp Alert (+91 81700 39171)</span>
                 </a>
               </div>
             </div>

@@ -71,7 +71,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
       const res = await saveQuoteRequestToSupabase(formData);
       setQuoteRefId(res.referenceId || 'QT-' + Date.now().toString().slice(-6));
 
-      // 2. Dispatch real-time Gmail notification to boipara90@gmail.com
+      // 2. Dispatch real-time Gmail notification to srisjcons@gmail.com
       await notifyQuoteSubmission({
         name: formData.name,
         companyName: formData.companyName,
@@ -142,7 +142,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-400">GST Registration:</span>
-                <span className="text-amber-300 font-mono font-bold">19AFUPK0762L1ZS</span>
+                <span className="text-emerald-300 font-mono font-bold">19ABPCS8304J1ZQ</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-400">Gmail Alert Routed:</span>
@@ -198,8 +198,8 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
                   </h3>
                 </div>
               </div>
-              <span className="px-2.5 py-1 rounded bg-amber-50 border border-amber-200 text-amber-900 font-mono font-bold text-xs">
-                GSTIN: 19AFUPK0762L1ZS
+              <span className="px-2.5 py-1 rounded bg-emerald-50 border border-emerald-200 text-emerald-900 font-mono font-bold text-xs">
+                GSTIN: 19ABPCS8304J1ZQ
               </span>
             </div>
 

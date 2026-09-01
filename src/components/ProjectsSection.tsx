@@ -204,7 +204,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenQuoteMod
                 {/* Card Footer */}
                 <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                   <span className="text-[10px] text-emerald-800 font-bold uppercase tracking-wider">
-                    SRI SJ CONSTRUCTION PVT LTD
+                    SRI SJ CONSTRUCTIONS PVT LTD
                   </span>
                   <button
                     onClick={onOpenQuoteModal}
@@ -229,7 +229,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenQuoteMod
             Looking for an Experienced Piling &amp; Foundation Contractor?
           </h3>
           <p className="text-slate-300 text-sm mt-2 max-w-xl mx-auto">
-            From major projects with <strong className="text-emerald-400">L&amp;T, TATA, JINDAL, SUNLIGHT, PGCIL &amp; UAIL</strong> to active industrial sites, <strong className="text-emerald-400">SRI SJ CONSTRUCTION PRIVATE LIMITED</strong> guarantees certified engineering excellence.
+            From major projects with <strong className="text-emerald-400">L&amp;T, TATA, JINDAL, SUNLIGHT, PGCIL &amp; UAIL</strong> to active industrial sites, <strong className="text-emerald-400">SRI SJ CONSTRUCTIONS PRIVATE LIMITED</strong> guarantees certified engineering excellence.
           </p>
           <div className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-3">
             <button
@@ -241,7 +241,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenQuoteMod
             </button>
           </div>
           <div className="mt-4 pt-3 border-t border-slate-800 text-xs text-slate-400">
-            GSTIN: <strong className="text-emerald-400 font-mono">19AFUPK0762L1ZS</strong> • Corporate Entity: <strong className="text-white">SRI SJ CONSTRUCTION PRIVATE LIMITED</strong> • Haldia, West Bengal (721635)
+            GSTIN: <strong className="text-emerald-400 font-mono">19ABPCS8304J1ZQ</strong> • Corporate Entity: <strong className="text-white">SRI SJ CONSTRUCTIONS PRIVATE LIMITED</strong> • Haldia, West Bengal (721635)
           </div>
         </div>
 
