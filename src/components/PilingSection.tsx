@@ -44,8 +44,8 @@ export const PilingSection: React.FC<PilingSectionProps> = ({ onOpenQuoteModal }
         
         {/* Section Title */}
         <div className="max-w-3xl mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-500/15 border border-amber-500/30 text-amber-700 text-xs font-bold uppercase tracking-wider mb-3">
-            <Drill className="w-3.5 h-3.5 text-amber-600" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-3">
+            <Drill className="w-3.5 h-3.5 text-emerald-600" />
             <span>Specialized Geotechnical Ground Engineering</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black text-slate-950 tracking-tight font-['Space_Grotesk']">
@@ -74,13 +74,13 @@ export const PilingSection: React.FC<PilingSectionProps> = ({ onOpenQuoteModal }
                   id={`piling-tab-${cap.id}`}
                   className={`w-full p-4 rounded-xl text-left transition-all duration-200 border flex items-start gap-4 cursor-pointer ${
                     isSelected
-                      ? 'bg-slate-100 border-amber-500 shadow-md ring-1 ring-amber-500/30'
+                      ? 'bg-slate-100 border-emerald-500 shadow-md ring-1 ring-emerald-500/30'
                       : 'bg-slate-100/70 border-slate-300 hover:border-slate-400 hover:bg-slate-100'
                   }`}
                 >
                   <div className={`p-2.5 rounded-lg shrink-0 transition-colors ${
                     isSelected 
-                      ? 'bg-amber-500 text-slate-950' 
+                      ? 'bg-emerald-600 text-white' 
                       : 'bg-slate-200 text-slate-800'
                   }`}>
                     {getPilingIcon(cap.iconName)}
@@ -89,12 +89,12 @@ export const PilingSection: React.FC<PilingSectionProps> = ({ onOpenQuoteModal }
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
                       <h4 className={`text-base font-bold font-['Space_Grotesk'] ${
-                        isSelected ? 'text-amber-700' : 'text-slate-900'
+                        isSelected ? 'text-emerald-700' : 'text-slate-900'
                       }`}>
                         {cap.title}
                       </h4>
                       {isSelected && (
-                        <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-amber-500/20 text-amber-800">
+                        <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-800">
                           Active View
                         </span>
                       )}
@@ -124,7 +124,7 @@ export const PilingSection: React.FC<PilingSectionProps> = ({ onOpenQuoteModal }
                   <span className="text-xs font-bold text-white px-2.5 py-1 rounded bg-slate-900/85 backdrop-blur-sm border border-slate-700">
                     IS 2911 Piling Standard Compliant
                   </span>
-                  <span className="text-xs font-bold text-amber-300 px-2.5 py-1 rounded bg-slate-900/85 backdrop-blur-sm border border-slate-700">
+                  <span className="text-xs font-bold text-emerald-400 px-2.5 py-1 rounded bg-slate-900/85 backdrop-blur-sm border border-slate-700">
                     Haldia Fleet
                   </span>
                 </div>
@@ -132,7 +132,7 @@ export const PilingSection: React.FC<PilingSectionProps> = ({ onOpenQuoteModal }
 
               {/* Dynamic Information Display for Selected Capability */}
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-amber-700">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
                   Detailed Specifications
                 </span>
                 <h3 className="text-2xl font-black text-slate-950 font-['Space_Grotesk'] mt-1">
@@ -148,7 +148,7 @@ export const PilingSection: React.FC<PilingSectionProps> = ({ onOpenQuoteModal }
                 {currentCapability.diameterRange && (
                   <div className="p-3 rounded-lg bg-slate-200 border border-slate-300">
                     <span className="text-[11px] font-bold text-slate-600 uppercase">Pile Diameters</span>
-                    <p className="text-sm font-black text-amber-700 mt-0.5">{currentCapability.diameterRange}</p>
+                    <p className="text-sm font-black text-emerald-700 mt-0.5">{currentCapability.diameterRange}</p>
                   </div>
                 )}
                 {currentCapability.depthRange && (
@@ -167,7 +167,7 @@ export const PilingSection: React.FC<PilingSectionProps> = ({ onOpenQuoteModal }
               {/* Action Button */}
               <button
                 onClick={() => onOpenQuoteModal(currentCapability.title)}
-                className="w-full py-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Request Piling Estimate for {currentCapability.title}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -191,10 +191,10 @@ export const PilingSection: React.FC<PilingSectionProps> = ({ onOpenQuoteModal }
             {PILING_PROCESS_STEPS.map((step, idx) => (
               <div 
                 key={idx}
-                className="p-4 rounded-xl bg-slate-200 border border-slate-300 flex flex-col justify-between relative group hover:border-amber-400 transition-colors shadow-sm"
+                className="p-4 rounded-xl bg-slate-200 border border-slate-300 flex flex-col justify-between relative group hover:border-emerald-400 transition-colors shadow-sm"
               >
                 <div>
-                  <div className="text-2xl font-black text-amber-600 font-['Space_Grotesk'] mb-2">
+                  <div className="text-2xl font-black text-emerald-600 font-['Space_Grotesk'] mb-2">
                     {step.step}
                   </div>
                   <h4 className="text-sm font-bold text-slate-900 leading-snug font-['Space_Grotesk']">
@@ -205,7 +205,7 @@ export const PilingSection: React.FC<PilingSectionProps> = ({ onOpenQuoteModal }
                   </p>
                 </div>
                 <div className="mt-3 pt-2 border-t border-slate-300">
-                  <span className="text-[10px] font-bold text-amber-700 uppercase tracking-wider">
+                  <span className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider">
                     SRI SJ CONSTRUCTION PVT LTD
                   </span>
                 </div>

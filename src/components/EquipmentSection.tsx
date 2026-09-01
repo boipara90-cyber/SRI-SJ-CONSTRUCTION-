@@ -27,8 +27,8 @@ export const EquipmentSection: React.FC<EquipmentSectionProps> = ({ onOpenQuoteM
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-500/15 border border-amber-500/30 text-amber-700 text-xs font-bold uppercase tracking-wider mb-3">
-              <Truck className="w-3.5 h-3.5 text-amber-600" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-3">
+              <Truck className="w-3.5 h-3.5 text-emerald-600" />
               <span>Plant &amp; Machinery Fleet</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-black text-slate-950 tracking-tight font-['Space_Grotesk']">
@@ -41,7 +41,7 @@ export const EquipmentSection: React.FC<EquipmentSectionProps> = ({ onOpenQuoteM
 
           <button
             onClick={() => onOpenQuoteModal('Equipment Deployment Support')}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm shadow-md transition-all self-start md:self-auto cursor-pointer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm shadow-md transition-all self-start md:self-auto cursor-pointer"
           >
             <span>Inquire for Equipment Support</span>
             <ArrowRight className="w-4 h-4" />
@@ -51,12 +51,12 @@ export const EquipmentSection: React.FC<EquipmentSectionProps> = ({ onOpenQuoteM
         {/* Company Notification Banner for Equipment Customization */}
         <div className="mb-8 p-4 rounded-xl bg-white border border-slate-200 flex items-center justify-between flex-wrap gap-3 shadow-sm">
           <div className="flex items-center gap-2 text-xs text-slate-700">
-            <span className="w-2 h-2 rounded-full bg-amber-500" />
+            <span className="w-2 h-2 rounded-full bg-emerald-500" />
             <span>
               <strong className="text-slate-900">Fleet Specifications:</strong> Equipment list includes active placeholders for company asset records. Custom machinery mobilization available for project-term requirements.
             </span>
           </div>
-          <span className="text-xs font-bold text-amber-800">
+          <span className="text-xs font-bold text-emerald-800">
             Haldia Central Maintenance Yard
           </span>
         </div>
@@ -67,7 +67,7 @@ export const EquipmentSection: React.FC<EquipmentSectionProps> = ({ onOpenQuoteM
             <div
               key={item.id}
               id={`equipment-card-${item.id}`}
-              className="rounded-xl bg-slate-100 border border-slate-300 hover:border-amber-400 hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between group shadow-md"
+              className="rounded-xl bg-slate-100 border border-slate-300 hover:border-emerald-400 hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between group shadow-md"
             >
               {/* Photo Area */}
               <div className="relative h-48 bg-slate-200 overflow-hidden">
@@ -81,7 +81,7 @@ export const EquipmentSection: React.FC<EquipmentSectionProps> = ({ onOpenQuoteM
 
                 {/* Category Pill */}
                 <div className="absolute top-3 left-3">
-                  <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-slate-950/80 backdrop-blur-sm text-amber-400 border border-amber-500/30">
+                  <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-slate-950/80 backdrop-blur-sm text-emerald-400 border border-emerald-500/30">
                     {item.category}
                   </span>
                 </div>
@@ -96,7 +96,7 @@ export const EquipmentSection: React.FC<EquipmentSectionProps> = ({ onOpenQuoteM
               {/* Machinery Details */}
               <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-amber-700 transition-colors font-['Space_Grotesk']">
+                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-emerald-700 transition-colors font-['Space_Grotesk']">
                     {item.name}
                   </h3>
 
@@ -107,7 +107,7 @@ export const EquipmentSection: React.FC<EquipmentSectionProps> = ({ onOpenQuoteM
                     </div>
                     <div className="text-slate-800">
                       <span className="text-slate-600 font-medium">Capacity: </span>
-                      <span className="font-bold text-amber-700">{item.capacity}</span>
+                      <span className="font-bold text-emerald-700">{item.capacity}</span>
                     </div>
                   </div>
 
@@ -126,7 +126,7 @@ export const EquipmentSection: React.FC<EquipmentSectionProps> = ({ onOpenQuoteM
                   </button>
                   <button
                     onClick={() => onOpenQuoteModal(`Machinery Support: ${item.name}`)}
-                    className="w-full py-2 px-3 rounded-lg bg-amber-500/15 hover:bg-amber-500 text-amber-800 hover:text-slate-950 border border-amber-500/30 text-xs font-bold transition-all flex items-center justify-center gap-1 cursor-pointer"
+                    className="w-full py-2 px-3 rounded-lg bg-emerald-500/15 hover:bg-emerald-600 text-emerald-900 hover:text-white border border-emerald-500/30 text-xs font-bold transition-all flex items-center justify-center gap-1 cursor-pointer"
                   >
                     <span>Request Unit</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -151,11 +151,11 @@ export const EquipmentSection: React.FC<EquipmentSectionProps> = ({ onOpenQuoteM
             </button>
 
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-3 rounded-xl bg-amber-500 text-slate-950">
+              <div className="p-3 rounded-xl bg-emerald-600 text-white">
                 <Truck className="w-6 h-6" />
               </div>
               <div>
-                <span className="text-xs font-bold text-amber-700 uppercase">
+                <span className="text-xs font-bold text-emerald-700 uppercase">
                   {selectedEquipment.category}
                 </span>
                 <h3 className="text-xl font-black text-slate-950 font-['Space_Grotesk']">
@@ -172,7 +172,7 @@ export const EquipmentSection: React.FC<EquipmentSectionProps> = ({ onOpenQuoteM
                 </div>
                 <div>
                   <span className="text-slate-500 uppercase font-bold">Operational Capacity:</span>
-                  <p className="text-sm font-black text-amber-700 mt-0.5">{selectedEquipment.capacity}</p>
+                  <p className="text-sm font-black text-emerald-700 mt-0.5">{selectedEquipment.capacity}</p>
                 </div>
                 <div>
                   <span className="text-slate-500 uppercase font-bold">Deployment Status:</span>
@@ -192,7 +192,7 @@ export const EquipmentSection: React.FC<EquipmentSectionProps> = ({ onOpenQuoteM
                   setSelectedEquipment(null);
                   onOpenQuoteModal(`Equipment Requirement: ${eqName}`);
                 }}
-                className="flex-1 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider cursor-pointer"
+                className="flex-1 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs uppercase tracking-wider cursor-pointer"
               >
                 Inquire Deployment
               </button>

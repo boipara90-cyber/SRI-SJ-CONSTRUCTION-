@@ -110,8 +110,8 @@ export const CareersSection: React.FC = () => {
         
         {/* Section Header */}
         <div className="max-w-3xl mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-500/15 border border-amber-500/30 text-amber-700 text-xs font-bold uppercase tracking-wider mb-3">
-            <Briefcase className="w-3.5 h-3.5 text-amber-600" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-3">
+            <Briefcase className="w-3.5 h-3.5 text-emerald-600" />
             <span>Join Our Team</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black text-slate-950 tracking-tight font-['Space_Grotesk']">
@@ -126,7 +126,7 @@ export const CareersSection: React.FC = () => {
         <div className="mb-16">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-xl font-bold text-slate-950 font-['Space_Grotesk'] flex items-center gap-2">
-              <span className="w-2.5 h-2.5 bg-amber-500 rounded-sm" />
+              <span className="w-2.5 h-2.5 bg-emerald-600 rounded-sm" />
               Active Job Openings ({JOB_OPENINGS.length})
             </h3>
             <span className="text-xs text-slate-500 font-medium">Location: Haldia &amp; Project Sites, WB</span>
@@ -136,11 +136,11 @@ export const CareersSection: React.FC = () => {
             {JOB_OPENINGS.map((job) => (
               <div
                 key={job.id}
-                className="p-5 rounded-xl bg-slate-100 border border-slate-300 hover:border-amber-400 hover:shadow-md transition-all flex flex-col justify-between space-y-4 shadow-sm"
+                className="p-5 rounded-xl bg-slate-100 border border-slate-300 hover:border-emerald-400 hover:shadow-md transition-all flex flex-col justify-between space-y-4 shadow-sm"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-2">
-                    <span className="text-[11px] font-bold uppercase px-2 py-0.5 rounded bg-amber-500/15 text-amber-800 border border-amber-500/30">
+                    <span className="text-[11px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-800 border border-emerald-500/30">
                       {job.department}
                     </span>
                     <span className="text-[11px] font-semibold text-slate-500">
@@ -154,7 +154,7 @@ export const CareersSection: React.FC = () => {
 
                   <div className="space-y-1 mt-2 text-xs text-slate-600">
                     <div className="flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                      <MapPin className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                       <span>{job.location}</span>
                     </div>
                     <div className="flex items-center gap-1.5">
@@ -177,7 +177,7 @@ export const CareersSection: React.FC = () => {
                   </button>
                   <button
                     onClick={() => handleJobSelect(job)}
-                    className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition-colors cursor-pointer"
+                    className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-colors cursor-pointer"
                   >
                     Apply Now
                   </button>
@@ -200,10 +200,10 @@ export const CareersSection: React.FC = () => {
           </div>
 
           {/* SENSITIVE DATA & AADHAAR PRIVACY ADVISORY BANNER */}
-          <div className="mb-8 p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-start gap-3.5">
-            <ShieldAlert className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+          <div className="mb-8 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-start gap-3.5">
+            <ShieldAlert className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
             <div className="text-xs sm:text-sm text-slate-700 space-y-1">
-              <span className="font-bold text-amber-800 block">
+              <span className="font-bold text-emerald-800 block">
                 Sensitive Information &amp; Data Privacy Advisory:
               </span>
               <p>
@@ -218,7 +218,7 @@ export const CareersSection: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                  Full Name <span className="text-amber-600">*</span>
+                  Full Name <span className="text-emerald-600">*</span>
                 </label>
                 <div className="relative">
                   <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
@@ -229,14 +229,14 @@ export const CareersSection: React.FC = () => {
                     value={formData.fullName}
                     onChange={handleInputChange}
                     placeholder="e.g., Subhashish Mondal"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#f0f4f8] border border-slate-300 text-slate-900 text-sm focus:bg-white focus:border-amber-500 focus:outline-none transition-colors"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#f0f4f8] border border-slate-300 text-slate-900 text-sm focus:bg-white focus:border-emerald-500 focus:outline-none transition-colors"
                   />
                 </div>
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                  Father's Name <span className="text-amber-600">*</span>
+                  Father's Name <span className="text-emerald-600">*</span>
                 </label>
                 <div className="relative">
                   <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
@@ -247,7 +247,7 @@ export const CareersSection: React.FC = () => {
                     value={formData.fatherName}
                     onChange={handleInputChange}
                     placeholder="Father's / Guardian's Full Name"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#f0f4f8] border border-slate-300 text-slate-900 text-sm focus:bg-white focus:border-amber-500 focus:outline-none transition-colors"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#f0f4f8] border border-slate-300 text-slate-900 text-sm focus:bg-white focus:border-emerald-500 focus:outline-none transition-colors"
                   />
                 </div>
               </div>
@@ -257,7 +257,7 @@ export const CareersSection: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                  Age <span className="text-amber-600">*</span>
+                  Age <span className="text-emerald-600">*</span>
                 </label>
                 <input
                   type="number"
@@ -268,14 +268,14 @@ export const CareersSection: React.FC = () => {
                   value={formData.age}
                   onChange={handleInputChange}
                   placeholder="e.g., 28"
-                  className="w-full px-4 py-2.5 rounded-lg bg-[#f0f4f8] border border-slate-300 text-slate-900 text-sm focus:bg-white focus:border-amber-500 focus:outline-none transition-colors"
+                  className="w-full px-4 py-2.5 rounded-lg bg-[#f0f4f8] border border-slate-300 text-slate-900 text-sm focus:bg-white focus:border-emerald-500 focus:outline-none transition-colors"
                 />
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 flex items-center justify-between">
                   <span>Aadhaar Number</span>
-                  <span className="text-[10px] text-amber-700 font-bold">(Optional)</span>
+                  <span className="text-[10px] text-emerald-800 font-bold">(Optional)</span>
                 </label>
                 <input
                   type="text"
@@ -284,19 +284,19 @@ export const CareersSection: React.FC = () => {
                   onChange={handleInputChange}
                   maxLength={14}
                   placeholder="XXXX XXXX XXXX (Optional)"
-                  className="w-full px-4 py-2.5 rounded-lg bg-[#f0f4f8] border border-slate-300 text-slate-900 text-sm focus:bg-white focus:border-amber-500 focus:outline-none transition-colors"
+                  className="w-full px-4 py-2.5 rounded-lg bg-[#f0f4f8] border border-slate-300 text-slate-900 text-sm focus:bg-white focus:border-emerald-500 focus:outline-none transition-colors"
                 />
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                  Years of Experience <span className="text-amber-600">*</span>
+                  Years of Experience <span className="text-emerald-600">*</span>
                 </label>
                 <select
                   name="experienceYears"
                   value={formData.experienceYears}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2.5 rounded-lg bg-[#f0f4f8] border border-slate-300 text-slate-900 text-sm focus:bg-white focus:border-amber-500 focus:outline-none transition-colors"
+                  className="w-full px-4 py-2.5 rounded-lg bg-[#f0f4f8] border border-slate-300 text-slate-900 text-sm focus:bg-white focus:border-emerald-500 focus:outline-none transition-colors"
                 >
                   <option value="0-1">Fresher / Less than 1 Year</option>
                   <option value="1-3">1 to 3 Years</option>
@@ -310,14 +310,14 @@ export const CareersSection: React.FC = () => {
             {/* Grid Row 3: Position Applied For */}
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                Position Applied For <span className="text-amber-600">*</span>
+                Position Applied For <span className="text-emerald-600">*</span>
               </label>
               <select
                 required
                 name="positionAppliedFor"
                 value={formData.positionAppliedFor}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2.5 rounded-lg bg-[#f0f4f8] border border-slate-300 text-slate-900 text-sm focus:bg-white focus:border-amber-500 focus:outline-none transition-colors"
+                className="w-full px-4 py-2.5 rounded-lg bg-[#f0f4f8] border border-slate-300 text-slate-900 text-sm focus:bg-white focus:border-emerald-500 focus:outline-none transition-colors"
               >
                 {JOB_OPENINGS.map((job) => (
                   <option key={job.id} value={job.title}>
@@ -332,7 +332,7 @@ export const CareersSection: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                  Phone Number <span className="text-amber-600">*</span>
+                  Phone Number <span className="text-emerald-600">*</span>
                 </label>
                 <div className="relative">
                   <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
@@ -343,14 +343,14 @@ export const CareersSection: React.FC = () => {
                     value={formData.phone}
                     onChange={handleInputChange}
                     placeholder="+91 98XXX XXXXX"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#f0f4f8] border border-slate-300 text-slate-900 text-sm focus:bg-white focus:border-amber-500 focus:outline-none transition-colors"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#f0f4f8] border border-slate-300 text-slate-900 text-sm focus:bg-white focus:border-emerald-500 focus:outline-none transition-colors"
                   />
                 </div>
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                  Email Address <span className="text-amber-600">*</span>
+                  Email Address <span className="text-emerald-600">*</span>
                 </label>
                 <div className="relative">
                   <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
@@ -361,7 +361,7 @@ export const CareersSection: React.FC = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     placeholder="candidate@example.com"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#f0f4f8] border border-slate-300 text-slate-900 text-sm focus:bg-white focus:border-amber-500 focus:outline-none transition-colors"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#f0f4f8] border border-slate-300 text-slate-900 text-sm focus:bg-white focus:border-emerald-500 focus:outline-none transition-colors"
                   />
                 </div>
               </div>
@@ -370,7 +370,7 @@ export const CareersSection: React.FC = () => {
             {/* Address */}
             <div>
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                Residential Address (Village / Town, District, State, Pin) <span className="text-amber-600">*</span>
+                Residential Address (Village / Town, District, State, Pin) <span className="text-emerald-600">*</span>
               </label>
               <div className="relative">
                 <MapPin className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
@@ -381,7 +381,7 @@ export const CareersSection: React.FC = () => {
                   value={formData.address}
                   onChange={handleInputChange}
                   placeholder="e.g., Sutahata, Haldia, Purba Medinipur, West Bengal - 721635"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#f0f4f8] border border-slate-300 text-slate-900 text-sm focus:bg-white focus:border-amber-500 focus:outline-none transition-colors"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-[#f0f4f8] border border-slate-300 text-slate-900 text-sm focus:bg-white focus:border-emerald-500 focus:outline-none transition-colors"
                 />
               </div>
             </div>
@@ -391,7 +391,7 @@ export const CareersSection: React.FC = () => {
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
                 Upload CV / Bio-data (PDF / DOCX / JPG)
               </label>
-              <div className="border-2 border-dashed border-slate-300 hover:border-amber-500 rounded-xl p-6 text-center bg-[#f0f4f8]/60 transition-colors">
+              <div className="border-2 border-dashed border-slate-300 hover:border-emerald-500 rounded-xl p-6 text-center bg-[#f0f4f8]/60 transition-colors">
                 <input
                   type="file"
                   id="cv-upload-input"
@@ -403,7 +403,7 @@ export const CareersSection: React.FC = () => {
                   htmlFor="cv-upload-input"
                   className="cursor-pointer flex flex-col items-center justify-center space-y-2"
                 >
-                  <div className="w-12 h-12 rounded-full bg-white border border-slate-200 text-amber-600 flex items-center justify-center shadow-sm">
+                  <div className="w-12 h-12 rounded-full bg-white border border-slate-200 text-emerald-600 flex items-center justify-center shadow-sm">
                     <Upload className="w-6 h-6" />
                   </div>
                   <div>
@@ -417,7 +417,7 @@ export const CareersSection: React.FC = () => {
                 </label>
 
                 {formData.cvFileName && (
-                  <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-800 text-xs">
+                  <div className="mt-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-800 text-xs">
                     <FileText className="w-4 h-4" />
                     <span>{formData.cvFileName}</span>
                     <button
@@ -446,7 +446,7 @@ export const CareersSection: React.FC = () => {
                 type="submit"
                 disabled={isSubmitting}
                 id="submit-career-app-btn"
-                className="w-full sm:w-auto px-8 py-3.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm uppercase tracking-wider transition-all shadow-md disabled:opacity-50 cursor-pointer flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-8 py-3.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm uppercase tracking-wider transition-all shadow-md disabled:opacity-50 cursor-pointer flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <>
@@ -479,7 +479,7 @@ export const CareersSection: React.FC = () => {
 
             <div className="space-y-4">
               <div>
-                <span className="text-xs font-bold text-amber-700 uppercase">
+                <span className="text-xs font-bold text-emerald-700 uppercase">
                   {selectedJob.department}
                 </span>
                 <h3 className="text-xl font-black text-slate-950 font-['Space_Grotesk'] mt-1">
@@ -497,7 +497,7 @@ export const CareersSection: React.FC = () => {
               </p>
 
               <div>
-                <h4 className="text-xs font-bold text-amber-800 uppercase mb-2">Key Requirements:</h4>
+                <h4 className="text-xs font-bold text-emerald-800 uppercase mb-2">Key Requirements:</h4>
                 <ul className="space-y-1.5">
                   {selectedJob.requirements.map((req, idx) => (
                     <li key={idx} className="flex items-start gap-2 text-xs text-slate-700">
@@ -515,7 +515,7 @@ export const CareersSection: React.FC = () => {
                     setSelectedJob(null);
                     handleJobSelect(job);
                   }}
-                  className="flex-1 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs uppercase cursor-pointer"
+                  className="flex-1 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs uppercase cursor-pointer"
                 >
                   Apply for this position
                 </button>
@@ -536,19 +536,19 @@ export const CareersSection: React.FC = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-200">
           <div className="bg-white border border-slate-200 rounded-2xl max-w-lg w-full p-6 sm:p-8 relative shadow-2xl text-center space-y-5 text-slate-800">
             
-            <div className="w-16 h-16 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-600 flex items-center justify-center mx-auto">
+            <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-600 flex items-center justify-center mx-auto">
               <CheckCircle2 className="w-10 h-10" />
             </div>
 
             <div className="space-y-2">
-              <span className="text-xs font-bold tracking-wider text-amber-700 uppercase">
+              <span className="text-xs font-bold tracking-wider text-emerald-800 uppercase">
                 Application Received Successfully
               </span>
               <h3 className="text-2xl font-black text-slate-950 font-['Space_Grotesk']">
                 Thank You, {formData.fullName || 'Candidate'}!
               </h3>
               <p className="text-slate-600 text-sm leading-relaxed">
-                Your employee application for <strong className="text-slate-900">{formData.positionAppliedFor}</strong> has been registered with the HR &amp; Technical Recruitment Cell of <strong className="text-amber-800">SRI SJ CONSTRUCTION PRIVATE LIMITED</strong>.
+                Your employee application for <strong className="text-slate-900">{formData.positionAppliedFor}</strong> has been registered with the HR &amp; Technical Recruitment Cell of <strong className="text-emerald-800">SRI SJ CONSTRUCTION PRIVATE LIMITED</strong>.
               </p>
             </div>
 
@@ -556,7 +556,7 @@ export const CareersSection: React.FC = () => {
             <div className="p-4 rounded-xl bg-[#f0f4f8] border border-slate-200 text-left space-y-2">
               <div className="flex justify-between items-center text-xs">
                 <span className="text-slate-600 font-medium">Application Reference ID:</span>
-                <span className="font-mono font-black text-amber-700 text-sm">{submittedRefId}</span>
+                <span className="font-mono font-black text-emerald-700 text-sm">{submittedRefId}</span>
               </div>
               <div className="flex justify-between items-center text-xs">
                 <span className="text-slate-600 font-medium">Position Applied:</span>
@@ -576,7 +576,7 @@ export const CareersSection: React.FC = () => {
               <div className="flex justify-between items-center text-xs">
                 <span className="text-slate-600 font-medium">Notification:</span>
                 <span className="text-slate-900 font-bold flex items-center gap-1">
-                  <Mail className="w-3.5 h-3.5 text-amber-600" />
+                  <Mail className="w-3.5 h-3.5 text-emerald-600" />
                   Sent to HR Desk
                 </span>
               </div>
@@ -615,7 +615,7 @@ export const CareersSection: React.FC = () => {
                   });
                   setUploadedFile(null);
                 }}
-                className="flex-1 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider cursor-pointer"
+                className="flex-1 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs uppercase tracking-wider cursor-pointer"
               >
                 Close &amp; Finish
               </button>

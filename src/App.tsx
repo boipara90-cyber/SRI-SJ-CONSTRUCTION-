@@ -126,7 +126,7 @@ export default function App() {
 
   return (
     <div 
-      className={`min-h-screen bg-[#e2e8f0] text-slate-900 selection:bg-amber-500 selection:text-slate-950 font-sans transition-colors duration-300 ${
+      className={`min-h-screen bg-[#e2e8f0] text-slate-900 selection:bg-emerald-500 selection:text-white font-sans transition-colors duration-300 ${
         theme === 'dark' ? 'theme-dark' : ''
       }`}
       style={{
@@ -202,7 +202,7 @@ export default function App() {
         <button
           onClick={handleFloatingWhatsApp}
           aria-label="Direct WhatsApp Message"
-          className="w-13 h-13 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer group relative ring-2 ring-emerald-400/50"
+          className="w-13 h-13 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer group relative ring-2 ring-emerald-400/50"
         >
           <MessageCircle className="w-6 h-6" />
           <span className="absolute right-15 px-3 py-1 rounded-md bg-slate-900 text-white text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg border border-slate-800">
@@ -213,7 +213,7 @@ export default function App() {
         <a
           href={`tel:${COMPANY_INFO.contact.phone}`}
           aria-label="Call Sri SJ Construction"
-          className="w-13 h-13 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer group relative ring-2 ring-amber-400/50"
+          className="w-13 h-13 rounded-full bg-emerald-700 hover:bg-emerald-600 text-white flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer group relative ring-2 ring-emerald-400/50"
         >
           <Phone className="w-6 h-6" />
           <span className="absolute right-15 px-3 py-1 rounded-md bg-slate-900 text-white text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg border border-slate-800">

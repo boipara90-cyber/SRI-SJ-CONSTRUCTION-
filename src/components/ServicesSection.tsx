@@ -62,7 +62,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-500/15 border border-amber-500/30 text-amber-700 text-xs font-bold uppercase tracking-wider mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-3">
               <span>Comprehensive Capabilities</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-black text-slate-950 tracking-tight font-['Space_Grotesk']">
@@ -76,7 +76,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
           {/* Quick Quote trigger */}
           <button
             onClick={() => onOpenQuoteModal()}
-            className="self-start md:self-auto inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm shadow-md transition-all shrink-0 cursor-pointer"
+            className="self-start md:self-auto inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-md transition-all shrink-0 cursor-pointer"
           >
             <span>Inquire for Custom Scope</span>
             <ArrowRight className="w-4 h-4" />
@@ -92,7 +92,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
                 onClick={() => setActiveCategory(cat.id)}
                 className={`px-4 py-2 text-xs sm:text-sm font-bold rounded-lg transition-all whitespace-nowrap cursor-pointer ${
                   activeCategory === cat.id
-                    ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
+                    ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
                     : 'bg-slate-200 text-slate-800 hover:bg-slate-300 border border-slate-300'
                 }`}
               >
@@ -108,7 +108,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
             <div
               key={service.id}
               id={`service-card-${service.id}`}
-              className="rounded-xl bg-slate-100 border border-slate-300 hover:border-amber-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden group shadow-md"
+              className="rounded-xl bg-slate-100 border border-slate-300 hover:border-emerald-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden group shadow-md"
             >
               {/* Image Container with Top Icon Overlay */}
               <div className="relative h-48 w-full overflow-hidden bg-slate-200">
@@ -122,13 +122,13 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
 
                 {/* Service Category Tag */}
                 <div className="absolute top-3 left-3">
-                  <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-slate-950/80 backdrop-blur-sm text-amber-400 border border-amber-500/30">
+                  <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-slate-950/80 backdrop-blur-sm text-emerald-400 border border-emerald-500/30">
                     {service.category}
                   </span>
                 </div>
 
                 {/* Icon Badge */}
-                <div className="absolute bottom-3 right-3 w-11 h-11 rounded-lg bg-amber-500 text-slate-950 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <div className="absolute bottom-3 right-3 w-11 h-11 rounded-lg bg-emerald-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                   {getServiceIcon(service.iconName)}
                 </div>
               </div>
@@ -136,7 +136,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
               {/* Service Card Content */}
               <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                 <div>
-                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-amber-700 transition-colors font-['Space_Grotesk']">
+                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-emerald-700 transition-colors font-['Space_Grotesk']">
                     {service.title}
                   </h3>
                   <p className="text-slate-700 text-sm mt-2 leading-relaxed">
@@ -164,7 +164,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
                   </button>
                   <button
                     onClick={() => onOpenQuoteModal(service.title)}
-                    className="w-full py-2 px-3 rounded-lg bg-amber-500/15 hover:bg-amber-500 text-amber-800 hover:text-slate-950 border border-amber-500/30 text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                    className="w-full py-2 px-3 rounded-lg bg-emerald-500/15 hover:bg-emerald-600 text-emerald-900 hover:text-white border border-emerald-500/30 text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                   >
                     <span>Get Quote</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -173,7 +173,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
 
                 <div className="pt-2 border-t border-slate-200 flex items-center justify-between">
                   <span className="text-[10px] font-bold text-slate-600">Contractor:</span>
-                  <span className="text-[10px] font-black text-amber-800 uppercase">SRI SJ CONSTRUCTION PVT LTD</span>
+                  <span className="text-[10px] font-black text-emerald-800 uppercase">SRI SJ CONSTRUCTION PVT LTD</span>
                 </div>
               </div>
             </div>
@@ -194,11 +194,11 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
             </button>
 
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-3 rounded-xl bg-amber-500 text-slate-950">
+              <div className="p-3 rounded-xl bg-emerald-600 text-white">
                 {getServiceIcon(selectedService.iconName)}
               </div>
               <div>
-                <span className="text-xs font-bold text-amber-600 uppercase tracking-wide">
+                <span className="text-xs font-bold text-emerald-700 uppercase tracking-wide">
                   {selectedService.category} Service
                 </span>
                 <h3 className="text-2xl font-black text-slate-950 font-['Space_Grotesk']">
@@ -213,7 +213,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
               <div className="p-4 rounded-xl bg-[#f0f4f8] border border-slate-200">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-amber-700 mb-3">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-3">
                   Scope &amp; Technical Capabilities
                 </h4>
                 <ul className="space-y-2">
@@ -227,13 +227,13 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
               </div>
 
               <div className="p-4 rounded-xl bg-[#f0f4f8] border border-slate-200">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-amber-700 mb-3">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-3">
                   Equipment &amp; Machinery Deployed
                 </h4>
                 <ul className="space-y-2">
                   {selectedService.equipmentUsed.map((eq, idx) => (
                     <li key={idx} className="flex items-center gap-2 text-xs sm:text-sm text-slate-700">
-                      <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                       <span>{eq}</span>
                     </li>
                   ))}
@@ -241,7 +241,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
               </div>
             </div>
 
-            <div className="mb-4 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-slate-700 text-center">
+            <div className="mb-4 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs text-slate-700 text-center">
               Civil execution and quality oversight guaranteed by <strong className="text-slate-950">SRI SJ CONSTRUCTION PRIVATE LIMITED</strong> (Haldia, WB).
             </div>
 
@@ -252,7 +252,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
                   setSelectedService(null);
                   onOpenQuoteModal(title);
                 }}
-                className="flex-1 py-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm flex items-center justify-center gap-2 shadow-md cursor-pointer"
+                className="flex-1 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm flex items-center justify-center gap-2 shadow-md cursor-pointer"
               >
                 <span>Request Quotation for {selectedService.title}</span>
                 <ArrowRight className="w-4 h-4" />

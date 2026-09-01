@@ -159,12 +159,12 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
             
             {/* Badges */}
             <div className="flex flex-wrap items-center gap-2.5">
-              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-800 text-xs sm:text-sm font-black tracking-wide shadow-sm">
-                <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/40 text-emerald-900 text-xs sm:text-sm font-black tracking-wide shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 ESTD. 2013 • HALDIA, WEST BENGAL
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-slate-300 text-slate-700 text-xs font-bold shadow-sm">
-                <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
                 Specialized Piling &amp; Civil Contractor
               </span>
             </div>
@@ -172,14 +172,14 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
             {/* Company Name & Tagline */}
             <div className="space-y-2.5">
               <div className="inline-block">
-                <h2 className="text-xs sm:text-sm uppercase tracking-widest text-amber-800 bg-amber-500/10 px-3 py-1 rounded-md border border-amber-500/30 font-black font-['Space_Grotesk']">
+                <h2 className="text-xs sm:text-sm uppercase tracking-widest text-emerald-900 bg-emerald-500/10 px-3 py-1 rounded-md border border-emerald-500/30 font-black font-['Space_Grotesk']">
                   SRI SJ CONSTRUCTION PRIVATE LIMITED
                 </h2>
               </div>
 
               <h1 className="text-3xl sm:text-5xl lg:text-[3.3rem] font-black text-slate-950 tracking-tight leading-[1.1] font-['Space_Grotesk']">
                 Strong Foundations. <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-amber-500 to-amber-700">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-emerald-500 to-green-700">
                   Reliable Construction.
                 </span>
               </h1>
@@ -197,10 +197,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
               <button
                 onClick={onOpenQuoteModal}
                 id="hero-quote-btn"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-sm sm:text-base shadow-lg shadow-amber-500/25 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 text-white font-black text-sm sm:text-base shadow-lg shadow-emerald-600/25 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
               >
                 <span>Get a Quote</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 text-white" />
               </button>
 
               {onOpenAppointmentModal && (
@@ -210,7 +210,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
                   id="hero-appointment-btn"
                   className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm sm:text-base shadow-md transition-all duration-200 cursor-pointer border border-slate-700"
                 >
-                  <Calendar className="w-4 h-4 text-amber-400" />
+                  <Calendar className="w-4 h-4 text-emerald-400" />
                   <span>Book Site Visit / Appointment</span>
                 </button>
               )}
@@ -220,7 +220,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
                 id="hero-projects-btn"
                 className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-slate-900 font-bold text-sm sm:text-base border border-slate-300 hover:border-slate-400 shadow-sm transition-all duration-200"
               >
-                <Building2 className="w-4 h-4 text-amber-600" />
+                <Building2 className="w-4 h-4 text-emerald-600" />
                 <span>View Done Projects</span>
               </a>
 
@@ -229,7 +229,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
                 id="hero-contact-btn"
                 className="inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-sm sm:text-base border border-slate-300 transition-all duration-200"
               >
-                <PhoneCall className="w-4 h-4 text-amber-600" />
+                <PhoneCall className="w-4 h-4 text-emerald-600" />
                 <span>Contact Desk</span>
               </a>
             </div>
@@ -240,10 +240,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
                 Major Clients &amp; Ongoing Project Partnerships:
               </div>
               <div className="flex flex-wrap items-center gap-2 text-xs font-bold text-slate-800">
-                <span className="px-2.5 py-1 rounded-md bg-amber-500/15 border border-amber-500/30 text-amber-950 font-black shadow-xs">L&amp;T</span>
-                <span className="px-2.5 py-1 rounded-md bg-amber-500/15 border border-amber-500/30 text-amber-950 font-black shadow-xs">TATA</span>
-                <span className="px-2.5 py-1 rounded-md bg-amber-500/15 border border-amber-500/30 text-amber-950 font-black shadow-xs">JINDAL</span>
-                <span className="px-2.5 py-1 rounded-md bg-amber-500/15 border border-amber-500/30 text-amber-950 font-black shadow-xs">SUNLIGHT</span>
+                <span className="px-2.5 py-1 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-950 font-black shadow-xs">L&amp;T</span>
+                <span className="px-2.5 py-1 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-950 font-black shadow-xs">TATA</span>
+                <span className="px-2.5 py-1 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-950 font-black shadow-xs">JINDAL</span>
+                <span className="px-2.5 py-1 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-950 font-black shadow-xs">SUNLIGHT</span>
                 <span className="px-2.5 py-1 rounded-md bg-white border border-slate-200 shadow-xs">PGCIL</span>
                 <span className="px-2.5 py-1 rounded-md bg-white border border-slate-200 text-slate-700 shadow-xs">Ceratizit India</span>
                 <span className="px-2.5 py-1 rounded-md bg-white border border-slate-200 text-slate-700 shadow-xs">Ruchi Infra Haldia</span>
@@ -285,13 +285,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
                   <button
                     onClick={() => setIsPlaying(!isPlaying)}
                     aria-label={isPlaying ? "Pause auto slide" : "Play auto slide"}
-                    className="p-1 rounded-md bg-slate-800 hover:bg-slate-700 text-amber-400 transition-colors cursor-pointer"
+                    className="p-1 rounded-md bg-slate-800 hover:bg-slate-700 text-emerald-400 transition-colors cursor-pointer"
                     title={isPlaying ? "Pause rotation" : "Play rotation"}
                   >
                     {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
                   </button>
 
-                  <div className="text-[11px] text-amber-400 font-mono font-bold px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">
+                  <div className="text-[11px] text-emerald-400 font-mono font-bold px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800">
                     0{currentSlideIndex + 1}/0{HERO_SLIDES.length}
                   </div>
                 </div>
@@ -319,7 +319,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
                     {/* Active Project Overlay Banner on Image */}
                     <div className="absolute bottom-3 left-3 right-3 z-20 space-y-1.5">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-amber-500 text-slate-950 shadow-md">
+                        <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded bg-emerald-500 text-slate-950 shadow-md">
                           Verified Project
                         </span>
                         <span className="text-[10px] font-bold text-slate-200 px-2 py-0.5 rounded bg-slate-950/80 backdrop-blur-xs border border-slate-700">
@@ -331,7 +331,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
                         {slide.title}
                       </h3>
 
-                      <p className="text-xs text-amber-300 font-medium line-clamp-1 drop-shadow-xs">
+                      <p className="text-xs text-emerald-300 font-medium line-clamp-1 drop-shadow-xs">
                         {slide.projectNote}
                       </p>
                     </div>
@@ -342,14 +342,14 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
                 <button
                   onClick={handlePrev}
                   aria-label="Previous live project image"
-                  className="absolute left-2.5 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-slate-950/80 hover:bg-amber-500 hover:text-slate-950 text-white transition-all shadow-md cursor-pointer border border-white/20 backdrop-blur-xs"
+                  className="absolute left-2.5 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-slate-950/80 hover:bg-emerald-500 hover:text-slate-950 text-white transition-all shadow-md cursor-pointer border border-white/20 backdrop-blur-xs"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
                 <button
                   onClick={handleNext}
                   aria-label="Next live project image"
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-slate-950/80 hover:bg-amber-500 hover:text-slate-950 text-white transition-all shadow-md cursor-pointer border border-white/20 backdrop-blur-xs"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-slate-950/80 hover:bg-emerald-500 hover:text-slate-950 text-white transition-all shadow-md cursor-pointer border border-white/20 backdrop-blur-xs"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
@@ -357,7 +357,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
                 {/* Live Animated Progress Bar */}
                 <div className="absolute top-0 left-0 right-0 h-1 bg-slate-800 z-30">
                   <div 
-                    className="h-full bg-amber-500 transition-all duration-75 ease-linear"
+                    className="h-full bg-emerald-500 transition-all duration-75 ease-linear"
                     style={{ width: `${progress}%` }}
                   />
                 </div>
@@ -376,7 +376,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
                         onClick={() => handleSelectSlide(idx)}
                         className={`relative rounded-lg overflow-hidden h-12 sm:h-14 border-2 transition-all cursor-pointer ${
                           isCurrent 
-                            ? 'border-amber-500 ring-2 ring-amber-500/30 scale-102' 
+                            ? 'border-emerald-500 ring-2 ring-emerald-500/30 scale-102' 
                             : 'border-slate-200 opacity-60 hover:opacity-100'
                         }`}
                       >
@@ -386,7 +386,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
                           className="w-full h-full object-cover" 
                         />
                         {isCurrent && (
-                          <div className="absolute inset-0 bg-amber-500/20" />
+                          <div className="absolute inset-0 bg-emerald-500/20" />
                         )}
                       </button>
                     );
@@ -406,7 +406,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenAppointmentM
                     ))}
                   </div>
 
-                  <span className="text-[10px] font-black text-amber-700 uppercase tracking-wider">
+                  <span className="text-[10px] font-black text-emerald-800 uppercase tracking-wider">
                     SRI SJ CONSTRUCTION PRIVATE LIMITED
                   </span>
                 </div>
