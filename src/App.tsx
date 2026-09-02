@@ -17,7 +17,6 @@ import { CareersSection } from './components/CareersSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { QuoteModal } from './components/QuoteModal';
-import { AppointmentBookingModal } from './components/AppointmentBookingModal';
 import { AdminPanelModal } from './components/AdminPanelModal';
 import { BrightnessSection, ThemeMode } from './components/BrightnessSection';
 import { COMPANY_INFO } from './data/companyData';
@@ -25,15 +24,14 @@ import { MessageCircle, Phone, Sparkles, Lock } from 'lucide-react';
 
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
-  const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
   const [adminModalOpen, setAdminModalOpen] = useState(false);
   const [prefillService, setPrefillService] = useState<string | undefined>(undefined);
   const [activeSection, setActiveSection] = useState<string>('home');
   
-  // Theme (Light / Dark) & Brightness (60% to 130%)
+  // Theme & Brightness (Default to Premium Dark / Black Theme)
   const [theme, setTheme] = useState<ThemeMode>(() => {
     const saved = localStorage.getItem('sri_sj_theme');
-    return (saved === 'dark' || saved === 'light') ? saved : 'light';
+    return (saved === 'dark' || saved === 'light') ? saved : 'dark';
   });
 
   const [brightness, setBrightness] = useState<number>(() => {
@@ -59,7 +57,7 @@ export default function App() {
   };
 
   const handleResetDisplay = () => {
-    handleThemeChange('light');
+    handleThemeChange('dark');
     handleBrightnessChange(100);
   };
 
@@ -107,16 +105,6 @@ export default function App() {
     setPrefillService(undefined);
   };
 
-  const handleOpenAppointmentModal = (serviceTitle?: string) => {
-    setPrefillService(serviceTitle);
-    setAppointmentModalOpen(true);
-  };
-
-  const handleCloseAppointmentModal = () => {
-    setAppointmentModalOpen(false);
-    setPrefillService(undefined);
-  };
-
   const handleFloatingWhatsApp = () => {
     const text = encodeURIComponent(
       `Hello Sri SJ Construction Private Limited, I would like to inquire about piling/construction services for our project.`
@@ -126,7 +114,7 @@ export default function App() {
 
   return (
     <div 
-      className={`min-h-screen bg-[#e2e8f0] text-slate-900 selection:bg-emerald-500 selection:text-white font-sans transition-colors duration-300 ${
+      className={`min-h-screen bg-black text-white selection:bg-orange-500 selection:text-white font-sans transition-colors duration-300 ${
         theme === 'dark' ? 'theme-dark' : ''
       }`}
       style={{
@@ -134,21 +122,19 @@ export default function App() {
         transition: 'filter 150ms ease-out, background-color 250ms ease-in-out'
       }}
     >
-      {/* Header with quick Dark/Light toggle and Book Appointment */}
+      {/* Header with quick Dark/Light toggle and Get Quote */}
       <Header 
         onOpenQuoteModal={handleOpenQuoteModal} 
-        onOpenAppointmentModal={handleOpenAppointmentModal}
         activeSection={activeSection} 
         theme={theme}
         onToggleTheme={handleToggleTheme}
       />
 
       {/* Main Content Sections */}
-      <main>
+      <main className="bg-black">
         {/* 1. Hero Section */}
         <Hero 
           onOpenQuoteModal={() => handleOpenQuoteModal()} 
-          onOpenAppointmentModal={handleOpenAppointmentModal}
         />
 
         {/* 2. About Us */}
@@ -178,7 +164,6 @@ export default function App() {
         {/* 10. Contact Us & Maps */}
         <ContactSection 
           onOpenQuoteModal={() => handleOpenQuoteModal()} 
-          onOpenAppointmentModal={handleOpenAppointmentModal}
         />
       </main>
 
@@ -202,10 +187,10 @@ export default function App() {
         <button
           onClick={handleFloatingWhatsApp}
           aria-label="Direct WhatsApp Message"
-          className="w-13 h-13 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer group relative ring-2 ring-emerald-400/50"
+          className="w-13 h-13 rounded-full bg-gradient-to-tr from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 text-white flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer group relative ring-2 ring-orange-500/50"
         >
           <MessageCircle className="w-6 h-6" />
-          <span className="absolute right-15 px-3 py-1 rounded-md bg-slate-900 text-white text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg border border-slate-800">
+          <span className="absolute right-15 px-3 py-1 rounded-md bg-zinc-950 text-orange-400 border border-orange-500/30 text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg">
             Chat on WhatsApp
           </span>
         </button>
@@ -213,11 +198,11 @@ export default function App() {
         <a
           href={`tel:${COMPANY_INFO.contact.phone}`}
           aria-label="Call Sri SJ Construction"
-          className="w-13 h-13 rounded-full bg-emerald-700 hover:bg-emerald-600 text-white flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer group relative ring-2 ring-emerald-400/50"
+          className="w-13 h-13 rounded-full bg-gradient-to-tr from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 text-white flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer group relative ring-2 ring-orange-400/50"
         >
           <Phone className="w-6 h-6" />
-          <span className="absolute right-15 px-3 py-1 rounded-md bg-slate-900 text-white text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg border border-slate-800">
-            Call {COMPANY_INFO.contact.phone}
+          <span className="absolute right-15 px-3 py-1 rounded-md bg-zinc-950 text-white border border-orange-500/30 text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg">
+            Call <span className="text-orange-400">{COMPANY_INFO.contact.phone}</span>
           </span>
         </a>
       </div>
@@ -226,17 +211,6 @@ export default function App() {
       <QuoteModal
         isOpen={quoteModalOpen}
         onClose={handleCloseQuoteModal}
-        prefillService={prefillService}
-        onOpenAppointmentModal={() => {
-          handleCloseQuoteModal();
-          handleOpenAppointmentModal(prefillService);
-        }}
-      />
-
-      {/* Supabase-Powered Appointment Booking Modal */}
-      <AppointmentBookingModal
-        isOpen={appointmentModalOpen}
-        onClose={handleCloseAppointmentModal}
         prefillService={prefillService}
       />
 

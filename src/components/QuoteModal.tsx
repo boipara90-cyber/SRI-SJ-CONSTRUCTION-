@@ -24,14 +24,12 @@ interface QuoteModalProps {
   isOpen: boolean;
   onClose: () => void;
   prefillService?: string;
-  onOpenAppointmentModal?: (prefillService?: string) => void;
 }
 
 export const QuoteModal: React.FC<QuoteModalProps> = ({
   isOpen,
   onClose,
-  prefillService,
-  onOpenAppointmentModal
+  prefillService
 }) => {
   const [formData, setFormData] = useState<QuoteRequest>({
     name: '',
@@ -152,25 +150,6 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
                 </span>
               </div>
             </div>
-
-            {onOpenAppointmentModal && (
-              <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-left flex items-center justify-between gap-3">
-                <div className="text-xs text-amber-900">
-                  <strong>Need an On-Site Soil &amp; Rig Assessment?</strong>
-                  <p className="text-[11px] text-amber-800">Book an engineer site appointment directly on calendar.</p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    onClose();
-                    onOpenAppointmentModal(formData.serviceRequired);
-                  }}
-                  className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shrink-0 cursor-pointer shadow-sm"
-                >
-                  Book Site Visit
-                </button>
-              </div>
-            )}
 
             <button
               onClick={() => {

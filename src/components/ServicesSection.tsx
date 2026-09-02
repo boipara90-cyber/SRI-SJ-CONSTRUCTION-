@@ -56,19 +56,19 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
   ];
 
   return (
-    <section id="services" className="py-20 bg-[#dbe2ea] text-slate-800 relative border-t border-slate-300">
+    <section id="services" className="py-20 bg-black text-white relative border-t border-zinc-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-orange-500/15 border border-orange-500/30 text-orange-400 text-xs font-bold uppercase tracking-wider mb-3">
               <span>Comprehensive Capabilities</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-950 tracking-tight font-['Space_Grotesk']">
+            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight font-['Space_Grotesk']">
               Our Specialized Services
             </h2>
-            <p className="text-slate-600 text-base mt-2 max-w-2xl">
+            <p className="text-zinc-300 text-base mt-2 max-w-2xl">
               Professional ground engineering, deep piling, heavy RCC structural works, and turnkey civil construction across West Bengal.
             </p>
           </div>
@@ -76,7 +76,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
           {/* Quick Quote trigger */}
           <button
             onClick={() => onOpenQuoteModal()}
-            className="self-start md:self-auto inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-md transition-all shrink-0 cursor-pointer"
+            className="self-start md:self-auto inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-orange-600 hover:bg-orange-500 text-white font-bold text-sm shadow-md shadow-orange-600/30 transition-all shrink-0 cursor-pointer border border-orange-400/30"
           >
             <span>Inquire for Custom Scope</span>
             <ArrowRight className="w-4 h-4" />
@@ -92,8 +92,8 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
                 onClick={() => setActiveCategory(cat.id)}
                 className={`px-4 py-2 text-xs sm:text-sm font-bold rounded-lg transition-all whitespace-nowrap cursor-pointer ${
                   activeCategory === cat.id
-                    ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
-                    : 'bg-slate-200 text-slate-800 hover:bg-slate-300 border border-slate-300'
+                    ? 'bg-orange-600 text-white shadow-md shadow-orange-600/30 border border-orange-500'
+                    : 'bg-zinc-900 text-zinc-300 hover:text-white hover:bg-zinc-800 border border-zinc-800'
                 }`}
               >
                 {cat.label}
@@ -108,27 +108,27 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
             <div
               key={service.id}
               id={`service-card-${service.id}`}
-              className="rounded-xl bg-slate-100 border border-slate-300 hover:border-emerald-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden group shadow-md"
+              className="rounded-xl bg-[#0e0e13] border border-zinc-800 hover:border-orange-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden group shadow-lg"
             >
               {/* Image Container with Top Icon Overlay */}
-              <div className="relative h-48 w-full overflow-hidden bg-slate-200">
+              <div className="relative h-48 w-full overflow-hidden bg-black">
                 <img
                   src={service.imageUrl}
                   alt={`${service.title} by Sri SJ Construction`}
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 opacity-90"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-black/20" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e13] via-black/40 to-transparent" />
 
                 {/* Service Category Tag */}
                 <div className="absolute top-3 left-3">
-                  <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-slate-950/80 backdrop-blur-sm text-emerald-400 border border-emerald-500/30">
+                  <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-black/80 backdrop-blur-sm text-orange-400 border border-orange-500/30">
                     {service.category}
                   </span>
                 </div>
 
                 {/* Icon Badge */}
-                <div className="absolute bottom-3 right-3 w-11 h-11 rounded-lg bg-emerald-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <div className="absolute bottom-3 right-3 w-11 h-11 rounded-lg bg-orange-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                   {getServiceIcon(service.iconName)}
                 </div>
               </div>
@@ -136,19 +136,19 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
               {/* Service Card Content */}
               <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                 <div>
-                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-emerald-700 transition-colors font-['Space_Grotesk']">
+                  <h3 className="text-xl font-bold text-white group-hover:text-orange-400 transition-colors font-['Space_Grotesk']">
                     {service.title}
                   </h3>
-                  <p className="text-slate-700 text-sm mt-2 leading-relaxed">
+                  <p className="text-zinc-300 text-sm mt-2 leading-relaxed">
                     {service.shortDescription}
                   </p>
                 </div>
 
                 {/* Key Features Pill List */}
-                <div className="space-y-1.5 pt-2 border-t border-slate-200">
+                <div className="space-y-1.5 pt-2 border-t border-zinc-800">
                   {service.features.slice(0, 2).map((feat, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-xs text-slate-700 font-medium">
-                      <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <div key={idx} className="flex items-center gap-2 text-xs text-zinc-300 font-medium">
+                      <Check className="w-3.5 h-3.5 text-orange-400 shrink-0" />
                       <span className="truncate">{feat}</span>
                     </div>
                   ))}
@@ -158,22 +158,22 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
                 <div className="grid grid-cols-2 gap-2 pt-2">
                   <button
                     onClick={() => setSelectedService(service)}
-                    className="w-full py-2 px-3 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-900 text-xs font-bold transition-colors flex items-center justify-center gap-1.5 cursor-pointer border border-slate-300"
+                    className="w-full py-2 px-3 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-bold transition-colors flex items-center justify-center gap-1.5 cursor-pointer border border-zinc-700 hover:border-orange-500"
                   >
                     <span>View Specs</span>
                   </button>
                   <button
                     onClick={() => onOpenQuoteModal(service.title)}
-                    className="w-full py-2 px-3 rounded-lg bg-emerald-500/15 hover:bg-emerald-600 text-emerald-900 hover:text-white border border-emerald-500/30 text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                    className="w-full py-2 px-3 rounded-lg bg-orange-500/20 hover:bg-orange-600 text-orange-300 hover:text-white border border-orange-500/40 text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                   >
                     <span>Get Quote</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
-                <div className="pt-2 border-t border-slate-200 flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-slate-600">Contractor:</span>
-                  <span className="text-[10px] font-black text-emerald-800 uppercase">SRI SJ CONSTRUCTIONS PVT LTD</span>
+                <div className="pt-2 border-t border-zinc-800/80 flex items-center justify-between">
+                  <span className="text-[10px] font-bold text-zinc-400">Contractor:</span>
+                  <span className="text-[10px] font-black text-orange-400 uppercase">SRI SJ CONSTRUCTIONS PVT LTD</span>
                 </div>
               </div>
             </div>
@@ -184,56 +184,56 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
 
       {/* Service Details Modal */}
       {selectedService && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white border border-slate-200 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl p-6 relative text-slate-800">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="bg-[#0e0e13] border-2 border-zinc-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl p-6 relative text-white">
             <button
               onClick={() => setSelectedService(null)}
-              className="absolute top-4 right-4 p-2 rounded-lg bg-slate-100 text-slate-500 hover:text-slate-900 hover:bg-slate-200 cursor-pointer"
+              className="absolute top-4 right-4 p-2 rounded-lg bg-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-700 cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-3 rounded-xl bg-emerald-600 text-white">
+              <div className="p-3 rounded-xl bg-orange-600 text-white shadow-lg">
                 {getServiceIcon(selectedService.iconName)}
               </div>
               <div>
-                <span className="text-xs font-bold text-emerald-700 uppercase tracking-wide">
+                <span className="text-xs font-bold text-orange-400 uppercase tracking-wide">
                   {selectedService.category} Service
                 </span>
-                <h3 className="text-2xl font-black text-slate-950 font-['Space_Grotesk']">
+                <h3 className="text-2xl font-black text-white font-['Space_Grotesk']">
                   {selectedService.title}
                 </h3>
               </div>
             </div>
 
-            <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
+            <p className="text-zinc-300 text-sm sm:text-base leading-relaxed mb-6">
               {selectedService.fullDescription}
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              <div className="p-4 rounded-xl bg-[#f0f4f8] border border-slate-200">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-3">
+              <div className="p-4 rounded-xl bg-[#14141a] border border-zinc-800">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-orange-400 mb-3">
                   Scope &amp; Technical Capabilities
                 </h4>
                 <ul className="space-y-2">
                   {selectedService.features.map((feat, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-slate-700">
-                      <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-zinc-300">
+                      <Check className="w-4 h-4 text-orange-400 shrink-0 mt-0.5" />
                       <span>{feat}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#f0f4f8] border border-slate-200">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-3">
+              <div className="p-4 rounded-xl bg-[#14141a] border border-zinc-800">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-orange-400 mb-3">
                   Equipment &amp; Machinery Deployed
                 </h4>
                 <ul className="space-y-2">
                   {selectedService.equipmentUsed.map((eq, idx) => (
-                    <li key={idx} className="flex items-center gap-2 text-xs sm:text-sm text-slate-700">
-                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    <li key={idx} className="flex items-center gap-2 text-xs sm:text-sm text-zinc-300">
+                      <div className="w-1.5 h-1.5 rounded-full bg-orange-500" />
                       <span>{eq}</span>
                     </li>
                   ))}
@@ -241,25 +241,25 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
               </div>
             </div>
 
-            <div className="mb-4 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs text-slate-700 text-center">
-              Civil execution and quality oversight guaranteed by <strong className="text-slate-950">SRI SJ CONSTRUCTIONS PRIVATE LIMITED</strong> (Haldia, WB).
+            <div className="mb-4 p-3 rounded-lg bg-orange-500/10 border border-orange-500/30 text-xs text-zinc-300 text-center">
+              Civil execution and quality oversight guaranteed by <strong className="text-white">SRI SJ CONSTRUCTIONS PRIVATE LIMITED</strong> (Haldia, WB).
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-200">
+            <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-zinc-800">
               <button
                 onClick={() => {
                   const title = selectedService.title;
                   setSelectedService(null);
                   onOpenQuoteModal(title);
                 }}
-                className="flex-1 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm flex items-center justify-center gap-2 shadow-md cursor-pointer"
+                className="flex-1 py-3 rounded-lg bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-600/30 cursor-pointer border border-orange-400/40"
               >
                 <span>Request Quotation for {selectedService.title}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setSelectedService(null)}
-                className="px-5 py-3 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold cursor-pointer"
+                className="px-5 py-3 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-sm font-semibold cursor-pointer"
               >
                 Close
               </button>

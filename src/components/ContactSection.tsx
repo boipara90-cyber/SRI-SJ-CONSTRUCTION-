@@ -19,18 +19,15 @@ import {
   ExternalLink,
   MessageCircle,
   Bell,
-  Database,
-  Calendar
+  Database
 } from 'lucide-react';
 
 interface ContactSectionProps {
   onOpenQuoteModal: () => void;
-  onOpenAppointmentModal?: (prefillService?: string) => void;
 }
 
 export const ContactSection: React.FC<ContactSectionProps> = ({ 
-  onOpenQuoteModal,
-  onOpenAppointmentModal 
+  onOpenQuoteModal
 }) => {
   const [formData, setFormData] = useState<QuoteRequest>({
     name: '',
@@ -191,7 +188,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 </div>
               </div>
 
-              {/* Direct Quick Action Buttons: WhatsApp, Quote & Appointment */}
+              {/* Direct Quick Action Buttons: WhatsApp & Quote */}
               <div className="space-y-2.5 pt-3 border-t border-slate-200">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <button
@@ -213,18 +210,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                     <span>Request a Quote</span>
                   </button>
                 </div>
-
-                {onOpenAppointmentModal && (
-                  <button
-                    type="button"
-                    onClick={() => onOpenAppointmentModal()}
-                    id="contact-book-appointment-btn"
-                    className="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-sm cursor-pointer border border-slate-800"
-                  >
-                    <Calendar className="w-4 h-4 text-emerald-400" />
-                    <span>Book Engineer Site Visit / Appointment</span>
-                  </button>
-                )}
               </div>
             </div>
 

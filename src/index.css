@@ -2,43 +2,35 @@
 
 :root {
   --app-brightness: 100%;
-}
-
-.theme-dark {
   color-scheme: dark;
 }
 
-.theme-dark body,
-.theme-dark .bg-\[\#e2e8f0\] {
-  background-color: #0f172a !important;
+body {
+  background-color: #000000;
+  color: #ffffff;
 }
 
-.theme-dark .bg-white {
-  background-color: #1e293b !important;
-  color: #f8fafc !important;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-.theme-dark .bg-slate-50,
-.theme-dark .bg-slate-100 {
-  background-color: #1e293b !important;
+::-webkit-scrollbar-track {
+  background: #09090b;
 }
 
-.theme-dark .bg-slate-200 {
-  background-color: #334155 !important;
+::-webkit-scrollbar-thumb {
+  background: #f97316;
+  border-radius: 4px;
 }
 
-.theme-dark .text-slate-900,
-.theme-dark .text-slate-800,
-.theme-dark .text-slate-700 {
-  color: #f1f5f9 !important;
+::-webkit-scrollbar-thumb:hover {
+  background: #ea580c;
 }
 
-.theme-dark .text-slate-600,
-.theme-dark .text-slate-500 {
-  color: #94a3b8 !important;
-}
-
-.theme-dark .border-slate-200,
-.theme-dark .border-slate-300 {
-  border-color: #334155 !important;
+/* Selection */
+::selection {
+  background-color: #f97316;
+  color: #ffffff;
 }
