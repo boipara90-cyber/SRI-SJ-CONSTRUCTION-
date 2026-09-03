@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { COMPANY_INFO } from '../data/companyData';
 import { OfficialCompanyEmblem } from './Logo';
 import { TOP_BACKGROUND_PHOTOS, TopBackgroundSlide } from '../data/heroSlidesData';
+import riverPilingHero from '../assets/images/river_piling_hero_1788334233850.jpg';
 import { getStoredPhotosMap } from '../services/photoStorageService';
 import { 
   ShieldCheck, 
@@ -256,8 +257,27 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal 
                   HEAVY FOUNDATION SPECIALISTS
                 </span>
                 <h1 className="text-3xl sm:text-4xl lg:text-[2.85rem] font-black tracking-tight leading-[1.2] font-['Space_Grotesk'] text-white">
-                  <span className="relative inline-block bg-[#050508] px-3.5 py-1.5 rounded-lg border border-orange-500/30 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-300 to-yellow-200 shadow-xl mr-2">
-                    Strong Foundations.
+                  <span className="relative inline-flex items-center px-4 py-2 rounded-xl border-2 border-orange-500/80 shadow-[0_10px_35px_rgba(249,115,22,0.35)] mr-2 overflow-hidden align-middle group">
+                    {/* Construction Site Background Photo Under The Letters */}
+                    <span
+                      className="absolute inset-0 bg-cover bg-center scale-105 transition-transform duration-700 group-hover:scale-110 filter brightness-[0.45] contrast-125 saturate-125 pointer-events-none"
+                      style={{ backgroundImage: `url(${riverPilingHero})` }}
+                      aria-hidden="true"
+                    />
+                    {/* High-contrast semi-transparent protective dark scrim */}
+                    <span
+                      className="absolute inset-0 bg-gradient-to-r from-black/85 via-zinc-950/75 to-orange-950/80 pointer-events-none"
+                      aria-hidden="true"
+                    />
+                    {/* Industrial hazard safety tape trim under the letters */}
+                    <span
+                      className="absolute bottom-0 inset-x-0 h-1 bg-[repeating-linear-gradient(45deg,#f97316,#f97316_8px,#09090b_8px,#09090b_16px)] opacity-95 pointer-events-none"
+                      aria-hidden="true"
+                    />
+                    {/* Crisp high-contrast lettering */}
+                    <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-amber-200 to-orange-400 font-black tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
+                      Strong Foundations.
+                    </span>
                   </span>
                   <span className="block mt-2 text-zinc-100 font-extrabold text-2xl sm:text-3xl lg:text-[2.25rem] tracking-tight leading-none">
                     Reliable Construction.
