@@ -8,7 +8,7 @@ import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { AboutSection } from './components/AboutSection';
 import { ServicesSection } from './components/ServicesSection';
-import { PilingSection } from './components/PilingSection';
+import { ClientSection } from './components/ClientSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { WhyChooseUs } from './components/WhyChooseUs';
 import { EquipmentSection } from './components/EquipmentSection';
@@ -18,13 +18,15 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { QuoteModal } from './components/QuoteModal';
 import { AdminPanelModal } from './components/AdminPanelModal';
+import { OriginalPhotosManagerModal } from './components/OriginalPhotosManagerModal';
 import { BrightnessSection, ThemeMode } from './components/BrightnessSection';
 import { COMPANY_INFO } from './data/companyData';
-import { MessageCircle, Phone, Sparkles, Lock } from 'lucide-react';
+import { MessageCircle, Phone, Sparkles, Lock, Camera } from 'lucide-react';
 
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
   const [adminModalOpen, setAdminModalOpen] = useState(false);
+  const [originalPhotosModalOpen, setOriginalPhotosModalOpen] = useState(false);
   const [prefillService, setPrefillService] = useState<string | undefined>(undefined);
   const [activeSection, setActiveSection] = useState<string>('home');
   
@@ -72,10 +74,19 @@ export default function App() {
     }
   }, [theme]);
 
+  // Listener for triggering admin panel modal from nested sections
+  useEffect(() => {
+    const handleOpenAdmin = () => {
+      setAdminModalOpen(true);
+    };
+    window.addEventListener('sri_sj_open_admin_modal', handleOpenAdmin);
+    return () => window.removeEventListener('sri_sj_open_admin_modal', handleOpenAdmin);
+  }, []);
+
   // Track active section via IntersectionObserver or Scroll
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'services', 'piling', 'projects', 'equipment', 'maps-photos', 'careers', 'contact'];
+      const sections = ['home', 'about', 'services', 'clients', 'projects', 'equipment', 'maps-photos', 'careers', 'contact'];
       const scrollPosition = window.scrollY + 200;
 
       for (const sectionId of sections) {
@@ -135,6 +146,7 @@ export default function App() {
         {/* 1. Hero Section */}
         <Hero 
           onOpenQuoteModal={() => handleOpenQuoteModal()} 
+          onOpenPhotosModal={() => setOriginalPhotosModalOpen(true)}
         />
 
         {/* 2. About Us */}
@@ -143,8 +155,8 @@ export default function App() {
         {/* 3. Our Services */}
         <ServicesSection onOpenQuoteModal={handleOpenQuoteModal} />
 
-        {/* 4. Piling Services Dedicated Section */}
-        <PilingSection onOpenQuoteModal={handleOpenQuoteModal} />
+        {/* 4. Client Section */}
+        <ClientSection />
 
         {/* 5. Projects Section */}
         <ProjectsSection onOpenQuoteModal={() => handleOpenQuoteModal()} />
@@ -156,7 +168,10 @@ export default function App() {
         <EquipmentSection onOpenQuoteModal={handleOpenQuoteModal} />
 
         {/* 8. Google Maps Search & Site Photo Hub */}
-        <GoogleMapsGallerySection onOpenQuoteModal={handleOpenQuoteModal} />
+        <GoogleMapsGallerySection 
+          onOpenQuoteModal={handleOpenQuoteModal} 
+          onOpenPhotosModal={() => setOriginalPhotosModalOpen(true)}
+        />
 
         {/* 9. Careers & Application Portal */}
         <CareersSection />
@@ -218,6 +233,12 @@ export default function App() {
       <AdminPanelModal
         isOpen={adminModalOpen}
         onClose={() => setAdminModalOpen(false)}
+      />
+
+      {/* Dedicated Original WhatsApp Site Photos Management Modal */}
+      <OriginalPhotosManagerModal
+        isOpen={originalPhotosModalOpen}
+        onClose={() => setOriginalPhotosModalOpen(false)}
       />
     </div>
   );

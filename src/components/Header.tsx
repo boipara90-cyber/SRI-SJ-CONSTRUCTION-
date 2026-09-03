@@ -50,7 +50,7 @@ export const Header: React.FC<HeaderProps> = ({
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
     { name: 'Services', href: '#services' },
-    { name: 'Piling', href: '#piling' },
+    { name: 'Clients', href: '#clients' },
     { name: 'Projects', href: '#projects' },
     { name: 'Equipment', href: '#equipment' },
     { name: 'Maps & Photos', href: '#maps-photos' },

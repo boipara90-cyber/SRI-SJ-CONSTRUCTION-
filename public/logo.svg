@@ -2,8 +2,8 @@
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Rozha+One&amp;family=Yatra+One&amp;family=Noto+Sans+Devanagari:wght@700;800;900&amp;display=swap');
-      .devanagari-glyph {
-        font-family: 'Rozha One', 'Yatra One', 'Noto Sans Devanagari', 'Mangal', 'Mukta', 'Lohit Devanagari', sans-serif;
+      .devanagari-shree {
+        font-family: 'Rozha One', 'Yatra One', 'Noto Sans Devanagari', 'Mukta', 'Mangal', 'Lohit Devanagari', sans-serif;
         font-weight: 900;
       }
     </style>
@@ -13,62 +13,69 @@
   <rect width="600" height="600" fill="#FFFFFF"/>
 
   <!-- 2. Outer Deep Royal Blue Rectangular Border -->
-  <rect x="16" y="16" width="568" height="568" rx="4" fill="none" stroke="#163FA7" stroke-width="8"/>
+  <rect x="14" y="14" width="572" height="572" rx="4" fill="none" stroke="#1338BE" stroke-width="8"/>
 
   <!-- 3. Inner Vivid Orange Rectangular Border -->
-  <rect x="32" y="32" width="536" height="536" fill="none" stroke="#F15A10" stroke-width="8"/>
+  <rect x="28" y="28" width="544" height="544" fill="none" stroke="#EE5A0E" stroke-width="8"/>
 
   <!-- 4. Clean Blue Outline of Symmetrical Pitched Roof -->
-  <path d="M 72 248 L 300 70 L 528 248" 
+  <path d="M 72 260 L 300 68 L 528 260" 
         fill="none" 
-        stroke="#163FA7" 
-        stroke-width="30" 
+        stroke="#1338BE" 
+        stroke-width="32" 
         stroke-linecap="square" 
         stroke-linejoin="miter" 
         stroke-miterlimit="10"/>
 
-  <!-- 5. Central Vivid Orange 'J' Column (Acts as Central Structural Beam) -->
-  <!-- Top apex of J angled along the roof pitch, straight vertical column, curving left at the base -->
-  <path d="M 300 120 L 356 164 L 356 460 C 356 488 334 506 294 506 L 244 506 L 244 456 L 286 456 C 302 456 312 448 312 434 L 312 254 L 300 254 Z" 
-        fill="#F15A10"/>
+  <!-- 5. Central Vivid Orange 'J' Column (Structural Beam & Base) -->
+  <!-- Top apex of J angled along the roof pitch, straight vertical column down to y=514, curving left at the base -->
+  <path d="M 300 120 L 358 165 L 358 460 C 358 495 330 514 286 514 L 244 514 L 244 460 L 282 460 C 298 460 308 450 308 434 L 308 260 L 300 260 Z" 
+        fill="#EE5A0E"/>
 
   <!-- Bottom Left Orange Foundation Base Wedge (Extension of J / Ground Base) -->
-  <polygon points="58,506 204,506 250,456 104,456" fill="#F15A10"/>
+  <polygon points="56,514 204,514 250,460 102,460" fill="#EE5A0E"/>
 
   <!-- 6. Left Deep Royal Blue 'S' Monogram -->
   <!-- Top Roof-Parallel Bar of S -->
-  <polygon points="96,254 260,254 218,300 96,300" fill="#163FA7"/>
+  <polygon points="96,260 260,260 216,306 96,306" fill="#1338BE"/>
 
   <!-- Outer Left Rounded Spine of S -->
-  <path d="M 96 254 C 74 254 60 268 60 292 L 60 376 C 60 398 74 412 96 412 L 142 412 L 142 368 L 104 368 C 98 368 94 362 94 354 L 94 300 L 96 254 Z" 
-        fill="#163FA7"/>
+  <path d="M 96 260 C 72 260 58 274 58 298 L 58 376 C 58 398 72 414 96 414 L 140 414 L 140 368 L 102 368 C 96 368 92 362 92 354 L 92 306 L 96 260 Z" 
+        fill="#1338BE"/>
 
   <!-- Dynamic Lower Sweeping Tail of S -->
-  <path d="M 204 362 C 238 362 264 398 264 442 C 264 480 232 506 172 506 C 218 496 244 458 244 422 C 244 380 216 362 204 362 Z" 
-        fill="#163FA7"/>
-  <path d="M 244 366 C 244 434 206 506 156 506 C 196 506 226 456 226 400 C 226 380 220 366 208 366 Z" 
-        fill="#163FA7"/>
+  <path d="M 204 366 C 238 366 264 402 264 446 C 264 486 230 514 170 514 C 216 504 244 464 244 426 C 244 384 216 366 204 366 Z" 
+        fill="#1338BE"/>
+  <path d="M 244 370 C 244 438 206 514 154 514 C 196 514 226 462 226 404 C 226 384 220 370 208 370 Z" 
+        fill="#1338BE"/>
 
-  <!-- 7. Devanagari Script Text 'श्री' in Vivid Orange in the Lower Loop of S -->
-  <g transform="translate(104, 308)">
-    <!-- High-Precision Vector Silhouette of 'श्री' -->
-    <path d="M 38 12 C 34 2 24 -6 14 -6 C 2 -6 -6 2 -6 14 C -6 26 2 34 14 36 C 22 38 28 34 32 30 L 32 64 C 32 68 28 72 24 72 L 12 72 L 12 82 L 28 82 C 38 82 44 74 44 64 L 44 12 Z M 14 4 C 18 4 22 8 22 14 C 22 20 18 24 14 24 C 10 24 6 20 6 14 C 6 8 10 4 14 4 Z" fill="#F15A10"/>
-    <path d="M 18 36 L -2 60 L 4 66 L 26 42 Z" fill="#F15A10"/>
-    <path d="M 44 4 L 72 4 L 72 82 L 60 82 L 60 14 L 44 14 Z" fill="#F15A10"/>
-    <path d="M 40 -8 C 50 -20 64 -26 80 -26 C 96 -26 108 -14 108 8 L 108 82 L 96 82 L 96 8 C 96 -6 88 -14 78 -14 C 66 -14 54 -6 48 4 Z" fill="#F15A10"/>
-    <path d="M 2 4 L 112 4 L 112 14 L 2 14 Z" fill="#F15A10"/>
+  <!-- 7. Devanagari Script 'श्री' in Vivid Orange in the Lower/Middle Loop of S -->
+  <g transform="translate(106, 316)">
+    <!-- High-Precision Vector Paths for 'श्री' for 100% Offline Crispness -->
+    <!-- Top Horizontal Shirorekha Bar -->
+    <rect x="0" y="4" width="108" height="11" rx="2" fill="#EE5A0E"/>
     
-    <!-- Ultra-Crisp Devanagari Text Rendering Fallback -->
-    <text x="56" y="68" 
-          font-size="110" 
+    <!-- Left Loop of 'श' -->
+    <path d="M 36 14 C 32 4 22 -4 12 -4 C 1 -4 -6 4 -6 16 C -6 28 2 36 14 38 C 22 40 28 36 32 32 L 32 64 C 32 68 28 72 24 72 L 10 72 L 10 82 L 28 82 C 38 82 44 74 44 64 L 44 14 Z M 12 6 C 16 6 20 10 20 16 C 20 22 16 26 12 26 C 8 26 4 22 4 16 C 4 10 8 6 12 6 Z" fill="#EE5A0E"/>
+    <!-- Diagonal cross stroke of 'श' -->
+    <path d="M 16 38 L -4 64 L 4 70 L 26 44 Z" fill="#EE5A0E"/>
+    <!-- Vertical stem of 'श' -->
+    <rect x="36" y="14" width="10" height="68" rx="2" fill="#EE5A0E"/>
+    <!-- Matra Canopy of 'ी' (Dirgha-ee) curving over top and vertical right bar -->
+    <path d="M 38 -6 C 50 -18 64 -24 80 -24 C 96 -24 106 -12 106 10 L 106 82 L 94 82 L 94 10 C 94 -4 86 -12 76 -12 C 64 -12 52 -4 46 6 Z" fill="#EE5A0E"/>
+    <rect x="94" y="14" width="12" height="68" rx="2" fill="#EE5A0E"/>
+
+    <!-- Direct Devanagari Glyph Rendering Overlay for Maximum Typographic Harmony -->
+    <text x="52" y="70" 
+          font-size="108" 
           font-weight="900" 
           text-anchor="middle" 
-          fill="#F15A10" 
-          class="devanagari-glyph">श्री</text>
+          fill="#EE5A0E" 
+          class="devanagari-shree">श्री</text>
   </g>
 
   <!-- 8. Right Deep Royal Blue 'C' Geometry -->
-  <path d="M 412 254 L 512 254 C 532 254 544 266 544 288 L 544 442 C 544 464 532 506 492 506 L 412 506 C 372 506 360 468 360 442 L 360 288 C 360 266 372 254 412 254 Z M 414 300 L 414 460 L 488 460 C 496 460 500 454 500 444 L 500 288 C 500 278 496 272 488 272 L 414 272 Z" 
-        fill="#163FA7" 
+  <path d="M 408 260 L 512 260 C 534 260 546 272 546 294 L 546 446 C 546 468 534 514 490 514 L 408 514 C 368 514 356 474 356 446 L 356 294 C 356 272 368 260 408 260 Z M 412 308 L 412 466 L 486 466 C 496 466 500 458 500 448 L 500 294 C 500 282 496 276 486 276 L 412 276 Z" 
+        fill="#1338BE" 
         fill-rule="evenodd"/>
 </svg>

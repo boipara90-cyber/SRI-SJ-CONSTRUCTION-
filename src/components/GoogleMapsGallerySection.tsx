@@ -7,6 +7,11 @@ import {
   GOOGLE_MAPS_OFFICIAL_QUERY 
 } from '../data/mapsPhotosData';
 import { 
+  getStoredPhotosMap, 
+  ORIGINAL_27_PHOTOS_DEF 
+} from '../services/photoStorageService';
+import { checkAdminSession } from '../services/adminAuthService';
+import { 
   MapPin, 
   Search, 
   UploadCloud, 
@@ -25,22 +30,27 @@ import {
   Eye, 
   ShieldCheck, 
   Download,
-  Filter
+  Filter,
+  Lock
 } from 'lucide-react';
 
 const STORAGE_KEY = 'sri_sj_user_uploaded_photos_v1';
 
 interface GoogleMapsGallerySectionProps {
   onOpenQuoteModal?: (serviceTitle?: string) => void;
+  onOpenPhotosModal?: () => void;
 }
 
-export const GoogleMapsGallerySection: React.FC<GoogleMapsGallerySectionProps> = ({ onOpenQuoteModal }) => {
+export const GoogleMapsGallerySection: React.FC<GoogleMapsGallerySectionProps> = ({ onOpenQuoteModal, onOpenPhotosModal }) => {
   const [selectedLocation, setSelectedLocation] = useState<MapLocation>(MAP_LOCATIONS[0]);
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [photos, setPhotos] = useState<SitePhotoItem[]>(INITIAL_SITE_PHOTOS);
   const [activePhotoModal, setActivePhotoModal] = useState<SitePhotoItem | null>(null);
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
+  const [customPhotosCount, setCustomPhotosCount] = useState<number>(0);
+
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(false);
 
   // Upload Form State
   const [uploadTitle, setUploadTitle] = useState('');
@@ -55,19 +65,63 @@ export const GoogleMapsGallerySection: React.FC<GoogleMapsGallerySectionProps> =
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Load uploaded photos from localStorage
-  useEffect(() => {
+  // Load uploaded photos and custom original photos
+  const loadAllPhotos = async () => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
+      let userList: SitePhotoItem[] = [];
       if (stored) {
         const parsed: SitePhotoItem[] = JSON.parse(stored);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setPhotos([...parsed, ...INITIAL_SITE_PHOTOS]);
+        if (Array.isArray(parsed)) {
+          userList = parsed;
         }
       }
+
+      // Check IndexedDB custom photos
+      const customMap = await getStoredPhotosMap();
+      const customCount = Object.keys(customMap).length;
+      setCustomPhotosCount(customCount);
+
+      // Map initial photos with custom replacements if any
+      const mappedInitial = INITIAL_SITE_PHOTOS.map(p => {
+        if (customMap[p.id]) {
+          return {
+            ...p,
+            imageUrl: customMap[p.id],
+            isVerified: true,
+            isOriginalCustom: true
+          };
+        }
+        return {
+          ...p,
+          isOriginalCustom: false
+        };
+      });
+
+      setPhotos([...userList, ...mappedInitial]);
     } catch (e) {
       console.warn('Could not load stored photos', e);
     }
+  };
+
+  useEffect(() => {
+    loadAllPhotos();
+    const handleUpdate = () => {
+      loadAllPhotos();
+    };
+
+    const checkAuth = () => {
+      const loggedIn = checkAdminSession();
+      setIsAdminLoggedIn(loggedIn);
+    };
+    checkAuth();
+    const authInterval = setInterval(checkAuth, 1000);
+
+    window.addEventListener('sri_sj_photos_updated', handleUpdate);
+    return () => {
+      clearInterval(authInterval);
+      window.removeEventListener('sri_sj_photos_updated', handleUpdate);
+    };
   }, []);
 
   const handleFileChange = (file: File) => {
@@ -336,6 +390,69 @@ export const GoogleMapsGallerySection: React.FC<GoogleMapsGallerySectionProps> =
 
         {/* 2. GOOGLE MAPS VERIFIED SITE PHOTOS GALLERY */}
         <div className="space-y-6">
+          {/* Admin Gated Gallery Control Center */}
+          <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className={`p-2.5 rounded-full shrink-0 ${isAdminLoggedIn ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600'}`}>
+                {isAdminLoggedIn ? (
+                  <ShieldCheck className="w-5 h-5 animate-pulse" />
+                ) : (
+                  <Lock className="w-5 h-5 text-amber-600" />
+                )}
+              </div>
+              <div>
+                <h4 className="text-sm font-black text-slate-900 font-['Space_Grotesk'] flex items-center gap-2">
+                  <span>Photo Gallery Administration</span>
+                  <span className={`text-[10px] px-2 py-0.5 rounded font-black tracking-wider uppercase ${
+                    isAdminLoggedIn ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
+                  }`}>
+                    {isAdminLoggedIn ? 'Admin Verified' : 'Restricted Upload'}
+                  </span>
+                </h4>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  {isAdminLoggedIn 
+                    ? `Welcome back, Sri SJ Administrator. You are fully authorized to upload, replace, or update any photo card (${customPhotosCount} customized).`
+                    : "Only authorized Sri SJ Constructions administrators can upload, replace, or update official project photographs."
+                  }
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0 w-full md:w-auto justify-end">
+              {isAdminLoggedIn ? (
+                <>
+                  {onOpenPhotosModal && (
+                    <button
+                      onClick={onOpenPhotosModal}
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer"
+                    >
+                      <UploadCloud className="w-4 h-4" />
+                      <span>Upload &amp; Sync WhatsApp Photos</span>
+                    </button>
+                  )}
+                  <button
+                    onClick={() => setUploadModalOpen(true)}
+                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs shadow-xs border border-slate-300 cursor-pointer"
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span>Post Photo Card</span>
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => {
+                    const event = new CustomEvent('sri_sj_open_admin_modal');
+                    window.dispatchEvent(event);
+                  }}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-sm transition-all cursor-pointer border border-slate-700"
+                >
+                  <Lock className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Admin Login to Update</span>
+                </button>
+              )}
+            </div>
+          </div>
+
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber-700">
@@ -347,24 +464,26 @@ export const GoogleMapsGallerySection: React.FC<GoogleMapsGallerySectionProps> =
               </h3>
             </div>
 
-            {/* Search Input in Gallery */}
-            <div className="relative w-full md:w-72">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                placeholder="Search photos by keyword, site..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 rounded-xl bg-white border border-slate-300 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-xs"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              )}
+            {/* Search Bar in Gallery */}
+            <div className="flex items-center gap-2.5 flex-wrap sm:flex-nowrap">
+              <div className="relative w-full md:w-64">
+                <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder="Search photos by keyword, site..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-9 pr-4 py-2 rounded-xl bg-white border border-slate-300 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-xs"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 
@@ -421,45 +540,53 @@ export const GoogleMapsGallerySection: React.FC<GoogleMapsGallerySectionProps> =
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {filteredPhotos.map((photo) => (
-                <div
-                  key={photo.id}
-                  id={`photo-card-${photo.id}`}
-                  onClick={() => setActivePhotoModal(photo)}
-                  className="group rounded-2xl bg-slate-100 border border-slate-300 hover:border-amber-400 hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between shadow-md cursor-pointer"
-                >
-                  <div className="relative h-52 bg-slate-900 overflow-hidden">
-                    <img
-                      src={photo.imageUrl}
-                      alt={photo.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-                    
-                    {/* Top Badges */}
-                    <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between gap-1">
-                      <span className={`text-[10px] font-black px-2 py-0.5 rounded-md backdrop-blur-xs border ${
-                        photo.category === 'user_uploaded'
-                          ? 'bg-amber-950/90 text-amber-300 border-amber-500/50'
-                          : 'bg-slate-900/80 text-slate-200 border-slate-700'
-                      }`}>
-                        {photo.category === 'user_uploaded' ? 'Field Upload' : 'Verified Rig Photo'}
-                      </span>
+              {filteredPhotos.map((photo) => {
+                const isOriginalCustom = (photo as any).isOriginalCustom;
+                
+                return (
+                  <div
+                    key={photo.id}
+                    id={`photo-card-${photo.id}`}
+                    onClick={() => {
+                      setActivePhotoModal(photo);
+                    }}
+                    className="group rounded-2xl bg-slate-100 border border-slate-300 hover:border-amber-400 hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between shadow-md cursor-pointer"
+                  >
+                    <div className="relative h-52 bg-slate-950 overflow-hidden">
+                      <img
+                        src={photo.imageUrl}
+                        alt={photo.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
+                      
+                      {/* Top Badges */}
+                      <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between gap-1">
+                        <span className={`text-[10px] font-black px-2 py-0.5 rounded-md backdrop-blur-xs border ${
+                          photo.category === 'user_uploaded'
+                            ? 'bg-amber-950/90 text-amber-300 border-amber-500/50'
+                            : 'bg-slate-900/80 text-slate-200 border-slate-700'
+                        }`}>
+                          {photo.category === 'user_uploaded' 
+                            ? 'Field Upload' 
+                            : (isOriginalCustom ? 'Admin Customized' : 'Verified Rig Photo')
+                          }
+                        </span>
 
-                      <div className="p-1 rounded bg-black/60 text-white group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
-                        <Eye className="w-3.5 h-3.5" />
+                        <div className="p-1 rounded bg-black/60 text-white group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
+                          <Eye className="w-3.5 h-3.5" />
+                        </div>
+                      </div>
+
+                      {/* Bottom Location Label */}
+                      <div className="absolute bottom-2.5 left-2.5 right-2.5">
+                        <span className="text-[11px] font-bold text-amber-300 flex items-center gap-1 truncate">
+                          <MapPin className="w-3 h-3 shrink-0" />
+                          <span className="truncate">{photo.locationName}</span>
+                        </span>
                       </div>
                     </div>
-
-                    {/* Bottom Location Label */}
-                    <div className="absolute bottom-2.5 left-2.5 right-2.5">
-                      <span className="text-[11px] font-bold text-amber-300 flex items-center gap-1 truncate">
-                        <MapPin className="w-3 h-3 shrink-0" />
-                        <span className="truncate">{photo.locationName}</span>
-                      </span>
-                    </div>
-                  </div>
 
                   {/* Card Content */}
                   <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
@@ -487,7 +614,8 @@ export const GoogleMapsGallerySection: React.FC<GoogleMapsGallerySectionProps> =
                     </div>
                   </div>
                 </div>
-              ))}
+              );
+            })}
             </div>
           )}
         </div>
@@ -579,6 +707,25 @@ export const GoogleMapsGallerySection: React.FC<GoogleMapsGallerySectionProps> =
                       <ExternalLink className="w-3 h-3" />
                     </a>
                   </div>
+
+                  {isAdminLoggedIn && (
+                    <div className="pt-3 border-t border-slate-200 mt-2 space-y-2">
+                      <div className="text-[10px] font-black uppercase tracking-wider text-emerald-700 flex items-center gap-1">
+                        <ShieldCheck className="w-3.5 h-3.5" />
+                        <span>Admin Actions Available</span>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setActivePhotoModal(null);
+                          onOpenPhotosModal?.();
+                        }}
+                        className="w-full inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-black transition-colors cursor-pointer"
+                      >
+                        <UploadCloud className="w-3.5 h-3.5" />
+                        <span>Replace/Update Photo</span>
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

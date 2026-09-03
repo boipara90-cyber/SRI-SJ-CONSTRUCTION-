@@ -325,12 +325,62 @@ export const WHY_CHOOSE_US = [
 ];
 
 export const MAJOR_CLIENTS = [
-  { name: "Larsen & Toubro Limited", short: "L&T", highlight: "River Bank Transmission Piling & Substation Substructures" },
-  { name: "Tata Projects / Tata Group", short: "TATA", highlight: "Heavy Industrial Civil & Structural Foundation Packages" },
-  { name: "Jindal India Limited", short: "JINDAL", highlight: "Sheet Piling, PEB & Triple Pot Foundations (WB)" },
-  { name: "Sunlight Group / Infra", short: "SUNLIGHT", highlight: "Industrial Substructures, Earthwork & Deep Piling" },
-  { name: "Power Grid Corporation of India Ltd", short: "PGCIL", highlight: "765kV KMTL EHV Tower Piling & Pile Built-Up" },
-  { name: "Utkal Alumina (Aditya Birla)", short: "UAIL", highlight: "Heavy Alumina Refinery Machine Foundations" }
+  { 
+    name: "Exide Industries Limited", 
+    short: "EXIDE", 
+    tagline: "Industrial Battery & Energy Systems",
+    highlight: "Deep Foundation Piling, Heavy Machine Slabs & Plant Infrastructure Works",
+    location: "Haldia & West Bengal Manufacturing Plants"
+  },
+  { 
+    name: "Tata Projects / Tata Group", 
+    short: "TATA", 
+    tagline: "Engineering, Procurement & Construction",
+    highlight: "Heavy Industrial Civil & Structural Foundation Packages under Strict EHS Norms",
+    location: "National Infrastructure Projects"
+  },
+  { 
+    name: "Adani Infra / Adani Group", 
+    short: "ADANI", 
+    tagline: "Ports, Energy & Logistics Infrastructure",
+    highlight: "Large-Scale Substructure Civil Works, Soil Stabilization & Deep Piling Solutions",
+    location: "Port, Energy & Industrial Corridors"
+  },
+  { 
+    name: "ITC Limited", 
+    short: "ITC", 
+    tagline: "Manufacturing, Packaging & Logistics Hubs",
+    highlight: "Precision Industrial Civil Construction, PEB Footings & Monolithic Floor Slabs",
+    location: "Eastern Region Processing & Logistics Campuses"
+  },
+  { 
+    name: "Ruchi Infra Services / Infrastructure", 
+    short: "RUCHI", 
+    tagline: "Port Terminals & Industrial Infrastructure",
+    highlight: "High-Capacity Bored Cast-in-Situ Foundation Piling & Coastal Jetty Substructures",
+    location: "Haldia Port & Industrial Belt, WB"
+  },
+  { 
+    name: "Larsen & Toubro Limited", 
+    short: "L&T", 
+    tagline: "Global EPC & Heavy Infrastructure",
+    highlight: "River Bank Transmission Piling & Substation Substructures at Krishna River",
+    location: "EHV Transmission Lines & River Crossing Corridors"
+  },
+  { 
+    name: "Jindal India Limited", 
+    short: "JINDAL", 
+    tagline: "Steel, Energy & Heavy Manufacturing",
+    highlight: "Sheet Piling, PEB Structures & Heavy Triple Pot Furnace Foundations",
+    location: "West Bengal Manufacturing Complexes"
+  },
+  { 
+    name: "Power Grid Corporation of India Ltd", 
+    short: "PGCIL", 
+    tagline: "Central Transmission Utility of India",
+    highlight: "765kV KMTL EHV Tower Piling, High-Load Foundation Rings & Pile Built-Up",
+    location: "National Power Transmission Corridors"
+  }
 ];
 
 export const PROJECTS: ProjectItem[] = [

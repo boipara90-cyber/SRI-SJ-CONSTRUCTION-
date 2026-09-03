@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PROJECTS, MAJOR_CLIENTS } from '../data/companyData';
+import { CompanyLogo } from './ClientLogos';
 import { 
   Building, 
   MapPin, 
@@ -100,11 +101,10 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenQuoteMod
               </h3>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
               {MAJOR_CLIENTS.map((client, idx) => (
-                <div key={idx} className="p-2.5 rounded-xl bg-[#14141a] border border-zinc-800 text-center hover:border-orange-500 transition-colors">
-                  <span className="block text-xs font-black text-white font-['Space_Grotesk']">{client.short}</span>
-                  <span className="block text-[9px] text-zinc-400 font-bold truncate mt-0.5" title={client.highlight}>{client.highlight}</span>
+                <div key={idx} className="p-2 rounded-xl bg-white border border-zinc-200 text-center hover:scale-105 transition-transform flex items-center justify-center h-12 shadow-sm" title={`${client.name} - ${client.highlight}`}>
+                  <CompanyLogo company={client.short} size="sm" className="w-full h-full" />
                 </div>
               ))}
             </div>

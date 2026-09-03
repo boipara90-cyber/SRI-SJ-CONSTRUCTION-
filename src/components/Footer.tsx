@@ -30,7 +30,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal, onOpenAdminMod
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
     { name: 'Services', href: '#services' },
-    { name: 'Piling', href: '#piling' },
+    { name: 'Clients', href: '#clients' },
     { name: 'Projects', href: '#projects' },
     { name: 'Maps & Photos', href: '#maps-photos' },
     { name: 'Careers', href: '#careers' },
@@ -38,9 +38,9 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal, onOpenAdminMod
   ];
 
   return (
-    <footer id="main-footer" className="bg-[#111c2a] text-slate-200 border-t-2 border-emerald-500 relative overflow-hidden">
+    <footer id="main-footer" className="bg-[#0a0a0e] text-zinc-200 border-t-2 border-orange-500 relative overflow-hidden">
       {/* Top Industrial Stripe Accent */}
-      <div className="h-1 w-full bg-gradient-to-r from-emerald-600 via-emerald-400 to-emerald-700" />
+      <div className="h-1 w-full bg-gradient-to-r from-orange-600 via-amber-400 to-orange-700" />
 
       {/* Main Footer Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12">
@@ -50,29 +50,29 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal, onOpenAdminMod
           <div className="lg:col-span-5 space-y-4">
             <Logo size="lg" />
             
-            <p className="text-emerald-400 font-bold text-base font-['Space_Grotesk'] italic">
+            <p className="text-orange-400 font-bold text-base font-['Space_Grotesk'] italic">
               "{COMPANY_INFO.tagline}"
             </p>
 
-            <p className="text-slate-300 text-sm leading-relaxed max-w-sm">
+            <p className="text-zinc-300 text-sm leading-relaxed max-w-sm">
               Established in 2011, Sri SJ Constructions Private Limited is a specialized 
               piling and construction company based in Haldia, West Bengal, delivering 
               bored cast-in-situ piling, industrial foundations, and turnkey civil structural engineering.
             </p>
 
             <div className="pt-2 flex items-center gap-3">
-              <span className="text-xs font-semibold text-slate-400">Follow Us:</span>
+              <span className="text-xs font-semibold text-zinc-400">Follow Us:</span>
               <div className="flex items-center gap-2">
-                <a href="#contact" aria-label="LinkedIn placeholder" className="p-2 rounded-lg bg-slate-800/80 hover:bg-emerald-600 hover:text-white text-slate-300 transition-colors">
+                <a href="#contact" aria-label="LinkedIn placeholder" className="p-2 rounded-lg bg-zinc-900 hover:bg-orange-600 hover:text-white text-zinc-300 transition-colors">
                   <Linkedin className="w-4 h-4" />
                 </a>
-                <a href="#contact" aria-label="Facebook placeholder" className="p-2 rounded-lg bg-slate-800/80 hover:bg-emerald-600 hover:text-white text-slate-300 transition-colors">
+                <a href="#contact" aria-label="Facebook placeholder" className="p-2 rounded-lg bg-zinc-900 hover:bg-orange-600 hover:text-white text-zinc-300 transition-colors">
                   <Facebook className="w-4 h-4" />
                 </a>
-                <a href="#contact" aria-label="Twitter placeholder" className="p-2 rounded-lg bg-slate-800/80 hover:bg-emerald-600 hover:text-white text-slate-300 transition-colors">
+                <a href="#contact" aria-label="Twitter placeholder" className="p-2 rounded-lg bg-zinc-900 hover:bg-orange-600 hover:text-white text-zinc-300 transition-colors">
                   <Twitter className="w-4 h-4" />
                 </a>
-                <a href="#contact" aria-label="YouTube placeholder" className="p-2 rounded-lg bg-slate-800/80 hover:bg-emerald-600 hover:text-white text-slate-300 transition-colors">
+                <a href="#contact" aria-label="YouTube placeholder" className="p-2 rounded-lg bg-zinc-900 hover:bg-orange-600 hover:text-white text-zinc-300 transition-colors">
                   <Youtube className="w-4 h-4" />
                 </a>
               </div>
