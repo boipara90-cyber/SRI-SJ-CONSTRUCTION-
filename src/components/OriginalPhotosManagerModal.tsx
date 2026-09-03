@@ -123,11 +123,10 @@ export const OriginalPhotosManagerModal: React.FC<OriginalPhotosManagerModalProp
 
   // Reset/clear custom photos
   const handleReset = async () => {
-    if (window.confirm('Are you sure you want to reset all custom uploaded site photos?')) {
-      await clearCustomPhotos();
-      setNotificationMsg('Photos reset successfully.');
-      setTimeout(() => setNotificationMsg(null), 3000);
-    }
+    await clearCustomPhotos();
+    setNotificationMsg('All 27 site photos have been successfully deleted.');
+    setTimeout(() => setNotificationMsg(null), 4000);
+    refreshPhotos();
   };
 
   const filteredDefs = ORIGINAL_27_PHOTOS_DEF.filter(item => {
@@ -233,16 +232,14 @@ export const OriginalPhotosManagerModal: React.FC<OriginalPhotosManagerModalProp
                 <FolderOpen className="w-3.5 h-3.5" />
                 <span>Select Photos From Computer / Mobile</span>
               </button>
-              {uploadStats.custom > 0 && (
-                <button
-                  type="button"
-                  onClick={(e) => { e.stopPropagation(); handleReset(); }}
-                  className="px-3 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-red-400 font-bold text-xs border border-zinc-800 transition-colors cursor-pointer flex items-center gap-1.5"
-                >
-                  <RotateCcw className="w-3.5 h-3.5" />
-                  <span>Reset All</span>
-                </button>
-              )}
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); handleReset(); }}
+                className="px-3 py-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 font-bold text-xs border border-red-500/30 transition-colors cursor-pointer flex items-center gap-1.5"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Delete All 27 Photos</span>
+              </button>
             </div>
           </div>
 

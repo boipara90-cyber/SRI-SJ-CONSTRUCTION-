@@ -101,7 +101,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenQuoteMod
               </h3>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5">
               {MAJOR_CLIENTS.map((client, idx) => (
                 <div key={idx} className="p-2 rounded-xl bg-white border border-zinc-200 text-center hover:scale-105 transition-transform flex items-center justify-center h-12 shadow-sm" title={`${client.name} - ${client.highlight}`}>
                   <CompanyLogo company={client.short} size="sm" className="w-full h-full" />

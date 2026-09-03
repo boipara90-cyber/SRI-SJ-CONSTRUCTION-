@@ -253,8 +253,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal 
               </div>
               
               <div className="pl-5 pr-4 py-4 sm:py-5 space-y-2">
-                <span className="text-[10px] font-black tracking-[0.25em] text-orange-500 uppercase block leading-none">
-                  HEAVY FOUNDATION SPECIALISTS
+                <span className="text-[11px] sm:text-xs font-black tracking-[0.2em] text-orange-400 uppercase block leading-tight">
+                  SPECIALIST IN PILE FOUNDATIONS &amp; INDUSTRIAL CIVIL WORKS
                 </span>
                 <h1 className="text-3xl sm:text-4xl lg:text-[2.85rem] font-black tracking-tight leading-[1.2] font-['Space_Grotesk'] text-white">
                   <span className="relative inline-flex items-center px-4 py-2 rounded-xl border-2 border-orange-500/80 shadow-[0_10px_35px_rgba(249,115,22,0.35)] mr-2 overflow-hidden align-middle group">

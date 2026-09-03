@@ -20,6 +20,7 @@ import { QuoteModal } from './components/QuoteModal';
 import { AdminPanelModal } from './components/AdminPanelModal';
 import { OriginalPhotosManagerModal } from './components/OriginalPhotosManagerModal';
 import { BrightnessSection, ThemeMode } from './components/BrightnessSection';
+import { AnimatedSection } from './components/AnimatedSection';
 import { COMPANY_INFO } from './data/companyData';
 import { MessageCircle, Phone, Sparkles, Lock, Camera } from 'lucide-react';
 
@@ -30,10 +31,10 @@ export default function App() {
   const [prefillService, setPrefillService] = useState<string | undefined>(undefined);
   const [activeSection, setActiveSection] = useState<string>('home');
   
-  // Theme & Brightness (Default to Premium Dark / Black Theme)
+  // Theme & Brightness (Default to Clean White / Light Theme)
   const [theme, setTheme] = useState<ThemeMode>(() => {
     const saved = localStorage.getItem('sri_sj_theme');
-    return (saved === 'dark' || saved === 'light') ? saved : 'dark';
+    return (saved === 'dark' || saved === 'light') ? saved : 'light';
   });
 
   const [brightness, setBrightness] = useState<number>(() => {
@@ -150,36 +151,54 @@ export default function App() {
         />
 
         {/* 2. About Us */}
-        <AboutSection />
+        <AnimatedSection>
+          <AboutSection />
+        </AnimatedSection>
 
         {/* 3. Our Services */}
-        <ServicesSection onOpenQuoteModal={handleOpenQuoteModal} />
+        <AnimatedSection>
+          <ServicesSection onOpenQuoteModal={handleOpenQuoteModal} />
+        </AnimatedSection>
 
         {/* 4. Client Section */}
-        <ClientSection />
+        <AnimatedSection>
+          <ClientSection />
+        </AnimatedSection>
 
         {/* 5. Projects Section */}
-        <ProjectsSection onOpenQuoteModal={() => handleOpenQuoteModal()} />
+        <AnimatedSection>
+          <ProjectsSection onOpenQuoteModal={() => handleOpenQuoteModal()} />
+        </AnimatedSection>
 
         {/* 6. Why Choose Us */}
-        <WhyChooseUs />
+        <AnimatedSection>
+          <WhyChooseUs />
+        </AnimatedSection>
 
         {/* 7. Our Equipment */}
-        <EquipmentSection onOpenQuoteModal={handleOpenQuoteModal} />
+        <AnimatedSection>
+          <EquipmentSection onOpenQuoteModal={handleOpenQuoteModal} />
+        </AnimatedSection>
 
         {/* 8. Google Maps Search & Site Photo Hub */}
-        <GoogleMapsGallerySection 
-          onOpenQuoteModal={handleOpenQuoteModal} 
-          onOpenPhotosModal={() => setOriginalPhotosModalOpen(true)}
-        />
+        <AnimatedSection>
+          <GoogleMapsGallerySection 
+            onOpenQuoteModal={handleOpenQuoteModal} 
+            onOpenPhotosModal={() => setOriginalPhotosModalOpen(true)}
+          />
+        </AnimatedSection>
 
         {/* 9. Careers & Application Portal */}
-        <CareersSection />
+        <AnimatedSection>
+          <CareersSection />
+        </AnimatedSection>
 
         {/* 10. Contact Us & Maps */}
-        <ContactSection 
-          onOpenQuoteModal={() => handleOpenQuoteModal()} 
-        />
+        <AnimatedSection>
+          <ContactSection 
+            onOpenQuoteModal={() => handleOpenQuoteModal()} 
+          />
+        </AnimatedSection>
       </main>
 
       {/* Footer (contains the exclusive Admin Portal login/setup link) */}

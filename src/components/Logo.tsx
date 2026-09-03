@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import companyLogoImg from '../assets/images/regenerated_image_1788338692886.png';
 
 interface LogoProps {
@@ -18,11 +19,13 @@ export const OfficialCompanyEmblem: React.FC<{ className?: string; strokeEnhance
   className = "w-full h-full"
 }) => {
   return (
-    <img 
+    <motion.img 
       src={companyLogoImg} 
       alt="Sri SJ Constructions Logo" 
       className={`${className} object-contain`} 
       draggable={false}
+      whileHover={{ scale: 1.08, rotate: [0, -2, 2, 0] }}
+      transition={{ duration: 0.4 }}
     />
   );
 };

@@ -1,221 +1,375 @@
 import React from 'react';
 
 interface CompanyLogoProps {
-  company: 'EXIDE' | 'TATA' | 'ADANI' | 'ITC' | 'RUCHI' | 'L&T' | 'JINDAL' | 'PGCIL' | string;
+  company: string;
   className?: string;
   size?: 'sm' | 'md' | 'lg';
 }
 
 export const CompanyLogo: React.FC<CompanyLogoProps> = ({ company, className = '', size = 'md' }) => {
-  const normalized = company.toUpperCase();
+  const normalized = company.toUpperCase().trim().replace(/[\s\-_]+/g, '');
 
   const sizeClasses = {
-    sm: 'h-8 max-w-[110px]',
-    md: 'h-11 max-w-[160px]',
-    lg: 'h-14 max-w-[200px]'
+    sm: 'h-8 max-w-[120px]',
+    md: 'h-11 max-w-[170px]',
+    lg: 'h-14 max-w-[210px]'
   };
 
   const containerClass = `flex items-center justify-center select-none ${sizeClasses[size]} ${className}`;
 
-  switch (normalized) {
-    case 'EXIDE':
-      return (
-        <div className={containerClass} title="Exide Industries Limited">
-          <svg viewBox="0 0 160 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Red Energy Badge Background */}
-            <rect x="2" y="5" width="156" height="40" rx="8" fill="#E31837" />
-            <path d="M120 5L105 45H150C154.418 45 158 41.418 158 37V13C158 8.58172 154.418 5 150 5H120Z" fill="#B30E26" />
-            
-            {/* Battery Power Spark Motif */}
-            <path d="M128 12L120 25H127L122 38L136 23H129L134 12H128Z" fill="#FFD200" />
-            
-            {/* EXIDE Bold Letterforms */}
-            <g fill="#FFFFFF" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif">
-              {/* E */}
-              <path d="M14 14H30V19H20V23H28V27H20V31H30V36H14V14Z" fill="#FFFFFF" />
-              {/* X */}
-              <path d="M33 14H40L46 23.5L52 14H59L50 25L60 36H53L46 26.5L39 36H32L42 25L33 14Z" fill="#FFFFFF" />
-              {/* I */}
-              <path d="M62 14H68V36H62V14Z" fill="#FFFFFF" />
-              {/* D */}
-              <path d="M72 14H83C88 14 92 18 92 25C92 32 88 36 83 36H72V14ZM78 19V31H83C85.5 31 86.5 28.5 86.5 25C86.5 21.5 85.5 19 83 19H78Z" fill="#FFFFFF" />
-              {/* E */}
-              <path d="M96 14H112V19H102V23H110V27H102V31H112V36H96V14Z" fill="#FFFFFF" />
-            </g>
-          </svg>
-        </div>
-      );
-
-    case 'TATA':
-      return (
-        <div className={containerClass} title="Tata Projects / Tata Group">
-          <svg viewBox="0 0 150 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Tata Iconic Oval Blue Monogram */}
-            <g transform="translate(6, 4)">
-              <ellipse cx="21" cy="21" rx="20" ry="19" fill="#005A9C" />
-              {/* Dual Arch curves symbolizing trust & growth */}
-              <path d="M21 7C21 7 21 24 21 28" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" />
-              <path d="M21 7C17.5 12 11 17 8 18.5" stroke="#FFFFFF" strokeWidth="3.2" strokeLinecap="round" />
-              <path d="M21 7C24.5 12 31 17 34 18.5" stroke="#FFFFFF" strokeWidth="3.2" strokeLinecap="round" />
-              <ellipse cx="21" cy="31" rx="1.5" ry="1.5" fill="#FFFFFF" />
-            </g>
-            
-            {/* TATA Bold Typography */}
-            <text x="56" y="32" fill="#005A9C" fontSize="24" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="4">
-              TATA
-            </text>
-            <text x="57" y="43" fill="#64748B" fontSize="8.5" fontWeight="700" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="1.5">
-              PROJECTS
-            </text>
-          </svg>
-        </div>
-      );
-
-    case 'ADANI':
-      return (
-        <div className={containerClass} title="Adani Infra / Adani Group">
-          <svg viewBox="0 0 150 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Adani Dynamic Tri-Arc Icon */}
-            <g transform="translate(6, 6)">
-              {/* Blue Arc */}
-              <path d="M2 34C6 18 16 8 32 4" stroke="#003B70" strokeWidth="4.5" strokeLinecap="round" />
-              {/* Cyan Arc */}
-              <path d="M8 36C12 23 20 14 34 11" stroke="#00A3E0" strokeWidth="4" strokeLinecap="round" />
-              {/* Orange/Coral Arc */}
-              <path d="M14 38C17 29 23 21 36 18" stroke="#F26522" strokeWidth="3.5" strokeLinecap="round" />
-            </g>
-            
-            {/* adani lowercase signature wordmark */}
-            <text x="48" y="31" fill="#003B70" fontSize="23" fontWeight="800" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="0.5">
-              adani
-            </text>
-            <text x="49" y="42" fill="#F26522" fontSize="8" fontWeight="800" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="2">
-              INFRASTRUCTURE
-            </text>
-          </svg>
-        </div>
-      );
-
-    case 'ITC':
-      return (
-        <div className={containerClass} title="ITC Limited">
-          <svg viewBox="0 0 140 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* ITC Triangular Heraldic Crest */}
-            <g transform="translate(6, 6)">
-              <polygon points="18,2 34,34 2,34" fill="#003366" stroke="#D4AF37" strokeWidth="1.5" />
-              <polygon points="18,7 30,32 6,32" fill="#0A2540" />
-              {/* Compass Gold Star */}
-              <circle cx="18" cy="20" r="4" fill="#D4AF37" />
-              <line x1="18" y1="12" x2="18" y2="28" stroke="#FFFFFF" strokeWidth="1.5" />
-              <line x1="10" y1="20" x2="26" y2="20" stroke="#FFFFFF" strokeWidth="1.5" />
-            </g>
-            
-            {/* ITC Serif Distinct Typography */}
-            <text x="46" y="28" fill="#003366" fontSize="22" fontWeight="900" fontFamily="Georgia, serif" letterSpacing="3">
-              I.T.C.
-            </text>
-            <text x="46" y="40" fill="#94A3B8" fontSize="7.5" fontWeight="700" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="1">
-              LIMITED
-            </text>
-          </svg>
-        </div>
-      );
-
-    case 'RUCHI':
-      return (
-        <div className={containerClass} title="Ruchi Infra Services / Infrastructure">
-          <svg viewBox="0 0 150 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Ruchi Golden Harvest & Port Industrial Ring */}
-            <g transform="translate(6, 6)">
-              <circle cx="18" cy="18" r="17" fill="#0D5C3A" />
-              <circle cx="18" cy="18" r="14" fill="#FFFFFF" />
-              {/* Sunburst / Grain Rays */}
-              <path d="M18 6V12M18 24V30M6 18H12M24 18H30M9 9L14 14M22 22L27 27M9 27L14 22M22 14L27 9" stroke="#E5A910" strokeWidth="2" strokeLinecap="round" />
-              <circle cx="18" cy="18" r="4.5" fill="#E31837" />
-            </g>
-            
-            {/* RUCHI Bold Wordmark */}
-            <text x="46" y="29" fill="#E31837" fontSize="21" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="1.5">
-              RUCHI
-            </text>
-            <text x="47" y="41" fill="#0D5C3A" fontSize="8" fontWeight="800" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="1.5">
-              INFRA SERVICES
-            </text>
-          </svg>
-        </div>
-      );
-
-    case 'L&T':
-      return (
-        <div className={containerClass} title="Larsen & Toubro Limited">
-          <svg viewBox="0 0 150 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* L&T Signature Yellow Box */}
-            <rect x="4" y="6" width="38" height="38" rx="6" fill="#FDB913" />
-            <path d="M10 13H15V31H25V36H10V13Z" fill="#002D62" />
-            <path d="M21 13H33V17H29V36H24V17H21V13Z" fill="#002D62" />
-            <path d="M18 22L22 26" stroke="#002D62" strokeWidth="2.5" strokeLinecap="round" />
-            
-            {/* L&T Wordmark */}
-            <text x="48" y="27" fill="#002D62" fontSize="18" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="1">
-              L&amp;T
-            </text>
-            <text x="48" y="39" fill="#64748B" fontSize="8" fontWeight="700" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="0.8">
-              LARSEN &amp; TOUBRO
-            </text>
-          </svg>
-        </div>
-      );
-
-    case 'JINDAL':
-      return (
-        <div className={containerClass} title="Jindal India Limited">
-          <svg viewBox="0 0 150 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Jindal Steel Arch */}
-            <g transform="translate(6, 6)">
-              <rect width="36" height="36" rx="6" fill="#0F172A" />
-              <path d="M8 28C8 17 17 8 28 8" stroke="#EF4444" strokeWidth="4" strokeLinecap="round" />
-              <path d="M14 28C14 20 20 14 28 14" stroke="#38BDF8" strokeWidth="3.5" strokeLinecap="round" />
-            </g>
-            
-            <text x="48" y="27" fill="#0F172A" fontSize="18" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="1.5">
-              JINDAL
-            </text>
-            <text x="49" y="39" fill="#0284C7" fontSize="8" fontWeight="800" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="1.5">
-              INDIA LIMITED
-            </text>
-          </svg>
-        </div>
-      );
-
-    case 'PGCIL':
-      return (
-        <div className={containerClass} title="Power Grid Corporation of India Limited">
-          <svg viewBox="0 0 160 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* PGCIL Transmission Tower Crest */}
-            <g transform="translate(6, 6)">
-              <rect width="36" height="36" rx="6" fill="#065F46" />
-              {/* Tower structure */}
-              <path d="M18 6V30M8 18H28M12 12H24M11 25L25 25M11 12L25 25M25 12L11 25" stroke="#34D399" strokeWidth="1.8" strokeLinecap="round" />
-              <circle cx="18" cy="6" r="2" fill="#F59E0B" />
-            </g>
-            
-            <text x="48" y="27" fill="#065F46" fontSize="17" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="1">
-              POWERGRID
-            </text>
-            <text x="49" y="39" fill="#047857" fontSize="7.5" fontWeight="800" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="1">
-              PGCIL GOVT OF INDIA
-            </text>
-          </svg>
-        </div>
-      );
-
-    default:
-      return (
-        <div className={containerClass}>
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-800 border border-zinc-700">
-            <span className="text-xs font-black text-orange-400 font-['Space_Grotesk'] tracking-wider">{company}</span>
-          </div>
-        </div>
-      );
+  // 1. L&T / LARSEN & TOUBRO
+  if (normalized.includes('L&T') || normalized.includes('LARSEN') || normalized === 'LT') {
+    return (
+      <div className={containerClass} title="Larsen & Toubro">
+        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(45, 0)">
+            <circle cx="25" cy="25" r="22" stroke="#00356B" strokeWidth="3.5" fill="none" />
+            <path d="M14 12 L22 36 L34 36 L26 12 Z" fill="#00356B" />
+            <path d="M21 12 L38 12 L35 20 L27 20 L30 12 Z" fill="#00356B" />
+            <path d="M23 28 L31 28 L28 36 L21 36 Z" fill="#00356B" />
+          </g>
+          <text x="100" y="32" fill="#00356B" fontSize="22" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" fontStyle="italic" letterSpacing="0.5">
+            L&amp;T
+          </text>
+        </svg>
+      </div>
+    );
   }
+
+  // 2. KALPATARU / KPIL
+  if (normalized.includes('KALPATARU') || normalized.includes('KPIL')) {
+    return (
+      <div className={containerClass} title="Kalpataru Projects International Limited">
+        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* Kalpataru Circular Seal */}
+          <g transform="translate(6, 0)">
+            <circle cx="25" cy="25" r="23" stroke="#23A1D9" strokeWidth="4.5" fill="none" />
+            <circle cx="25" cy="25" r="18" stroke="#23A1D9" strokeWidth="1" fill="none" />
+            
+            {/* Center Blue Square */}
+            <rect x="14" y="11" width="8" height="8" fill="#23A1D9" />
+            {/* White Clover inside square */}
+            <path d="M18 12.5 C19 12.5 19 14.5 18 15 C19.5 15 19.5 16.5 18 16.5 C18 17.5 16 17.5 16 16.5 C14.5 16.5 14.5 15 16 15 C15 14.5 15 12.5 16 12.5 Z" fill="#FFFFFF" />
+            <line x1="18" y1="12" x2="18" y2="17" stroke="#FFFFFF" strokeWidth="0.8" />
+            <line x1="15" y1="15" x2="21" y2="15" stroke="#FFFFFF" strokeWidth="0.8" />
+            
+            {/* Inner Text */}
+            <text x="24" y="17" fill="#333333" fontSize="5.5" fontWeight="900" fontFamily="system-ui, sans-serif">
+              KALPA-TARU
+            </text>
+            <text x="25" y="32" textAnchor="middle" fill="#333333" fontSize="13" fontWeight="900" fontFamily="system-ui, sans-serif" letterSpacing="0.5">
+              KPIL
+            </text>
+
+            {/* Stars */}
+            <g fill="#23A1D9" transform="translate(0, 1) scale(0.95)">
+              <polygon points="12,42 13,44 15,44 13.5,45.5 14,47.5 12,46.5 10,47.5 10.5,45.5 9,44 11,44" />
+              <polygon points="17,44 18,46 20,46 18.5,47.5 19,49.5 17,48.5 15,49.5 15.5,47.5 14,46 16,46" />
+              <polygon points="22.5,45 23.5,47 25.5,47 24,48.5 24.5,50.5 22.5,49.5 20.5,50.5 21,48.5 19.5,47 21.5,47" />
+              <polygon points="28,44 29,46 31,46 29.5,47.5 30,49.5 28,48.5 26,49.5 26.5,47.5 25,46 27,46" />
+              <polygon points="33,42 34,44 36,44 34.5,45.5 35,47.5 33,46.5 31,47.5 31.5,45.5 30,44 32,44" />
+            </g>
+          </g>
+          
+          <text x="64" y="24" fill="#23A1D9" fontSize="15" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="0.5">
+            KALPATARU
+          </text>
+          <text x="64" y="37" fill="#475569" fontSize="8.5" fontWeight="800" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="0.3">
+            PROJECTS INTL LTD
+          </text>
+        </svg>
+      </div>
+    );
+  }
+
+  // 3. RESONIA LTD
+  if (normalized.includes('RESONIA')) {
+    return (
+      <div className={containerClass} title="Resonia Ltd">
+        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(10, 6)">
+            <polygon points="19,2 35,11 35,29 19,38 3,29 3,11" fill="#1E293B" />
+            <polygon points="19,7 30,13 30,27 19,33 8,27 8,13" fill="#0F172A" stroke="#F97316" strokeWidth="2" />
+            <path d="M13 16L19 22L25 16M13 22L19 28L25 22" stroke="#F97316" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          </g>
+          <text x="58" y="27" fill="#1E293B" fontSize="19" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="1.5">
+            RESONIA
+          </text>
+          <text x="59" y="39" fill="#F97316" fontSize="8.5" fontWeight="800" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="2">
+            LIMITED
+          </text>
+        </svg>
+      </div>
+    );
+  }
+
+  // 4. ADANI WILMAR
+  if (normalized.includes('WILMAR') || normalized === 'ADANIWILMAR') {
+    return (
+      <div className={containerClass} title="Adani Wilmar Limited">
+        <svg viewBox="0 0 160 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="adaniWilmarGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#0079C1" />
+              <stop offset="50%" stopColor="#7B3294" />
+              <stop offset="100%" stopColor="#D81B60" />
+            </linearGradient>
+          </defs>
+          <text x="36" y="22" fill="url(#adaniWilmarGrad)" fontSize="26" fontWeight="800" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="0">
+            adani
+          </text>
+          <text x="33" y="44" fill="#00665E" fontSize="23" fontWeight="900" fontFamily="Georgia, serif" letterSpacing="0">
+            wilmar
+          </text>
+        </svg>
+      </div>
+    );
+  }
+
+  // 5. ADANI ENERGY SOLUTIONS
+  if (normalized.includes('ADANIENERGY') || normalized.includes('ENERGYSOLUTIONS')) {
+    return (
+      <div className={containerClass} title="Adani Energy Solutions Ltd">
+        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="adaniEnergyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#0079C1" />
+              <stop offset="50%" stopColor="#7B3294" />
+              <stop offset="100%" stopColor="#D81B60" />
+            </linearGradient>
+          </defs>
+          <text x="18" y="24" fill="url(#adaniEnergyGrad)" fontSize="26" fontWeight="800" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="0">
+            adani
+          </text>
+          <line x1="18" y1="31" x2="152" y2="31" stroke="#64748B" strokeWidth="1.5" />
+          <text x="18" y="44" fill="#475569" fontSize="12.5" fontWeight="600" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="0.2">
+            Energy Solutions
+          </text>
+        </svg>
+      </div>
+    );
+  }
+
+  // 6. SHAPOORJI PALLONJI
+  if (normalized.includes('SHAPOORJI') || normalized.includes('PALLONJI') || normalized === 'SP') {
+    return (
+      <div className={containerClass} title="Shapoorji Pallonji">
+        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(16, 4)">
+            {/* Shapoorji 3D Ribbon SP */}
+            <polygon points="12,18 24,12 36,18 36,26 24,32 12,26" fill="#0B3C78" />
+            <polygon points="12,18 24,12 24,18 12,24" fill="#0E4B92" />
+            <polygon points="24,12 36,18 36,26 24,20" fill="#0078C1" />
+            
+            <polygon points="0,24 12,18 24,24 24,32 12,38 0,32" fill="#0E4B92" />
+            <polygon points="0,24 12,18 12,24 0,30" fill="#0B3C78" />
+            <polygon points="12,18 24,24 24,32 12,26" fill="#1867BB" />
+          </g>
+          <text x="58" y="27" fill="#0B3C78" fontSize="14" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="0">
+            Shapoorji Pallonji
+          </text>
+          <text x="59" y="39" fill="#0078C1" fontSize="8.5" fontWeight="800" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="0.8">
+            CONSTRUCTION LTD
+          </text>
+        </svg>
+      </div>
+    );
+  }
+
+  // 7. ITC LIMITED
+  if (normalized.includes('ITC')) {
+    return (
+      <div className={containerClass} title="ITC Limited">
+        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(18, 0)">
+            {/* The ITC Triangle */}
+            <path d="M 23 2 L 44 42 L 2 42 Z" fill="#002B5E" />
+            {/* The White Cutout forming I T C */}
+            <path d="M 23 18 L 33 42 L 30 42 L 27 35 L 19 35 L 16 42 L 13 42 Z" fill="#FFFFFF" />
+            <path d="M 20 31 L 26 31 L 23 23 Z" fill="#002B5E" />
+            <rect x="22" y="10" width="2" height="6" fill="#FFFFFF" />
+          </g>
+          <text x="68" y="28" fill="#002B5E" fontSize="21" fontWeight="900" fontFamily="Georgia, serif" letterSpacing="2">
+            ITC
+          </text>
+          <text x="69" y="42" fill="#002B5E" fontSize="11" fontWeight="700" fontFamily="Georgia, serif" letterSpacing="0.5">
+            Limited
+          </text>
+        </svg>
+      </div>
+    );
+  }
+
+  // 8. RUCHI INDUSTRIES / RUCHI SOYA
+  if (normalized.includes('RUCHI')) {
+    return (
+      <div className={containerClass} title="Ruchi Soya Industries Limited">
+        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="25" y="4" width="120" height="30" rx="15" fill="#139648" />
+          <g fill="#FFFFFF" transform="translate(35, 10)">
+            {/* Custom stylized R */}
+            <path d="M 10 3 L 18 3 C 21 3 23 4.5 23 7 C 23 9.5 21 11 18 11 L 14 11 L 14 17 L 10 17 Z M 14 6 L 14 8 L 18 8 C 19 8 19 6 18 6 Z" />
+            <path d="M 18 11 L 26 21 L 21 21 L 15 13 Z" />
+            <text x="25" y="16" fontSize="15" fontWeight="900" fontFamily="Georgia, serif" letterSpacing="0">
+              uchi
+            </text>
+          </g>
+          <text x="22" y="45" fill="#139648" fontSize="8.5" fontWeight="800" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="0.3">
+            Ruchi Soya Industries Limited
+          </text>
+        </svg>
+      </div>
+    );
+  }
+
+  // 9. JINDAL INDIA LTD
+  if (normalized.includes('JINDAL')) {
+    return (
+      <div className={containerClass} title="Jindal India Limited">
+        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(25, 2)">
+            {/* Red Oval Trade Mark */}
+            <ellipse cx="30" cy="18" rx="28" ry="17" stroke="#E31837" strokeWidth="2.5" fill="none" />
+            <rect x="18" y="0" width="24" height="6" fill="#FFFFFF" />
+            <text x="30" y="5" textAnchor="middle" fill="#E31837" fontSize="5" fontWeight="900" fontFamily="system-ui, sans-serif" letterSpacing="0.5">
+              TRADE
+            </text>
+            <rect x="20" y="32" width="20" height="6" fill="#FFFFFF" />
+            <text x="30" y="37" textAnchor="middle" fill="#E31837" fontSize="5" fontWeight="900" fontFamily="system-ui, sans-serif" letterSpacing="0.5">
+              MARK
+            </text>
+            
+            {/* Simplified Map of India */}
+            <path d="M25 8 C28 6 32 8 34 11 C37 13 40 15 39 18 C38 21 35 24 33 27 C31 30 29 34 26 34 C23 30 21 26 19 23 C17 19 16 15 19 11 Z" fill="#E31837" />
+            
+            <text x="30" y="21" textAnchor="middle" fill="#FFFFFF" fontSize="9" fontWeight="900" fontFamily="Georgia, serif" letterSpacing="0.5">
+              Jindal
+            </text>
+          </g>
+          
+          <text x="86" y="22" fill="#E31837" fontSize="16" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="1">
+            JINDAL
+          </text>
+          <text x="86" y="36" fill="#E31837" fontSize="8" fontWeight="800" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="0.8">
+            (INDIA) LIMITED
+          </text>
+        </svg>
+      </div>
+    );
+  }
+
+  // 10. EXIDE INDUSTRIES LTD
+  if (normalized.includes('EXIDE')) {
+    return (
+      <div className={containerClass} title="Exide Industries Limited">
+        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(10, 4)">
+            <circle cx="21" cy="21" r="19" fill="#0A18A8" />
+            <path d="M25 7 L12 21 L19 21 L16 34 L29 20 L22 20 Z" fill="#FFFFFF" />
+          </g>
+          <text x="56" y="28" fill="#DA2128" fontSize="27" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" fontStyle="italic" letterSpacing="1">
+            EXIDE
+          </text>
+          <text x="57" y="41" fill="#1C1B50" fontSize="8.5" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="1.2">
+            INDUSTRIES LIMITED
+          </text>
+        </svg>
+      </div>
+    );
+  }
+
+  // 11. CERATIZIT INDIA PVT LTD
+  if (normalized.includes('CERATIZIT')) {
+    return (
+      <div className={containerClass} title="Ceratizit Group">
+        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(12, 8)">
+            {/* Dark Charcoal Triangle outline */}
+            <polygon points="12,2 2,26 8,32 18,32 21,26 12,26 7,26 14,8 18,8" fill="#404040" />
+            {/* Red Triangle Stripes */}
+            <polygon points="21,12 30,30 25,30 17,16" fill="#E83A14" />
+            <polygon points="24,18 29,30 27,30 22,21" fill="#E83A14" />
+            <polygon points="27,24 30,30 28,30 25,25" fill="#E83A14" />
+            
+            <line x1="20" y1="32" x2="33" y2="32" stroke="#E83A14" strokeWidth="2.5" />
+          </g>
+
+          <g transform="translate(54, 8)">
+            <text x="0" y="19" fill="#E83A14" fontSize="18" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="2">
+              CERATIZIT
+            </text>
+            <line x1="2" y1="26" x2="100" y2="26" stroke="#404040" strokeWidth="1.5" />
+            <text x="30" y="38" fill="#404040" fontSize="9" fontWeight="800" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="4">
+              GROUP
+            </text>
+          </g>
+        </svg>
+      </div>
+    );
+  }
+
+  // 12. SHREEJI PROPACK PVT LTD (SHREEJI GROUP)
+  if (normalized.includes('SHREEJI')) {
+    return (
+      <div className={containerClass} title="Shreeji Group">
+        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(8, 2)">
+            {/* Globe Sphere */}
+            <circle cx="21" cy="24" r="17" fill="#2E2469" />
+            <ellipse cx="21" cy="24" rx="15" ry="7" stroke="#4B4190" strokeWidth="1" fill="none" />
+            <ellipse cx="21" cy="24" rx="7" ry="15" stroke="#4B4190" strokeWidth="1" fill="none" />
+            
+            {/* Light Blue S Wave */}
+            <path d="M 12 18 C 16 12 28 10 32 18 C 36 26 24 32 16 35 C 12 36 26 31 34 23" stroke="#25A5DE" strokeWidth="3.5" strokeLinecap="round" fill="none" />
+            
+            <path d="M 6 12 C 12 4 30 4 36 12" id="shreejiCurve" fill="none" />
+            <text fill="#E51D24" fontSize="7" fontWeight="900" fontFamily="system-ui, sans-serif" letterSpacing="0.2">
+              <textPath href="#shreejiCurve" startOffset="50%" textAnchor="middle">
+                SHREEJI GROUP
+              </textPath>
+            </text>
+          </g>
+          
+          <g transform="translate(56, 4)">
+            <text x="0" y="19" fill="#E51D24" fontSize="15" fontWeight="900" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="0.5">
+              SHREEJI
+            </text>
+            <text x="0" y="32" fill="#2E2469" fontSize="8.5" fontWeight="800" fontFamily="system-ui, -apple-system, sans-serif" letterSpacing="0.5">
+              PROPACK PVT. LTD.
+            </text>
+            <text x="0" y="42" fill="#2E2469" fontSize="7" fontStyle="italic" fontWeight="600" fontFamily="Georgia, serif">
+              Driven to Deliver
+            </text>
+          </g>
+        </svg>
+      </div>
+    );
+  }
+
+  // TATA (For backwards compatibility)
+  if (normalized.includes('TATA')) {
+    return (
+      <div className={containerClass} title="Tata Projects">
+        <svg viewBox="0 0 150 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="21" cy="25" rx="19" ry="18" fill="#005A9C" />
+          <path d="M21 11C21 11 21 28 21 32" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" />
+          <path d="M21 11C17.5 16 11 21 8 22.5" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" />
+          <path d="M21 11C24.5 16 31 21 34 22.5" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" />
+          <text x="52" y="30" fill="#005A9C" fontSize="22" fontWeight="900" fontFamily="system-ui, sans-serif" letterSpacing="3">
+            TATA
+          </text>
+        </svg>
+      </div>
+    );
+  }
+
+  // Default fallback
+  return (
+    <div className={containerClass}>
+      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-800 border border-zinc-700">
+        <span className="text-xs font-black text-orange-400 font-['Space_Grotesk'] tracking-wider">{company}</span>
+      </div>
+    </div>
+  );
 };
+

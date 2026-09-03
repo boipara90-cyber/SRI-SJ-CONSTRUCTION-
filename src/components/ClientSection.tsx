@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import { MAJOR_CLIENTS } from '../data/companyData';
 import { CompanyLogo } from './ClientLogos';
 import { Award, Building2, ShieldCheck, MapPin, CheckCircle2, ArrowUpRight } from 'lucide-react';
@@ -32,24 +33,34 @@ export const ClientSection: React.FC = () => {
           <div className="text-[11px] font-black uppercase tracking-[0.2em] text-zinc-400 text-center mb-5">
             Verified Contractor for Blue-Chip Industry Leaders
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4 items-center">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4 items-center">
             {MAJOR_CLIENTS.map((client, idx) => (
-              <div 
+              <motion.div 
                 key={idx}
-                className="p-3.5 rounded-xl bg-white flex items-center justify-center hover:scale-105 transition-transform duration-300 shadow-md h-16 border border-zinc-200 group"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.04 }}
+                whileHover={{ scale: 1.06, y: -3 }}
+                className="p-3 rounded-xl bg-white flex items-center justify-center shadow-md h-16 border border-zinc-200 cursor-pointer group"
                 title={client.name}
               >
                 <CompanyLogo company={client.short} size="sm" className="w-full" />
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
 
         {/* Comprehensive Client Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {MAJOR_CLIENTS.map((client, idx) => (
-            <div 
+            <motion.div 
               key={idx} 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.05 }}
+              whileHover={{ y: -5 }}
               className="group relative p-6 rounded-3xl bg-[#121218] border border-zinc-800 hover:border-orange-500/50 transition-all duration-500 overflow-hidden shadow-xl hover:shadow-[0_0_40px_rgba(249,115,22,0.15)] flex flex-col justify-between"
             >
               {/* Hover Glow Effect */}
@@ -100,7 +111,7 @@ export const ClientSection: React.FC = () => {
                   </div>
                 )}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
@@ -117,7 +128,7 @@ export const ClientSection: React.FC = () => {
               High-Tonnage Foundation &amp; Substructure Capability
             </h4>
             <p className="text-zinc-400 text-sm sm:text-base max-w-2xl">
-              From Exide's heavy industrial battery plants and Tata Projects packages to Adani Infra corridors and PGCIL 765kV EHV lines, Sri SJ Constructions delivers uncompromising structural durability.
+              From L&amp;T EHV river crossings and Kalpataru transmission lines to Adani Energy Solutions, Shapoorji Pallonji, Exide, Ceratizit, and Adani Wilmar facilities, Sri SJ Constructions delivers uncompromising structural durability.
             </p>
           </div>
           

@@ -326,60 +326,88 @@ export const WHY_CHOOSE_US = [
 
 export const MAJOR_CLIENTS = [
   { 
-    name: "Exide Industries Limited", 
-    short: "EXIDE", 
-    tagline: "Industrial Battery & Energy Systems",
-    highlight: "Deep Foundation Piling, Heavy Machine Slabs & Plant Infrastructure Works",
-    location: "Haldia & West Bengal Manufacturing Plants"
+    name: "Larsen & Toubro Limited", 
+    short: "L&T", 
+    tagline: "Global EPC, Power Transmission & Heavy Infrastructure",
+    highlight: "River Bank Transmission Tower Piling & Substation Substructures",
+    location: "EHV Transmission Lines & River Crossing Corridors"
   },
   { 
-    name: "Tata Projects / Tata Group", 
-    short: "TATA", 
-    tagline: "Engineering, Procurement & Construction",
-    highlight: "Heavy Industrial Civil & Structural Foundation Packages under Strict EHS Norms",
-    location: "National Infrastructure Projects"
+    name: "Kalpataru Projects International Ltd", 
+    short: "KPIL", 
+    tagline: "Global Power Transmission, Oil & Gas and Infra EPC",
+    highlight: "High-Capacity Rotary Bored Foundation Piling & Grid Substructures",
+    location: "National Power Transmission & EPC Corridors"
   },
   { 
-    name: "Adani Infra / Adani Group", 
-    short: "ADANI", 
-    tagline: "Ports, Energy & Logistics Infrastructure",
-    highlight: "Large-Scale Substructure Civil Works, Soil Stabilization & Deep Piling Solutions",
-    location: "Port, Energy & Industrial Corridors"
+    name: "Resonia Ltd", 
+    short: "RESONIA", 
+    tagline: "Industrial Engineering & Advanced Materials",
+    highlight: "Heavy Equipment Civil Foundations & Precision Plant Piling Works",
+    location: "Industrial Manufacturing Corridors, West Bengal"
+  },
+  { 
+    name: "Adani Energy Solutions Ltd", 
+    short: "ADANI ENERGY", 
+    tagline: "Power Transmission, Grid Infrastructure & Smart Energy",
+    highlight: "EHV Substation Civil Works, Tower Pile Foundations & Plinths",
+    location: "Eastern Region Power Transmission Corridors"
+  },
+  { 
+    name: "Shapoorji Pallonji Construction Ltd", 
+    short: "SHAPOORJI", 
+    tagline: "Premier Engineering, Industrial & Mega Infrastructure",
+    highlight: "Heavy Load Bored Cast-in-Situ Piling, Machine Foundations & RCC Works",
+    location: "Industrial Campuses & Commercial Facilities"
   },
   { 
     name: "ITC Limited", 
     short: "ITC", 
-    tagline: "Manufacturing, Packaging & Logistics Hubs",
-    highlight: "Precision Industrial Civil Construction, PEB Footings & Monolithic Floor Slabs",
-    location: "Eastern Region Processing & Logistics Campuses"
+    tagline: "Manufacturing, Packaging & Logistics Campuses",
+    highlight: "Precision Industrial Civil Construction, PEB Footings & Floor Slabs",
+    location: "Eastern Region Manufacturing & Processing Hubs"
   },
   { 
-    name: "Ruchi Infra Services / Infrastructure", 
+    name: "Ruchi Industries Ltd", 
     short: "RUCHI", 
-    tagline: "Port Terminals & Industrial Infrastructure",
-    highlight: "High-Capacity Bored Cast-in-Situ Foundation Piling & Coastal Jetty Substructures",
-    location: "Haldia Port & Industrial Belt, WB"
-  },
-  { 
-    name: "Larsen & Toubro Limited", 
-    short: "L&T", 
-    tagline: "Global EPC & Heavy Infrastructure",
-    highlight: "River Bank Transmission Piling & Substation Substructures at Krishna River",
-    location: "EHV Transmission Lines & River Crossing Corridors"
+    tagline: "Port Terminals & Agro-Industrial Refining Complexes",
+    highlight: "High-Capacity Bored Cast-in-Situ Piling & Coastal Jetty Foundations",
+    location: "Haldia Port & Industrial Belt, West Bengal"
   },
   { 
     name: "Jindal India Limited", 
     short: "JINDAL", 
-    tagline: "Steel, Energy & Heavy Manufacturing",
-    highlight: "Sheet Piling, PEB Structures & Heavy Triple Pot Furnace Foundations",
-    location: "West Bengal Manufacturing Complexes"
+    tagline: "Steel Processing, Energy & Heavy Manufacturing",
+    highlight: "Sheet Piling, PEB Structural Sheds & Triple Pot Furnace Foundations",
+    location: "West Bengal Industrial Manufacturing Complexes"
   },
   { 
-    name: "Power Grid Corporation of India Ltd", 
-    short: "PGCIL", 
-    tagline: "Central Transmission Utility of India",
-    highlight: "765kV KMTL EHV Tower Piling, High-Load Foundation Rings & Pile Built-Up",
-    location: "National Power Transmission Corridors"
+    name: "Exide Industries Limited", 
+    short: "EXIDE", 
+    tagline: "Industrial Battery & Energy Storage Systems",
+    highlight: "Deep Foundation Bored Piling, Heavy Machine Slabs & Plant Infrastructure",
+    location: "Haldia & West Bengal Manufacturing Plants"
+  },
+  { 
+    name: "Ceratizit India Pvt Ltd", 
+    short: "CERATIZIT", 
+    tagline: "Precision Carbide Tooling & High-Tech Manufacturing",
+    highlight: "Vibration-Isolated Dynamic Machine Foundations & Rotary Bored Piling",
+    location: "Industrial Corridor, West Bengal"
+  },
+  { 
+    name: "Shreeji Propack Pvt Ltd", 
+    short: "SHREEJI", 
+    tagline: "Advanced Packaging & Industrial Manufacturing Solutions",
+    highlight: "Heavy Factory Foundations, Equipment Piling & Floor Hardening Packages",
+    location: "Industrial Parks, West Bengal"
+  },
+  { 
+    name: "Adani Wilmar Limited", 
+    short: "ADANI WILMAR", 
+    tagline: "Fortune Foods FMCG & Bulk Port Agro-Refining Complex",
+    highlight: "Heavy Tank Farm Piling, Grain Silo Substructures & Civil Works",
+    location: "Haldia Port Corridor, West Bengal"
   }
 ];
 
