@@ -1,6 +1,7 @@
 import React from 'react';
 import { COMPANY_INFO } from '../data/companyData';
 import { OfficialCompanyEmblem } from './Logo';
+import { useSiteContent } from '../services/siteContentService';
 import { 
   Building2, 
   Drill, 
@@ -21,6 +22,7 @@ import {
 } from 'lucide-react';
 
 export const AboutSection: React.FC = () => {
+  const { content } = useSiteContent();
   const modernMethods = [
     {
       name: "Sonic Integrity Testing on Piles",
@@ -103,13 +105,13 @@ export const AboutSection: React.FC = () => {
         <div className="max-w-3xl mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-orange-500/15 border border-orange-500/30 text-orange-400 text-xs font-bold uppercase tracking-wider mb-3">
             <HardHat className="w-3.5 h-3.5 text-orange-500" />
-            <span>About S.J. Constructions</span>
+            <span>{content.about.badgeText}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight font-['Space_Grotesk']">
-            Building on Trust, Technicality &amp; Engineering Precision
+            {content.about.heading}
           </h2>
           <p className="text-zinc-300 text-base sm:text-lg mt-3 leading-relaxed">
-            From our founding roots in <strong className="text-orange-400">2007</strong> to our established corporate presence in <strong className="text-white font-semibold">Haldia, Sutahata, Nandarampur, West Bengal (721635)</strong>, delivering specialized deep foundation and infrastructure solutions.
+            {content.about.leadParagraph}
           </p>
         </div>
 
@@ -127,7 +129,7 @@ export const AboutSection: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-black text-white font-['Space_Grotesk'] leading-tight">
-                    SRI SJ CONSTRUCTIONS
+                    {content.company.shortName}
                   </h3>
                   <span className="text-[11px] font-bold text-orange-400 uppercase tracking-wider">
                     Private Limited
@@ -138,7 +140,7 @@ export const AboutSection: React.FC = () => {
               <div className="w-full pt-3 border-t border-zinc-800 space-y-2 text-xs text-zinc-300">
                 <div className="flex items-center justify-between">
                   <span className="text-zinc-400">Piling Roots:</span>
-                  <span className="font-bold text-white">Since 2007</span>
+                  <span className="font-bold text-white">Since {content.company.establishedYear}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-zinc-400">Corporate Incorporation:</span>
@@ -146,7 +148,7 @@ export const AboutSection: React.FC = () => {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-zinc-400">GSTIN:</span>
-                  <span className="font-mono font-bold text-orange-400">19ABPCS8304J1ZQ</span>
+                  <span className="font-mono font-bold text-orange-400">{content.company.gstNumber}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-zinc-400">HQ Location:</span>
@@ -158,17 +160,17 @@ export const AboutSection: React.FC = () => {
             {/* Right: User's Official Text Narrative */}
             <div className="lg:col-span-8 space-y-5 text-zinc-300 text-sm sm:text-base leading-relaxed">
               <p className="text-white font-semibold text-base sm:text-lg leading-snug">
-                Incorporated as a piling company in <strong className="text-orange-400 font-bold">2007</strong>, <strong className="text-white">S.J. Constructions</strong> has taken the shape of a full-fledged construction company with special emphasis on pile foundation, testing and other geotechnical works in less than a year and half.
+                {content.about.storyParagraph1}
               </p>
 
               <div className="p-4 rounded-xl bg-orange-500/10 border-l-4 border-orange-500 text-zinc-200">
                 <p className="font-medium">
-                  <strong className="text-white">Consistent effort to improve quality of workmanship</strong>, <strong className="text-white">Commitment towards timely Completion</strong>, <strong className="text-white">Transparency in dealing with clients</strong>, above all the greatest encouragement from our clients are the <span className="text-orange-400 font-bold">Motivating factors to our Success</span>.
+                  {content.about.storyParagraph2}
                 </p>
               </div>
 
               <p>
-                To combat the challenge ahead we’re on the way to modernize the testing and Construction methods. <strong className="text-orange-300">Sonic integrity testing on piles</strong>, usage of <strong className="text-orange-300">LVDT display device</strong>, <strong className="text-orange-300">VDF system</strong> and <strong className="text-orange-300">Power trowel</strong> are to name a few in this direction.
+                {content.about.storyParagraph3}
               </p>
 
               {/* Client Assurance Highlight Banner */}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Logo } from './Logo';
 import { COMPANY_INFO, SERVICES } from '../data/companyData';
+import { useSiteContent } from '../services/siteContentService';
 import { 
   MapPin, 
   Phone, 
@@ -13,15 +14,18 @@ import {
   Instagram, 
   Youtube,
   ShieldCheck,
-  Lock
+  Lock,
+  SlidersHorizontal
 } from 'lucide-react';
 
 interface FooterProps {
   onOpenQuoteModal: () => void;
   onOpenAdminModal?: () => void;
+  onOpenWebsiteEditor?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal, onOpenAdminModal }) => {
+export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal, onOpenAdminModal, onOpenWebsiteEditor }) => {
+  const { content } = useSiteContent();
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -146,21 +150,21 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal, onOpenAdminMod
 
               <div className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
-                <a href={`tel:${COMPANY_INFO.contact.phone}`} className="text-slate-200 hover:text-emerald-400 font-semibold">
-                  {COMPANY_INFO.contact.phone}
+                <a href={`tel:${content.company.phone}`} className="text-slate-200 hover:text-emerald-400 font-semibold">
+                  {content.company.phone}
                 </a>
               </div>
 
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-emerald-400 shrink-0" />
-                <a href={`mailto:${COMPANY_INFO.contact.email}`} className="text-slate-200 hover:text-emerald-400 font-semibold">
-                  {COMPANY_INFO.contact.email}
+                <a href={`mailto:${content.company.email}`} className="text-slate-200 hover:text-emerald-400 font-semibold">
+                  {content.company.email}
                 </a>
               </div>
 
               <div className="pt-1 text-[11px] text-emerald-400 font-mono font-semibold flex items-center gap-1.5">
                 <span className="px-1.5 py-0.5 rounded bg-emerald-500/20 border border-emerald-500/30 text-emerald-300">GSTIN</span>
-                <span>19ABPCS8304J1ZQ</span>
+                <span>{content.company.gstNumber}</span>
               </div>
             </div>
 
@@ -179,14 +183,26 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal, onOpenAdminMod
         {/* Bottom Bar: Copyright & Back to Top */}
         <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <div className="flex items-center gap-2 flex-wrap text-center sm:text-left">
-            <span>© 2011 – {new Date().getFullYear()} <strong className="text-white font-black tracking-wide">SRI SJ CONSTRUCTIONS PRIVATE LIMITED</strong>. All Rights Reserved.</span>
+            <span>© 2011 – {new Date().getFullYear()} <strong className="text-white font-black tracking-wide">{content.company.name}</strong>. All Rights Reserved.</span>
             <span className="hidden md:inline text-emerald-500">•</span>
-            <span className="text-slate-300">GSTIN: <strong className="text-emerald-400 font-mono">19ABPCS8304J1ZQ</strong></span>
+            <span className="text-slate-300">GSTIN: <strong className="text-emerald-400 font-mono">{content.company.gstNumber}</strong></span>
             <span className="hidden md:inline text-emerald-500">•</span>
             <span className="text-slate-300">Haldia, West Bengal – 721635, India</span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5 flex-wrap">
+            {onOpenWebsiteEditor && (
+              <button
+                onClick={onOpenWebsiteEditor}
+                id="footer-edit-website-btn"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/40 transition-colors cursor-pointer font-bold text-xs shadow-sm"
+                title="Edit Website Content (Company Details, Hero, Services, Numbers)"
+              >
+                <SlidersHorizontal className="w-3.5 h-3.5 text-amber-400" />
+                <span>Edit Website Content</span>
+              </button>
+            )}
+
             {onOpenAdminModal && (
               <button
                 onClick={onOpenAdminModal}

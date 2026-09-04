@@ -4,6 +4,7 @@ import { COMPANY_INFO } from '../data/companyData';
 import { GmailNotificationDrawer } from './GmailNotificationDrawer';
 import { ADMIN_NOTIFICATION_EMAIL } from '../services/gmailNotificationService';
 import { SUPABASE_PROJECT_ID } from '../services/supabaseClient';
+import { useSiteContent } from '../services/siteContentService';
 import { 
   Phone, 
   Mail, 
@@ -18,11 +19,14 @@ import {
   Sun,
   Moon,
   Database,
-  Lock
+  Lock,
+  SlidersHorizontal,
+  Edit3
 } from 'lucide-react';
 
 interface HeaderProps {
   onOpenQuoteModal: (prefillService?: string) => void;
+  onOpenWebsiteEditor?: () => void;
   activeSection: string;
   theme?: 'light' | 'dark';
   onToggleTheme?: () => void;
@@ -30,10 +34,12 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({
   onOpenQuoteModal,
+  onOpenWebsiteEditor,
   activeSection,
   theme = 'light',
   onToggleTheme
 }) => {
+  const { content } = useSiteContent();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isGmailDrawerOpen, setIsGmailDrawerOpen] = useState(false);
@@ -68,15 +74,28 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center gap-5 flex-wrap">
             <div className="flex items-center gap-1.5 text-zinc-300 font-medium">
               <MapPin className="w-3.5 h-3.5 text-orange-500 shrink-0" />
-              <span>Haldia, Sutahata, Nandarampur, West Bengal – 721635</span>
+              <span>{content.company.fullAddress}</span>
             </div>
             <div className="hidden lg:flex items-center gap-1.5 text-zinc-400">
               <Clock className="w-3.5 h-3.5 text-orange-400 shrink-0" />
-              <span>Office Hours: <strong className="text-white">9:00 AM – 8:00 PM</strong> (Mon – Sat)</span>
+              <span>Office Hours: <strong className="text-white">{content.company.workingHours}</strong></span>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
+            {onOpenWebsiteEditor && (
+              <button
+                type="button"
+                onClick={onOpenWebsiteEditor}
+                id="topbar-edit-website-btn"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 font-bold text-[11px] cursor-pointer transition-colors shadow-sm"
+                title="Edit Website Content (Company Details, Hero, Services, Numbers)"
+              >
+                <SlidersHorizontal className="w-3 h-3 text-amber-400" />
+                <span>Edit Site</span>
+              </button>
+            )}
+
             <button
               onClick={() => setIsGmailDrawerOpen(true)}
               className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/30 text-orange-400 font-bold text-[11px] cursor-pointer transition-colors"
@@ -91,16 +110,16 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             <a 
-              href={`tel:${COMPANY_INFO.contact.phone}`} 
+              href={`tel:${content.company.phone}`} 
               className="flex items-center gap-1.5 text-white hover:text-orange-400 transition-colors font-medium"
               id="topbar-phone-link"
             >
               <Phone className="w-3.5 h-3.5 text-orange-400 shrink-0" />
-              <span>{COMPANY_INFO.contact.phone}</span>
+              <span>{content.company.phone}</span>
             </a>
-            <div className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded bg-zinc-900 border border-orange-500/30 text-orange-400 font-semibold text-[11px]" title="GSTIN: 19ABPCS8304J1ZQ">
+            <div className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded bg-zinc-900 border border-orange-500/30 text-orange-400 font-semibold text-[11px]" title={`GSTIN: ${content.company.gstNumber}`}>
               <HardHat className="w-3 h-3 text-orange-400" />
-              <span className="text-zinc-200">GST: <span className="font-mono text-orange-400 font-bold">19ABPCS8304J1ZQ</span></span>
+              <span className="text-zinc-200">GST: <span className="font-mono text-orange-400 font-bold">{content.company.gstNumber}</span></span>
             </div>
           </div>
         </div>
@@ -141,6 +160,19 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-2.5">
+            {onOpenWebsiteEditor && (
+              <button
+                type="button"
+                onClick={onOpenWebsiteEditor}
+                id="header-edit-site-btn"
+                title="Edit Website Content (Company Details, Hero, Services, Numbers)"
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 font-bold text-xs transition-all duration-200 cursor-pointer shadow-sm hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <SlidersHorizontal className="w-3.5 h-3.5 text-amber-400" />
+                <span>Edit Site</span>
+              </button>
+            )}
+
             {onToggleTheme && (
               <button
                 onClick={onToggleTheme}
@@ -169,6 +201,19 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Mobile Menu Button */}
           <div className="flex items-center gap-2 lg:hidden">
+            {onOpenWebsiteEditor && (
+              <button
+                type="button"
+                onClick={onOpenWebsiteEditor}
+                id="mobile-header-edit-site-btn"
+                title="Edit Website Content"
+                className="p-1.5 rounded-md bg-amber-500/15 border border-amber-500/40 text-amber-300 flex items-center gap-1 text-[11px] font-bold"
+              >
+                <SlidersHorizontal className="w-3.5 h-3.5 text-amber-400" />
+                <span>Edit</span>
+              </button>
+            )}
+
             {onToggleTheme && (
               <button
                 onClick={onToggleTheme}
@@ -219,6 +264,20 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
 
             <div className="pt-2 space-y-2.5">
+              {onOpenWebsiteEditor && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenWebsiteEditor();
+                  }}
+                  className="w-full py-2.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 font-bold text-xs flex items-center justify-center gap-2 shadow-sm"
+                >
+                  <SlidersHorizontal className="w-4 h-4 text-amber-400" />
+                  <span>Edit Website Content &amp; Details</span>
+                </button>
+              )}
+
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
@@ -233,15 +292,15 @@ export const Header: React.FC<HeaderProps> = ({
               <div className="flex flex-col gap-2 text-xs text-zinc-400 pt-2 border-t border-zinc-800">
                 <div className="flex items-center gap-2">
                   <Phone className="w-3.5 h-3.5 text-orange-400" />
-                  <span className="text-white font-medium">{COMPANY_INFO.contact.phone}</span>
+                  <span className="text-white font-medium">{content.company.phone}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Mail className="w-3.5 h-3.5 text-orange-400" />
-                  <span className="text-white font-medium">{COMPANY_INFO.contact.email}</span>
+                  <span className="text-white font-medium">{content.company.email}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="w-3.5 h-3.5 text-orange-400" />
-                  <span>{COMPANY_INFO.address.fullAddress}</span>
+                  <span>{content.company.fullAddress}</span>
                 </div>
               </div>
             </div>

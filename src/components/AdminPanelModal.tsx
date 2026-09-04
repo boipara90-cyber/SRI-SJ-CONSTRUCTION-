@@ -52,17 +52,19 @@ import {
   Sparkles,
   Layers,
   Settings,
-  MessageSquare
+  MessageSquare,
+  SlidersHorizontal
 } from 'lucide-react';
 
 interface AdminPanelModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onOpenWebsiteEditor?: () => void;
 }
 
 type TabType = 'bookings' | 'quotes' | 'contacts' | 'careers' | 'account';
 
-export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({ isOpen, onClose }) => {
+export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({ isOpen, onClose, onOpenWebsiteEditor }) => {
   // Authentication & Single Slot State
   const [isSlotTaken, setIsSlotTaken] = useState<boolean>(isSingleAdminSlotOccupied());
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(checkAdminSession());
@@ -378,6 +380,23 @@ export const AdminPanelModal: React.FC<AdminPanelModalProps> = ({ isOpen, onClos
           </div>
 
           <div className="flex items-center gap-2">
+            {onOpenWebsiteEditor && (
+              <button
+                type="button"
+                onClick={() => {
+                  onClose();
+                  onOpenWebsiteEditor();
+                }}
+                id="admin-modal-edit-site-btn"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-xs font-bold transition-colors cursor-pointer"
+                title="Edit Website Content (Company info, hero banner, services, etc.)"
+              >
+                <SlidersHorizontal className="w-3.5 h-3.5 text-amber-400" />
+                <span className="hidden sm:inline">Edit Website Content</span>
+                <span className="sm:hidden">Edit Site</span>
+              </button>
+            )}
+
             {isAuthenticated && (
               <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-xs">
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />

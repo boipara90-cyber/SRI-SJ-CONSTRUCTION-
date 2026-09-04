@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { COMPANY_INFO, SERVICES } from '../data/companyData';
+import { useSiteContent } from '../services/siteContentService';
 import { QuoteRequest } from '../types';
 import { notifyContactSubmission, ADMIN_NOTIFICATION_EMAIL } from '../services/gmailNotificationService';
 import { 
@@ -29,6 +30,7 @@ interface ContactSectionProps {
 export const ContactSection: React.FC<ContactSectionProps> = ({ 
   onOpenQuoteModal
 }) => {
+  const { content } = useSiteContent();
   const [formData, setFormData] = useState<QuoteRequest>({
     name: '',
     companyName: '',
@@ -81,7 +83,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     const text = encodeURIComponent(
       `Hello Sri SJ Construction Team, I am inquiring regarding piling and civil construction services for our project.`
     );
-    window.open(`https://wa.me/${COMPANY_INFO.contact.whatsapp.replace(/[^0-9]/g, '')}?text=${text}`, '_blank');
+    window.open(`https://wa.me/${content.company.whatsapp.replace(/[^0-9]/g, '')}?text=${text}`, '_blank');
   };
 
   return (
@@ -95,7 +97,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             <span>Contact &amp; Site Assessment</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-black text-slate-950 tracking-tight font-['Space_Grotesk']">
-            Get in Touch with Sri SJ Construction
+            Get in Touch with {content.company.shortName}
           </h2>
           <p className="text-slate-600 text-base sm:text-lg mt-3 leading-relaxed">
             Connect with our engineering estimation desk in Haldia, West Bengal for BOQ pricing, rotary rig deployment, or site inspection requests.
@@ -115,14 +117,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                     Head Office &amp; Central Operations
                   </span>
                   <span className="px-2 py-0.5 rounded bg-emerald-500/15 border border-emerald-500/30 text-emerald-900 font-mono font-bold text-[11px]">
-                    GSTIN: 19ABPCS8304J1ZQ
+                    GSTIN: {content.company.gstNumber}
                   </span>
                 </div>
                 <h3 className="text-xl font-black text-slate-950 font-['Space_Grotesk']">
-                  Sri SJ Constructions Private Limited
+                  {content.company.name}
                 </h3>
                 <p className="text-xs text-slate-500 font-medium">
-                  Registered under Indian Companies Act (Estd. 2011) • GST Registered Active Taxpayer
+                  Registered under Indian Companies Act (Estd. {content.company.establishedYear}) • GST Registered Active Taxpayer
                 </p>
               </div>
 
@@ -135,8 +137,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                   <div>
                     <span className="text-xs text-slate-500 font-bold uppercase block mb-0.5">Registered Office Address</span>
                     <p className="text-slate-900 font-medium leading-snug">
-                      Haldia, Sutahata, Nandarampur,<br />
-                      West Bengal – 721635, India
+                      {content.company.fullAddress}
                     </p>
                   </div>
                 </div>
@@ -148,11 +149,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                   </div>
                   <div>
                     <span className="text-xs text-slate-500 font-bold uppercase block mb-0.5">Phone &amp; Site Inquiries</span>
-                    <a href={`tel:${COMPANY_INFO.contact.phone}`} className="text-slate-950 hover:text-emerald-600 font-bold transition-colors block">
-                      {COMPANY_INFO.contact.phone}
+                    <a href={`tel:${content.company.phone}`} className="text-slate-950 hover:text-emerald-600 font-bold transition-colors block">
+                      {content.company.phone}
                     </a>
-                    <a href={`tel:${COMPANY_INFO.contact.altPhone}`} className="text-slate-600 hover:text-emerald-600 transition-colors text-xs">
-                      {COMPANY_INFO.contact.altPhone} (Site Hotline)
+                    <a href={`tel:${content.company.altPhone}`} className="text-slate-600 hover:text-emerald-600 transition-colors text-xs">
+                      {content.company.altPhone} (Site Hotline)
                     </a>
                   </div>
                 </div>
@@ -164,11 +165,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                   </div>
                   <div>
                     <span className="text-xs text-slate-500 font-bold uppercase block mb-0.5">Email Communications</span>
-                    <a href={`mailto:${COMPANY_INFO.contact.email}`} className="text-slate-950 hover:text-emerald-600 font-bold transition-colors block">
-                      {COMPANY_INFO.contact.email}
+                    <a href={`mailto:${content.company.email}`} className="text-slate-950 hover:text-emerald-600 font-bold transition-colors block">
+                      {content.company.email}
                     </a>
-                    <a href={`mailto:${COMPANY_INFO.contact.supportEmail}`} className="text-slate-600 hover:text-emerald-600 transition-colors text-xs">
-                      {COMPANY_INFO.contact.supportEmail}
+                    <a href={`mailto:${content.company.supportEmail}`} className="text-slate-600 hover:text-emerald-600 transition-colors text-xs">
+                      {content.company.supportEmail}
                     </a>
                   </div>
                 </div>
@@ -181,7 +182,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                   <div>
                     <span className="text-xs text-slate-500 font-bold uppercase block mb-0.5">Working Hours</span>
                     <p className="text-slate-900 text-xs leading-relaxed font-medium">
-                      {COMPANY_INFO.contact.workingHours}<br />
+                      {content.company.workingHours}<br />
                       <span className="text-emerald-800 font-bold">24/7 Site Emergency Response for Piling Operations</span>
                     </p>
                   </div>

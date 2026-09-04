@@ -19,15 +19,17 @@ import { Footer } from './components/Footer';
 import { QuoteModal } from './components/QuoteModal';
 import { AdminPanelModal } from './components/AdminPanelModal';
 import { OriginalPhotosManagerModal } from './components/OriginalPhotosManagerModal';
+import { WebsiteContentEditorModal } from './components/WebsiteContentEditorModal';
 import { BrightnessSection, ThemeMode } from './components/BrightnessSection';
 import { AnimatedSection } from './components/AnimatedSection';
 import { COMPANY_INFO } from './data/companyData';
-import { MessageCircle, Phone, Sparkles, Lock, Camera } from 'lucide-react';
+import { MessageCircle, Phone, Sparkles, Lock, Camera, SlidersHorizontal } from 'lucide-react';
 
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
   const [adminModalOpen, setAdminModalOpen] = useState(false);
   const [originalPhotosModalOpen, setOriginalPhotosModalOpen] = useState(false);
+  const [isWebsiteEditorOpen, setIsWebsiteEditorOpen] = useState(false);
   const [prefillService, setPrefillService] = useState<string | undefined>(undefined);
   const [activeSection, setActiveSection] = useState<string>('home');
   
@@ -140,6 +142,7 @@ export default function App() {
         activeSection={activeSection} 
         theme={theme}
         onToggleTheme={handleToggleTheme}
+        onOpenWebsiteEditor={() => setIsWebsiteEditorOpen(true)}
       />
 
       {/* Main Content Sections */}
@@ -148,11 +151,12 @@ export default function App() {
         <Hero 
           onOpenQuoteModal={() => handleOpenQuoteModal()} 
           onOpenPhotosModal={() => setOriginalPhotosModalOpen(true)}
+          onOpenWebsiteEditor={() => setIsWebsiteEditorOpen(true)}
         />
 
         {/* 2. About Us */}
         <AnimatedSection>
-          <AboutSection />
+          <AboutSection onOpenWebsiteEditor={() => setIsWebsiteEditorOpen(true)} />
         </AnimatedSection>
 
         {/* 3. Our Services */}
@@ -205,6 +209,7 @@ export default function App() {
       <Footer 
         onOpenQuoteModal={() => handleOpenQuoteModal()} 
         onOpenAdminModal={() => setAdminModalOpen(true)}
+        onOpenWebsiteEditor={() => setIsWebsiteEditorOpen(true)}
       />
 
       {/* Dedicated Small Brightness & Dark/Light Mode Section */}
@@ -252,12 +257,20 @@ export default function App() {
       <AdminPanelModal
         isOpen={adminModalOpen}
         onClose={() => setAdminModalOpen(false)}
+        onOpenWebsiteEditor={() => setIsWebsiteEditorOpen(true)}
       />
 
       {/* Dedicated Original WhatsApp Site Photos Management Modal */}
       <OriginalPhotosManagerModal
         isOpen={originalPhotosModalOpen}
         onClose={() => setOriginalPhotosModalOpen(false)}
+      />
+
+      {/* Dedicated Full-featured Website Content Editor Modal */}
+      <WebsiteContentEditorModal
+        isOpen={isWebsiteEditorOpen}
+        onClose={() => setIsWebsiteEditorOpen(false)}
+        onOpenPhotosManager={() => setOriginalPhotosModalOpen(true)}
       />
     </div>
   );

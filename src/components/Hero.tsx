@@ -3,7 +3,13 @@ import { COMPANY_INFO } from '../data/companyData';
 import { OfficialCompanyEmblem } from './Logo';
 import { TOP_BACKGROUND_PHOTOS, TopBackgroundSlide } from '../data/heroSlidesData';
 import riverPilingHero from '../assets/images/river_piling_hero_1788334233850.jpg';
-import { getStoredPhotosMap } from '../services/photoStorageService';
+import { 
+  getStoredPhotosMap, 
+  batchSaveOriginalPhotos, 
+  saveOriginalPhoto, 
+  fileToDataUrl 
+} from '../services/photoStorageService';
+import { useSiteContent } from '../services/siteContentService';
 import { 
   ShieldCheck, 
   ArrowRight, 
@@ -26,15 +32,22 @@ import {
   Gauge,
   Camera,
   UploadCloud,
-  Check
+  Check,
+  SlidersHorizontal,
+  Edit3,
+  Plus,
+  FolderPlus,
+  Image as ImageIcon
 } from 'lucide-react';
 
 interface HeroProps {
   onOpenQuoteModal: () => void;
   onOpenPhotosModal?: () => void;
+  onOpenWebsiteEditor?: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal }) => {
+export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal, onOpenWebsiteEditor }) => {
+  const { content } = useSiteContent();
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
@@ -43,7 +56,11 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal 
   const [fullscreenPhoto, setFullscreenPhoto] = useState<TopBackgroundSlide | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [customPhotosMap, setCustomPhotosMap] = useState<Record<string, string>>({});
+  const [uploadToastMsg, setUploadToastMsg] = useState<string | null>(null);
+  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
   const thumbnailScrollRef = useRef<HTMLDivElement>(null);
+  const heroFileInputRef = useRef<HTMLInputElement>(null);
+  const heroSingleSlotInputRef = useRef<HTMLInputElement>(null);
 
   const PROGRESS_INTERVAL = 40; // update progress smoothly every 40ms
 
@@ -132,6 +149,62 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal 
     setSelectedCategory(category);
     setCurrentSlideIndex(0);
     setProgress(0);
+  };
+
+  // Direct batch / multi-photo upload from Hero slider
+  const handleHeroPhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    try {
+      setIsUploadingPhoto(true);
+      const itemsToSave: { id: string; dataUrl: string }[] = [];
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const dataUrl = await fileToDataUrl(file);
+        // Map to current slide slot or next available slots
+        const targetIndex = (currentSlideIndex + i) % displaySlides.length;
+        const targetId = displaySlides[targetIndex]?.id || `photo-${i + 1}`;
+        itemsToSave.push({ id: targetId, dataUrl });
+      }
+
+      await batchSaveOriginalPhotos(itemsToSave);
+      await loadStoredPhotos();
+      setUploadToastMsg(`Added ${itemsToSave.length} original photo${itemsToSave.length > 1 ? 's' : ''} to slider!`);
+      setTimeout(() => setUploadToastMsg(null), 4000);
+    } catch (err) {
+      console.error('Failed to upload photo:', err);
+      setUploadToastMsg('Could not upload photo. Please try again.');
+      setTimeout(() => setUploadToastMsg(null), 3000);
+    } finally {
+      setIsUploadingPhoto(false);
+      if (heroFileInputRef.current) heroFileInputRef.current.value = '';
+    }
+  };
+
+  // Upload/replace specific active slide photo
+  const handleHeroSingleSlotUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    try {
+      setIsUploadingPhoto(true);
+      const file = files[0];
+      const dataUrl = await fileToDataUrl(file);
+      const targetId = activeSlide.id;
+      await saveOriginalPhoto(targetId, dataUrl);
+      await loadStoredPhotos();
+      setUploadToastMsg(`Replaced photo for Step ${activeSlide.stepNumber} with your real photo!`);
+      setTimeout(() => setUploadToastMsg(null), 4000);
+    } catch (err) {
+      console.error('Failed to replace photo:', err);
+      setUploadToastMsg('Failed to update photo.');
+      setTimeout(() => setUploadToastMsg(null), 3000);
+    } finally {
+      setIsUploadingPhoto(false);
+      if (heroSingleSlotInputRef.current) heroSingleSlotInputRef.current.value = '';
+    }
   };
 
   return (
@@ -235,9 +308,20 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal 
                   <span className="text-[10px] font-black px-1.5 py-0.5 rounded bg-orange-500/20 text-orange-400 border border-orange-500/40">
                     PVT LTD
                   </span>
+                  {onOpenWebsiteEditor && (
+                    <button
+                      type="button"
+                      onClick={onOpenWebsiteEditor}
+                      className="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 text-[10px] font-bold transition-colors cursor-pointer"
+                      title="Edit this section's text, headlines and company details"
+                    >
+                      <SlidersHorizontal className="w-3 h-3 text-amber-400" />
+                      <span>Edit Info</span>
+                    </button>
+                  )}
                 </div>
                 <p className="text-xs text-zinc-400 font-medium">
-                  Haldia, West Bengal (721635) • GSTIN: <span className="font-mono font-bold text-orange-400">19ABPCS8304J1ZQ</span>
+                  {content.company.fullAddress} • GSTIN: <span className="font-mono font-bold text-orange-400">{content.company.gstNumber}</span>
                 </p>
               </div>
             </div>
@@ -254,7 +338,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal 
               
               <div className="pl-5 pr-4 py-4 sm:py-5 space-y-2">
                 <span className="text-[11px] sm:text-xs font-black tracking-[0.2em] text-orange-400 uppercase block leading-tight">
-                  SPECIALIST IN PILE FOUNDATIONS &amp; INDUSTRIAL CIVIL WORKS
+                  {content.hero.specialistBadge}
                 </span>
                 <h1 className="text-3xl sm:text-4xl lg:text-[2.85rem] font-black tracking-tight leading-[1.2] font-['Space_Grotesk'] text-white">
                   <span className="relative inline-flex items-center px-4 py-2 rounded-xl border-2 border-orange-500/80 shadow-[0_10px_35px_rgba(249,115,22,0.35)] mr-2 overflow-hidden align-middle group">
@@ -276,11 +360,11 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal 
                     />
                     {/* Crisp high-contrast lettering */}
                     <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-amber-200 to-orange-400 font-black tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
-                      Strong Foundations.
+                      {content.hero.headline1}
                     </span>
                   </span>
                   <span className="block mt-2 text-zinc-100 font-extrabold text-2xl sm:text-3xl lg:text-[2.25rem] tracking-tight leading-none">
-                    Reliable Construction.
+                    {content.hero.headline2}
                   </span>
                 </h1>
               </div>
@@ -288,9 +372,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal 
 
             {/* Introduction Narrative */}
             <p className="text-sm sm:text-base text-zinc-300 max-w-2xl leading-relaxed font-normal">
-              <strong className="text-white font-bold">SRI SJ CONSTRUCTIONS PRIVATE LIMITED</strong> is an established engineering contractor based in 
-              <strong className="text-orange-400 font-semibold"> Haldia, Sutahata, Nandarampur, West Bengal (721635)</strong>. 
-              We execute high-capacity bored cast-in-situ piling, sheet piling, EHV transmission tower footings, and heavy industrial machine substructures across India.
+              {content.hero.intro}
             </p>
 
             {/* Action Buttons */}
@@ -300,7 +382,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal 
                 id="hero-quote-btn"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-orange-600 via-orange-500 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-black text-sm sm:text-base shadow-lg shadow-orange-600/30 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer border border-orange-400/40"
               >
-                <span>Get a Quote</span>
+                <span>{content.hero.quoteBtnText || 'Get a Quote'}</span>
                 <ArrowRight className="w-4 h-4 text-white" />
               </button>
 
@@ -310,7 +392,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal 
                 className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white font-bold text-sm sm:text-base border border-zinc-700 hover:border-orange-500 shadow-sm transition-all duration-200"
               >
                 <Building2 className="w-4 h-4 text-orange-400" />
-                <span>View Done Projects</span>
+                <span>{content.hero.projectsBtnText || 'View Done Projects'}</span>
               </a>
 
               <a
@@ -319,24 +401,50 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal 
                 className="inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl bg-zinc-950 hover:bg-zinc-900 text-zinc-300 hover:text-white font-semibold text-sm sm:text-base border border-zinc-800 hover:border-zinc-700 transition-all duration-200"
               >
                 <Camera className="w-4 h-4 text-orange-400" />
-                <span>Project Gallery (27 Photos)</span>
+                <span>{content.hero.galleryBtnText || 'Project Gallery (27 Photos)'}</span>
               </a>
             </div>
 
             {/* Registered Name Proper End of Point */}
             <div className="flex items-center gap-2 text-[11px] text-zinc-400 font-semibold pt-4 border-t border-zinc-900">
-              <span>All operations executed by <strong className="text-white">SRI SJ CONSTRUCTIONS PRIVATE LIMITED</strong></span>
+              <span>All operations executed by <strong className="text-white">{content.company.name}</strong></span>
             </div>
 
           </div>
 
           {/* Right Column: Big Formatting Company Construction Photo Showcase Slider */}
           <div className="lg:col-span-5 w-full flex flex-col justify-center">
+            
+            {/* Hidden File Inputs for Direct Photo Uploads */}
+            <input
+              ref={heroFileInputRef}
+              type="file"
+              accept="image/*"
+              multiple
+              className="hidden"
+              onChange={handleHeroPhotoUpload}
+            />
+            <input
+              ref={heroSingleSlotInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleHeroSingleSlotUpload}
+            />
+
             <div 
               className="relative aspect-video sm:aspect-[4/3] w-full rounded-2xl overflow-hidden border-2 border-zinc-800 bg-[#121217] shadow-2xl group transition-all duration-300 hover:border-orange-500/50"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
+              {/* Toast Notification Alert inside Slider */}
+              {uploadToastMsg && (
+                <div className="absolute top-3 left-1/2 -translate-x-1/2 z-30 px-3.5 py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-bold text-xs shadow-2xl flex items-center gap-1.5 animate-in fade-in slide-in-from-top-2">
+                  <CheckCircle2 className="w-4 h-4 text-slate-950" />
+                  <span>{uploadToastMsg}</span>
+                </div>
+              )}
+
               {/* Active Photo with Ken Burns Zoom & smooth crossfade */}
               <div className="absolute inset-0 z-0 overflow-hidden bg-black">
                 {displaySlides.map((slide, idx) => {
@@ -361,14 +469,46 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal 
                 })}
               </div>
 
+              {/* Slider Top Bar: Add Photo CTA, Photo Hub and Counter */}
+              <div className="absolute inset-x-0 top-0 bg-gradient-to-b from-black/80 via-black/40 to-transparent p-3 sm:p-4 z-20 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => heroFileInputRef.current?.click()}
+                    id="hero-slider-add-photo-btn"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-black text-xs shadow-lg shadow-orange-600/40 transition-all hover:scale-105 active:scale-95 cursor-pointer border border-orange-400"
+                    title="Add or upload original construction photos"
+                  >
+                    <Plus className="w-3.5 h-3.5 text-white" />
+                    <span>+ Add Photo</span>
+                  </button>
 
-              <div className="absolute inset-x-0 top-0 bg-gradient-to-b from-black/60 to-transparent p-3 sm:p-4 z-10 flex items-center justify-end">
-                <span className="text-[11px] font-bold text-zinc-300 font-mono bg-black/50 px-2.5 py-1 rounded-full backdrop-blur-sm border border-zinc-800">
-                  {String(currentSlideIndex + 1).padStart(2, '0')} / {String(displaySlides.length).padStart(2, '0')}
-                </span>
+                  {onOpenPhotosModal && (
+                    <button
+                      type="button"
+                      onClick={onOpenPhotosModal}
+                      id="hero-slider-hub-btn"
+                      className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-black/60 hover:bg-zinc-800 text-zinc-300 hover:text-white text-xs font-semibold backdrop-blur-sm border border-zinc-700 transition-colors cursor-pointer"
+                      title="Open 27 Photo Management Hub"
+                    >
+                      <Camera className="w-3 h-3 text-orange-400" />
+                      <span>Photo Hub</span>
+                    </button>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-2">
+                  {activeSlide.isOriginalCustom && (
+                    <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-500/60 text-emerald-400 text-[10px] font-bold">
+                      <CheckCircle2 className="w-2.5 h-2.5 text-emerald-400" />
+                      <span>Custom Photo</span>
+                    </span>
+                  )}
+                  <span className="text-[11px] font-bold text-zinc-300 font-mono bg-black/60 px-2.5 py-1 rounded-full backdrop-blur-sm border border-zinc-800">
+                    {String(currentSlideIndex + 1).padStart(2, '0')} / {String(displaySlides.length).padStart(2, '0')}
+                  </span>
+                </div>
               </div>
-
-
 
               {/* Slider Interactive Navigation Controls */}
               <div className="absolute inset-y-0 inset-x-2 flex items-center justify-between z-20 pointer-events-none">
@@ -388,6 +528,41 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal 
                 </button>
               </div>
 
+              {/* Active Slide Caption & Quick Replace Overlay */}
+              <div className="absolute inset-x-0 bottom-1.5 z-20 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-3 sm:p-4 flex items-end justify-between gap-3 pointer-events-auto">
+                <div className="space-y-0.5 max-w-[75%]">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-orange-400 block">
+                    Step {activeSlide.stepNumber} • {activeSlide.categoryLabel}
+                  </span>
+                  <h4 className="text-xs sm:text-sm font-bold text-white line-clamp-1 font-['Space_Grotesk']">
+                    {activeSlide.title}
+                  </h4>
+                  <p className="text-[11px] text-zinc-400 line-clamp-1 hidden sm:block">
+                    {activeSlide.location}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => heroSingleSlotInputRef.current?.click()}
+                    className="p-1.5 sm:px-2.5 sm:py-1 rounded-lg bg-zinc-900/80 hover:bg-orange-500 text-zinc-300 hover:text-black text-xs font-bold border border-zinc-700 transition-colors flex items-center gap-1 cursor-pointer"
+                    title={`Replace photo for Step ${activeSlide.stepNumber}`}
+                  >
+                    <UploadCloud className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">Replace</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFullscreenPhoto(activeSlide)}
+                    className="p-1.5 sm:px-2 sm:py-1 rounded-lg bg-zinc-900/80 hover:bg-zinc-800 text-zinc-300 hover:text-white text-xs border border-zinc-700 transition-colors flex items-center cursor-pointer"
+                    title="View fullscreen photo"
+                  >
+                    <Maximize2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+
               {/* Slider progress bar indicator (at the very bottom edge of card) */}
               <div className="absolute bottom-0 inset-x-0 h-1 bg-zinc-800 z-20">
                 <div 
@@ -397,7 +572,66 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal 
               </div>
             </div>
 
+            {/* Horizontal Interactive Thumbnail Strip with "+ Add" Button */}
+            <div className="mt-3.5 space-y-1.5">
+              <div className="flex items-center justify-between px-1 text-[11px] text-zinc-400">
+                <span className="font-semibold text-zinc-300 flex items-center gap-1">
+                  <ImageIcon className="w-3 h-3 text-orange-400" />
+                  <span>Photo Slides ({displaySlides.length})</span>
+                </span>
+                <button
+                  type="button"
+                  onClick={() => heroFileInputRef.current?.click()}
+                  className="text-orange-400 hover:text-orange-300 font-bold hover:underline flex items-center gap-1 cursor-pointer"
+                >
+                  <Plus className="w-3 h-3" />
+                  <span>Add More Photos</span>
+                </button>
+              </div>
 
+              <div 
+                ref={thumbnailScrollRef}
+                className="flex items-center gap-2 overflow-x-auto py-1 px-0.5 scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent select-none"
+              >
+                {/* + Add Photo Card at start of thumbnail row */}
+                <button
+                  type="button"
+                  onClick={() => heroFileInputRef.current?.click()}
+                  id="hero-thumb-add-tile"
+                  className="shrink-0 w-13 h-10 sm:w-16 sm:h-12 rounded-xl border-2 border-dashed border-orange-500/70 hover:border-orange-400 bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 flex flex-col items-center justify-center gap-0.5 text-[10px] font-bold transition-all cursor-pointer group"
+                  title="Click to add/upload your construction photo"
+                >
+                  <Plus className="w-4 h-4 group-hover:scale-125 transition-transform" />
+                  <span className="leading-none">+ Add</span>
+                </button>
+
+                {displaySlides.map((slide, idx) => {
+                  const isSelected = idx === currentSlideIndex;
+                  return (
+                    <button
+                      key={`thumb-tile-${slide.id}`}
+                      type="button"
+                      onClick={() => handleSelectSlide(idx)}
+                      className={`relative shrink-0 w-13 h-10 sm:w-16 sm:h-12 rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
+                        isSelected
+                          ? 'border-orange-500 ring-2 ring-orange-500/70 scale-105 shadow-md shadow-orange-500/20 z-10'
+                          : 'border-zinc-800 opacity-60 hover:opacity-100 hover:border-zinc-600'
+                      }`}
+                      title={`Step ${slide.stepNumber}: ${slide.title}`}
+                    >
+                      <img
+                        src={slide.imageUrl}
+                        alt={slide.title}
+                        className="w-full h-full object-cover"
+                      />
+                      <span className="absolute bottom-0 inset-x-0 bg-black/70 text-[8px] font-mono text-zinc-300 text-center py-0.5 font-bold leading-none">
+                        #{slide.stepNumber}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
 
           </div>
 
