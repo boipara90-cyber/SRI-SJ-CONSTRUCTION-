@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Logo } from './Logo';
+import { Header3DLogo } from './Header3DLogo';
 import { COMPANY_INFO } from '../data/companyData';
 import { GmailNotificationDrawer } from './GmailNotificationDrawer';
 import { ADMIN_NOTIFICATION_EMAIL } from '../services/gmailNotificationService';
@@ -21,7 +22,8 @@ import {
   Database,
   Lock,
   SlidersHorizontal,
-  Edit3
+  Edit3,
+  Cpu
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -59,7 +61,6 @@ export const Header: React.FC<HeaderProps> = ({
     { name: 'Clients', href: '#clients' },
     { name: 'Projects', href: '#projects' },
     { name: 'Equipment', href: '#equipment' },
-    { name: 'Maps & Photos', href: '#maps-photos' },
     { name: 'Careers', href: '#careers' },
     { name: 'Contact', href: '#contact' },
   ];
@@ -125,20 +126,20 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      {/* Main Navbar */}
+      {/* Main Navbar with 3D Bevel & Perspective */}
       <nav className={`transition-all duration-300 ${
         isScrolled 
-          ? 'bg-black/95 backdrop-blur-md shadow-2xl border-b border-zinc-800 py-3' 
-          : 'bg-[#09090b]/95 backdrop-blur-sm border-b border-zinc-800/80 py-4'
+          ? 'bg-black/95 backdrop-blur-md shadow-[0_10px_30px_rgba(0,0,0,0.9)] border-b border-orange-500/30 py-3' 
+          : 'bg-[#09090e]/95 backdrop-blur-sm border-b border-zinc-800 py-3.5'
       }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          {/* Logo */}
-          <a href="#home" className="focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg">
-            <Logo size="md" theme="dark" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
+          {/* 3D Interactive Logo */}
+          <a href="#home" className="focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-xl">
+            <Header3DLogo size="md" />
           </a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-1 bg-zinc-950/90 p-1.5 rounded-full border border-zinc-800">
+          {/* Desktop Navigation with 3D Depth */}
+          <div className="hidden lg:flex items-center gap-1 bg-[#0a0a10] p-1.5 rounded-full border border-zinc-800 shadow-[inset_0_2px_4px_rgba(0,0,0,0.8)]">
             {navLinks.map((link) => {
               const isActive = activeSection === link.href.replace('#', '');
               return (
@@ -146,9 +147,9 @@ export const Header: React.FC<HeaderProps> = ({
                   key={link.name}
                   href={link.href}
                   id={`nav-${link.name.toLowerCase()}`}
-                  className={`px-3.5 py-1.5 text-sm font-semibold rounded-full transition-all duration-200 ${
+                  className={`nav-link-3d px-3.5 py-1.5 text-sm font-semibold rounded-full transition-all duration-200 ${
                     isActive
-                      ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-md shadow-orange-600/30 font-bold'
+                      ? 'btn-3d-primary text-white font-black shadow-md shadow-orange-600/40 border border-orange-400/40'
                       : 'text-zinc-300 hover:text-white hover:bg-zinc-800/80'
                   }`}
                 >
@@ -158,15 +159,15 @@ export const Header: React.FC<HeaderProps> = ({
             })}
           </div>
 
-          {/* CTA Buttons */}
-          <div className="hidden md:flex items-center gap-2.5">
+          {/* Action & CTA Buttons */}
+          <div className="hidden md:flex items-center gap-3">
             {onOpenWebsiteEditor && (
               <button
                 type="button"
                 onClick={onOpenWebsiteEditor}
                 id="header-edit-site-btn"
                 title="Edit Website Content (Company Details, Hero, Services, Numbers)"
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 font-bold text-xs transition-all duration-200 cursor-pointer shadow-sm hover:scale-[1.02] active:scale-[0.98]"
+                className="btn-3d-dark inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-amber-300 font-bold text-xs transition-all duration-200 cursor-pointer shadow-sm hover:scale-[1.02] active:scale-[0.98]"
               >
                 <SlidersHorizontal className="w-3.5 h-3.5 text-amber-400" />
                 <span>Edit Site</span>
@@ -178,7 +179,7 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={onToggleTheme}
                 id="header-theme-toggle-btn"
                 title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
-                className="p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 transition-all cursor-pointer flex items-center justify-center"
+                className="p-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-zinc-200 transition-all cursor-pointer flex items-center justify-center shadow-xs"
               >
                 {theme === 'dark' ? (
                   <Sun className="w-4 h-4 text-orange-400" />
@@ -188,18 +189,21 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
             )}
 
+            {/* 3D CTA "Get Quote" Button with Shimmer Sweep */}
             <button
               onClick={() => onOpenQuoteModal()}
               id="header-quote-btn"
-              className="relative inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-gradient-to-r from-orange-600 via-orange-500 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-black text-xs uppercase tracking-wider shadow-lg shadow-orange-600/30 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer border border-orange-400/30"
+              className="btn-3d-primary relative overflow-hidden inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-white font-black text-xs uppercase tracking-wider cursor-pointer border border-orange-300/40 group"
             >
-              <Sparkles className="w-3.5 h-3.5 text-white" />
+              {/* 3D Shimmer Specular Light Wave */}
+              <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none animate-shimmer-3d" />
+              <Sparkles className="w-3.5 h-3.5 text-amber-200 group-hover:rotate-12 transition-transform" />
               <span>Get Quote</span>
-              <ArrowRight className="w-3.5 h-3.5 text-white" />
+              <ArrowRight className="w-3.5 h-3.5 text-white group-hover:translate-x-0.5 transition-transform" />
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Controls */}
           <div className="flex items-center gap-2 lg:hidden">
             {onOpenWebsiteEditor && (
               <button
@@ -207,7 +211,7 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={onOpenWebsiteEditor}
                 id="mobile-header-edit-site-btn"
                 title="Edit Website Content"
-                className="p-1.5 rounded-md bg-amber-500/15 border border-amber-500/40 text-amber-300 flex items-center gap-1 text-[11px] font-bold"
+                className="p-1.5 rounded-lg bg-amber-500/15 border border-amber-500/40 text-amber-300 flex items-center gap-1 text-[11px] font-bold"
               >
                 <SlidersHorizontal className="w-3.5 h-3.5 text-amber-400" />
                 <span>Edit</span>
@@ -219,7 +223,7 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={onToggleTheme}
                 id="mobile-header-theme-toggle-btn"
                 title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
-                className="p-1.5 rounded-md bg-zinc-900 border border-zinc-700 text-zinc-200"
+                className="p-1.5 rounded-lg bg-zinc-900 border border-zinc-700 text-zinc-200"
               >
                 {theme === 'dark' ? (
                   <Sun className="w-4 h-4 text-orange-400" />
@@ -231,32 +235,32 @@ export const Header: React.FC<HeaderProps> = ({
 
             <button
               onClick={() => onOpenQuoteModal()}
-              className="px-3 py-1.5 rounded-md bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white text-xs font-bold shadow-sm"
+              className="btn-3d-primary px-3 py-1.5 rounded-lg text-white text-xs font-black shadow-sm"
               id="mobile-quick-quote-btn"
             >
-              Get Quote
+              Quote
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg bg-zinc-900 text-white hover:text-orange-400 hover:bg-zinc-800 border border-zinc-800 focus:outline-none"
+              className="p-2 rounded-xl bg-zinc-900 text-white hover:text-orange-400 hover:bg-zinc-800 border border-zinc-800 focus:outline-none cursor-pointer"
               aria-label="Toggle navigation menu"
               id="mobile-menu-toggle-btn"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-6 h-6 text-orange-400" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer */}
+        {/* Mobile Navigation Drawer with 3D Fold Transition */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-[#09090b] border-b border-zinc-800 px-4 pt-4 pb-6 mt-3 space-y-2 shadow-2xl animate-in fade-in slide-in-from-top-4 duration-200">
+          <div className="lg:hidden menu-drawer-3d bg-[#0a0a10] border-b-2 border-orange-500/30 px-4 pt-4 pb-6 mt-3 space-y-3 shadow-[0_20px_40px_rgba(0,0,0,0.9)]">
             <div className="grid grid-cols-2 gap-2 pb-3 border-b border-zinc-800">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="px-3 py-2.5 text-sm font-semibold rounded-lg text-zinc-200 hover:bg-orange-500/15 hover:text-orange-400 border border-transparent hover:border-orange-500/30"
+                  className="nav-link-3d px-3 py-2.5 text-sm font-semibold rounded-xl text-zinc-200 hover:bg-orange-500/15 hover:text-orange-400 border border-transparent hover:border-orange-500/30"
                 >
                   {link.name}
                 </a>
@@ -271,7 +275,7 @@ export const Header: React.FC<HeaderProps> = ({
                     setMobileMenuOpen(false);
                     onOpenWebsiteEditor();
                   }}
-                  className="w-full py-2.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 text-amber-300 font-bold text-xs flex items-center justify-center gap-2 shadow-sm"
+                  className="btn-3d-dark w-full py-2.5 rounded-xl text-amber-300 font-bold text-xs flex items-center justify-center gap-2 shadow-sm"
                 >
                   <SlidersHorizontal className="w-4 h-4 text-amber-400" />
                   <span>Edit Website Content &amp; Details</span>
@@ -283,7 +287,7 @@ export const Header: React.FC<HeaderProps> = ({
                   setMobileMenuOpen(false);
                   onOpenQuoteModal();
                 }}
-                className="w-full py-3 rounded-lg bg-gradient-to-r from-orange-600 to-amber-600 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-600/30"
+                className="btn-3d-primary w-full py-3 rounded-xl text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-orange-600/30"
               >
                 <span>Request a Detailed Quote</span>
                 <ArrowRight className="w-4 h-4" />

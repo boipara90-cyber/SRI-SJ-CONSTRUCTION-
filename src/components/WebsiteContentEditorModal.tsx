@@ -504,7 +504,7 @@ export const WebsiteContentEditorModal: React.FC<WebsiteContentEditorModalProps>
                     />
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
                         Primary CTA Button Text
@@ -524,17 +524,6 @@ export const WebsiteContentEditorModal: React.FC<WebsiteContentEditorModalProps>
                         type="text"
                         value={formData.hero.projectsBtnText}
                         onChange={e => updateHeroField('projectsBtnText', e.target.value)}
-                        className="w-full px-3.5 py-2.5 rounded-lg bg-zinc-900 border border-zinc-700 text-white text-sm focus:border-orange-500 focus:outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-semibold text-zinc-300 mb-1.5">
-                        Gallery CTA Button Text
-                      </label>
-                      <input
-                        type="text"
-                        value={formData.hero.galleryBtnText}
-                        onChange={e => updateHeroField('galleryBtnText', e.target.value)}
                         className="w-full px-3.5 py-2.5 rounded-lg bg-zinc-900 border border-zinc-700 text-white text-sm focus:border-orange-500 focus:outline-none"
                       />
                     </div>

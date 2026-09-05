@@ -12,7 +12,6 @@ import { ClientSection } from './components/ClientSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { WhyChooseUs } from './components/WhyChooseUs';
 import { EquipmentSection } from './components/EquipmentSection';
-import { GoogleMapsGallerySection } from './components/GoogleMapsGallerySection';
 import { CareersSection } from './components/CareersSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
@@ -50,46 +49,10 @@ export default function App() {
     localStorage.setItem('sri_sj_theme', newTheme);
   };
 
-  const handleToggleTheme = () => {
-    const next = theme === 'dark' ? 'light' : 'dark';
-    handleThemeChange(next);
-  };
-
-  const handleBrightnessChange = (val: number) => {
-    const clamped = Math.min(130, Math.max(60, val));
-    setBrightness(clamped);
-    localStorage.setItem('sri_sj_brightness', clamped.toString());
-  };
-
-  const handleResetDisplay = () => {
-    handleThemeChange('dark');
-    handleBrightnessChange(100);
-  };
-
-  // Sync theme class to document body / root
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('theme-dark');
-      document.body.classList.add('theme-dark');
-    } else {
-      document.documentElement.classList.remove('theme-dark');
-      document.body.classList.remove('theme-dark');
-    }
-  }, [theme]);
-
-  // Listener for triggering admin panel modal from nested sections
-  useEffect(() => {
-    const handleOpenAdmin = () => {
-      setAdminModalOpen(true);
-    };
-    window.addEventListener('sri_sj_open_admin_modal', handleOpenAdmin);
-    return () => window.removeEventListener('sri_sj_open_admin_modal', handleOpenAdmin);
-  }, []);
-
   // Track active section via IntersectionObserver or Scroll
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'services', 'clients', 'projects', 'equipment', 'maps-photos', 'careers', 'contact'];
+      const sections = ['home', 'about', 'services', 'clients', 'projects', 'equipment', 'careers', 'contact'];
       const scrollPosition = window.scrollY + 200;
 
       for (const sectionId of sections) {
@@ -105,7 +68,7 @@ export default function App() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -114,163 +77,153 @@ export default function App() {
     setQuoteModalOpen(true);
   };
 
-  const handleCloseQuoteModal = () => {
-    setQuoteModalOpen(false);
-    setPrefillService(undefined);
-  };
-
-  const handleFloatingWhatsApp = () => {
-    const text = encodeURIComponent(
-      `Hello Sri SJ Construction Private Limited, I would like to inquire about piling/construction services for our project.`
-    );
-    window.open(`https://wa.me/${COMPANY_INFO.contact.whatsapp.replace(/[^0-9]/g, '')}?text=${text}`, '_blank');
-  };
-
   return (
     <div 
-      className={`min-h-screen bg-black text-white selection:bg-orange-500 selection:text-white font-sans transition-colors duration-300 ${
-        theme === 'dark' ? 'theme-dark' : ''
+      className={`min-h-screen transition-colors duration-300 font-sans selection:bg-orange-500 selection:text-white ${
+        theme === 'dark' ? 'bg-zinc-950 text-zinc-100 dark' : 'bg-slate-50 text-slate-900'
       }`}
       style={{
         filter: brightness !== 100 ? `brightness(${brightness}%)` : undefined,
-        transition: 'filter 150ms ease-out, background-color 250ms ease-in-out'
       }}
     >
-      {/* Header with quick Dark/Light toggle and Get Quote */}
+      {/* Top Header & Navigation */}
       <Header 
-        onOpenQuoteModal={handleOpenQuoteModal} 
-        activeSection={activeSection} 
-        theme={theme}
-        onToggleTheme={handleToggleTheme}
+        onOpenQuoteModal={() => handleOpenQuoteModal()} 
         onOpenWebsiteEditor={() => setIsWebsiteEditorOpen(true)}
+        activeSection={activeSection}
+        theme={theme}
+        onToggleTheme={() => handleThemeChange(theme === 'dark' ? 'light' : 'dark')}
       />
 
-      {/* Main Content Sections */}
-      <main className="bg-black">
-        {/* 1. Hero Section */}
+      {/* Main Page Sections */}
+      <main>
+        {/* 1. Industrial Hero Banner */}
         <Hero 
           onOpenQuoteModal={() => handleOpenQuoteModal()} 
           onOpenPhotosModal={() => setOriginalPhotosModalOpen(true)}
           onOpenWebsiteEditor={() => setIsWebsiteEditorOpen(true)}
         />
 
-        {/* 2. About Us */}
+        {/* 2. Visual Brightness & Quick Control Ribbon */}
+        <BrightnessSection 
+          theme={theme}
+          onThemeChange={handleThemeChange}
+          brightness={brightness}
+          onBrightnessChange={(val) => {
+            setBrightness(val);
+            localStorage.setItem('sri_sj_brightness', val.toString());
+          }}
+          onReset={() => {
+            setBrightness(100);
+            localStorage.setItem('sri_sj_brightness', '100');
+          }}
+        />
+
+        {/* 3. Company Overview & Credentials */}
         <AnimatedSection>
-          <AboutSection onOpenWebsiteEditor={() => setIsWebsiteEditorOpen(true)} />
+          <AboutSection onOpenQuoteModal={handleOpenQuoteModal} />
         </AnimatedSection>
 
-        {/* 3. Our Services */}
+        {/* 4. Core Capabilities & Piling Services */}
         <AnimatedSection>
           <ServicesSection onOpenQuoteModal={handleOpenQuoteModal} />
         </AnimatedSection>
 
-        {/* 4. Client Section */}
+        {/* 5. Client Portfolio & Industry Partners */}
         <AnimatedSection>
           <ClientSection />
         </AnimatedSection>
 
-        {/* 5. Projects Section */}
+        {/* 6. Featured Completed Infrastructure Projects */}
         <AnimatedSection>
-          <ProjectsSection onOpenQuoteModal={() => handleOpenQuoteModal()} />
+          <ProjectsSection onOpenQuoteModal={handleOpenQuoteModal} />
         </AnimatedSection>
 
-        {/* 6. Why Choose Us */}
+        {/* 7. Why Choose Sri SJ Constructions */}
         <AnimatedSection>
-          <WhyChooseUs />
+          <WhyChooseUs onOpenQuoteModal={handleOpenQuoteModal} />
         </AnimatedSection>
 
-        {/* 7. Our Equipment */}
+        {/* 7b. Heavy Machinery & Modern Rig Fleet */}
         <AnimatedSection>
           <EquipmentSection onOpenQuoteModal={handleOpenQuoteModal} />
         </AnimatedSection>
 
-        {/* 8. Google Maps Search & Site Photo Hub */}
-        <AnimatedSection>
-          <GoogleMapsGallerySection 
-            onOpenQuoteModal={handleOpenQuoteModal} 
-            onOpenPhotosModal={() => setOriginalPhotosModalOpen(true)}
-          />
-        </AnimatedSection>
-
-        {/* 9. Careers & Application Portal */}
+        {/* 8. Careers & Application Portal */}
         <AnimatedSection>
           <CareersSection />
         </AnimatedSection>
 
-        {/* 10. Contact Us & Maps */}
+        {/* 9. Contact & Registered Office Location */}
         <AnimatedSection>
-          <ContactSection 
-            onOpenQuoteModal={() => handleOpenQuoteModal()} 
-          />
+          <ContactSection onOpenQuoteModal={handleOpenQuoteModal} />
         </AnimatedSection>
       </main>
 
-      {/* Footer (contains the exclusive Admin Portal login/setup link) */}
+      {/* Footer */}
       <Footer 
         onOpenQuoteModal={() => handleOpenQuoteModal()} 
         onOpenAdminModal={() => setAdminModalOpen(true)}
         onOpenWebsiteEditor={() => setIsWebsiteEditorOpen(true)}
       />
 
-      {/* Dedicated Small Brightness & Dark/Light Mode Section */}
-      <BrightnessSection
-        theme={theme}
-        brightness={brightness}
-        onThemeChange={handleThemeChange}
-        onBrightnessChange={handleBrightnessChange}
-        onReset={handleResetDisplay}
-      />
-
-      {/* Floating Quick Action Buttons (WhatsApp & Quick Call) */}
-      <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
+      {/* Floating Action Buttons */}
+      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3 pointer-events-auto">
+        {/* Floating Quick Quote Button */}
         <button
-          onClick={handleFloatingWhatsApp}
-          aria-label="Direct WhatsApp Message"
-          className="w-13 h-13 rounded-full bg-gradient-to-tr from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 text-white flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer group relative ring-2 ring-orange-500/50"
+          onClick={() => handleOpenQuoteModal()}
+          className="group flex items-center gap-2.5 px-4 py-2.5 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white rounded-full shadow-lg shadow-orange-600/30 hover:shadow-orange-600/50 hover:scale-105 active:scale-95 transition-all text-sm font-semibold border border-orange-400/30 cursor-pointer"
+          title="Instant Piling Rate Calculation"
         >
-          <MessageCircle className="w-6 h-6" />
-          <span className="absolute right-15 px-3 py-1 rounded-md bg-zinc-950 text-orange-400 border border-orange-500/30 text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg">
-            Chat on WhatsApp
-          </span>
+          <Sparkles className="w-4 h-4 animate-spin text-amber-200" style={{ animationDuration: '4s' }} />
+          <span>Get Instant Quote</span>
         </button>
 
+        {/* Floating WhatsApp Quick Connect */}
         <a
-          href={`tel:${COMPANY_INFO.contact.phone}`}
-          aria-label="Call Sri SJ Construction"
-          className="w-13 h-13 rounded-full bg-gradient-to-tr from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 text-white flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer group relative ring-2 ring-orange-400/50"
+          href={`https://wa.me/${COMPANY_INFO.contact.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(
+            `Hello Sri SJ Constructions, I am inquiring about piling work and foundation construction services.`
+          )}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center w-12 h-12 bg-[#25D366] hover:bg-[#20ba59] text-white rounded-full shadow-lg shadow-green-600/30 hover:scale-110 active:scale-95 transition-all cursor-pointer"
+          title="Chat on WhatsApp"
         >
-          <Phone className="w-6 h-6" />
-          <span className="absolute right-15 px-3 py-1 rounded-md bg-zinc-950 text-white border border-orange-500/30 text-xs font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg">
-            Call <span className="text-orange-400">{COMPANY_INFO.contact.phone}</span>
-          </span>
+          <MessageCircle className="w-6 h-6 fill-current" />
+        </a>
+
+        {/* Floating Direct Call Button */}
+        <a
+          href={`tel:${COMPANY_INFO.contact.phone.replace(/\s+/g, '')}`}
+          className="flex items-center justify-center w-12 h-12 bg-blue-600 hover:bg-blue-500 text-white rounded-full shadow-lg shadow-blue-600/30 hover:scale-110 active:scale-95 transition-all cursor-pointer"
+          title={`Call Us: ${COMPANY_INFO.contact.phone}`}
+        >
+          <Phone className="w-5 h-5 fill-current" />
         </a>
       </div>
 
-      {/* Slide-over / Modal for Quote Request */}
-      <QuoteModal
-        isOpen={quoteModalOpen}
-        onClose={handleCloseQuoteModal}
-        prefillService={prefillService}
+      {/* Modals */}
+      <QuoteModal 
+        isOpen={quoteModalOpen} 
+        onClose={() => setQuoteModalOpen(false)} 
+        prefillService={prefillService} 
       />
 
-      {/* Single-Slot Master Admin Management Portal */}
-      <AdminPanelModal
-        isOpen={adminModalOpen}
-        onClose={() => setAdminModalOpen(false)}
+      <AdminPanelModal 
+        isOpen={adminModalOpen} 
+        onClose={() => setAdminModalOpen(false)} 
         onOpenWebsiteEditor={() => setIsWebsiteEditorOpen(true)}
       />
 
-      {/* Dedicated Original WhatsApp Site Photos Management Modal */}
-      <OriginalPhotosManagerModal
-        isOpen={originalPhotosModalOpen}
-        onClose={() => setOriginalPhotosModalOpen(false)}
+      <OriginalPhotosManagerModal 
+        isOpen={originalPhotosModalOpen} 
+        onClose={() => setOriginalPhotosModalOpen(false)} 
       />
 
-      {/* Dedicated Full-featured Website Content Editor Modal */}
-      <WebsiteContentEditorModal
-        isOpen={isWebsiteEditorOpen}
-        onClose={() => setIsWebsiteEditorOpen(false)}
-        onOpenPhotosManager={() => setOriginalPhotosModalOpen(true)}
+      <WebsiteContentEditorModal 
+        isOpen={isWebsiteEditorOpen} 
+        onClose={() => setIsWebsiteEditorOpen(false)} 
+        onOpenPhotosManager={() => setOriginalPhotosModalOpen(true)} 
       />
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SERVICES } from '../data/companyData';
 import { ServiceItem } from '../types';
+import { Card3D } from './Card3D';
 import { 
   Drill, 
   Layers, 
@@ -16,7 +17,8 @@ import {
   Check, 
   SlidersHorizontal,
   X,
-  PhoneCall
+  PhoneCall,
+  Sparkles
 } from 'lucide-react';
 
 interface ServicesSectionProps {
@@ -62,8 +64,9 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-orange-500/15 border border-orange-500/30 text-orange-400 text-xs font-bold uppercase tracking-wider mb-3">
-              <span>Comprehensive Capabilities</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/15 border border-orange-500/30 text-orange-400 text-xs font-bold uppercase tracking-wider mb-3">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>3D Engineered Capabilities</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight font-['Space_Grotesk']">
               Our Specialized Services
@@ -76,7 +79,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
           {/* Quick Quote trigger */}
           <button
             onClick={() => onOpenQuoteModal()}
-            className="self-start md:self-auto inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-orange-600 hover:bg-orange-500 text-white font-bold text-sm shadow-md shadow-orange-600/30 transition-all shrink-0 cursor-pointer border border-orange-400/30"
+            className="self-start md:self-auto inline-flex items-center gap-2 px-6 py-3 rounded-xl btn-3d-primary text-white font-bold text-sm transition-all shrink-0 cursor-pointer"
           >
             <span>Inquire for Custom Scope</span>
             <ArrowRight className="w-4 h-4" />
@@ -90,10 +93,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-4 py-2 text-xs sm:text-sm font-bold rounded-lg transition-all whitespace-nowrap cursor-pointer ${
+                className={`px-4 py-2 text-xs sm:text-sm font-bold rounded-xl transition-all whitespace-nowrap cursor-pointer ${
                   activeCategory === cat.id
-                    ? 'bg-orange-600 text-white shadow-md shadow-orange-600/30 border border-orange-500'
-                    : 'bg-zinc-900 text-zinc-300 hover:text-white hover:bg-zinc-800 border border-zinc-800'
+                    ? 'btn-3d-primary text-white'
+                    : 'bg-zinc-900/90 text-zinc-300 hover:text-white hover:bg-zinc-800 border border-zinc-800'
                 }`}
               >
                 {cat.label}
@@ -102,85 +105,86 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenQuoteMod
           </div>
         </div>
 
-        {/* 10 Services Grid */}
+        {/* 10 Services Grid with 3D Tilt & Metallic Bevel */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredServices.map((service) => (
-            <div
-              key={service.id}
-              id={`service-card-${service.id}`}
-              className="rounded-xl bg-[#0e0e13] border border-zinc-800 hover:border-orange-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden group shadow-lg"
-            >
-              {/* Image Container with Top Icon Overlay */}
-              <div className="relative h-48 w-full overflow-hidden bg-black">
-                <img
-                  src={service.imageUrl}
-                  alt={`${service.title} by Sri SJ Construction`}
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 opacity-90"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e13] via-black/40 to-transparent" />
+            <Card3D key={service.id} intensity={14} depth={22} className="h-full">
+              <div
+                id={`service-card-${service.id}`}
+                className="card-3d-bevel rounded-2xl flex flex-col justify-between overflow-hidden group h-full"
+              >
+                {/* Image Container with Top Icon Overlay */}
+                <div className="relative h-48 w-full overflow-hidden bg-black">
+                  <img
+                    src={service.imageUrl}
+                    alt={`${service.title} by Sri SJ Construction`}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 opacity-90"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e13] via-black/40 to-transparent" />
 
-                {/* Service Category Tag */}
-                <div className="absolute top-3 left-3">
-                  <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-black/80 backdrop-blur-sm text-orange-400 border border-orange-500/30">
-                    {service.category}
-                  </span>
+                  {/* Service Category Tag */}
+                  <div className="absolute top-3 left-3">
+                    <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-black/80 backdrop-blur-sm text-orange-400 border border-orange-500/30">
+                      {service.category}
+                    </span>
+                  </div>
+
+                  {/* 3D Icon Badge */}
+                  <div className="absolute bottom-3 right-3 w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-amber-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform border border-orange-300/40">
+                    {getServiceIcon(service.iconName)}
+                  </div>
                 </div>
 
-                {/* Icon Badge */}
-                <div className="absolute bottom-3 right-3 w-11 h-11 rounded-lg bg-orange-600 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                  {getServiceIcon(service.iconName)}
+                {/* Service Card Content */}
+                <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-white group-hover:text-orange-400 transition-colors font-['Space_Grotesk']">
+                      {service.title}
+                    </h3>
+                    <p className="text-zinc-300 text-sm mt-2 leading-relaxed">
+                      {service.shortDescription}
+                    </p>
+                  </div>
+
+                  {/* Key Features Pill List */}
+                  <div className="space-y-1.5 pt-2 border-t border-zinc-800">
+                    {service.features.slice(0, 2).map((feat, idx) => (
+                      <div key={idx} className="flex items-center gap-2 text-xs text-zinc-300 font-medium">
+                        <Check className="w-3.5 h-3.5 text-orange-400 shrink-0" />
+                        <span className="truncate">{feat}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Actions: View Details / Request Quote */}
+                  <div className="grid grid-cols-2 gap-2 pt-2">
+                    <button
+                      onClick={() => setSelectedService(service)}
+                      className="btn-3d-dark w-full py-2.5 px-3 rounded-xl text-white text-xs font-bold transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                    >
+                      <span>View Specs</span>
+                    </button>
+                    <button
+                      onClick={() => onOpenQuoteModal(service.title)}
+                      className="btn-3d-primary w-full py-2.5 px-3 rounded-xl text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                    >
+                      <span>Get Quote</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+
+                  <div className="pt-2 border-t border-zinc-800/80 flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-zinc-400">Contractor:</span>
+                    <span className="text-[10px] font-black text-orange-400 uppercase">SRI SJ CONSTRUCTIONS PVT LTD</span>
+                  </div>
                 </div>
               </div>
-
-              {/* Service Card Content */}
-              <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-                <div>
-                  <h3 className="text-xl font-bold text-white group-hover:text-orange-400 transition-colors font-['Space_Grotesk']">
-                    {service.title}
-                  </h3>
-                  <p className="text-zinc-300 text-sm mt-2 leading-relaxed">
-                    {service.shortDescription}
-                  </p>
-                </div>
-
-                {/* Key Features Pill List */}
-                <div className="space-y-1.5 pt-2 border-t border-zinc-800">
-                  {service.features.slice(0, 2).map((feat, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-xs text-zinc-300 font-medium">
-                      <Check className="w-3.5 h-3.5 text-orange-400 shrink-0" />
-                      <span className="truncate">{feat}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Actions: View Details / Request Quote */}
-                <div className="grid grid-cols-2 gap-2 pt-2">
-                  <button
-                    onClick={() => setSelectedService(service)}
-                    className="w-full py-2 px-3 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-bold transition-colors flex items-center justify-center gap-1.5 cursor-pointer border border-zinc-700 hover:border-orange-500"
-                  >
-                    <span>View Specs</span>
-                  </button>
-                  <button
-                    onClick={() => onOpenQuoteModal(service.title)}
-                    className="w-full py-2 px-3 rounded-lg bg-orange-500/20 hover:bg-orange-600 text-orange-300 hover:text-white border border-orange-500/40 text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                  >
-                    <span>Get Quote</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-
-                <div className="pt-2 border-t border-zinc-800/80 flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-zinc-400">Contractor:</span>
-                  <span className="text-[10px] font-black text-orange-400 uppercase">SRI SJ CONSTRUCTIONS PVT LTD</span>
-                </div>
-              </div>
-            </div>
+            </Card3D>
           ))}
         </div>
-
       </div>
+
 
       {/* Service Details Modal */}
       {selectedService && (

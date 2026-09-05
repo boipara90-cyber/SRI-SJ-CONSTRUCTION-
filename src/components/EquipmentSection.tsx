@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { EQUIPMENT_FLEET } from '../data/companyData';
 import { EquipmentItem } from '../types';
+import { Card3D } from './Card3D';
 import { 
   Truck, 
   Wrench, 
@@ -10,7 +11,8 @@ import {
   Sparkles, 
   Zap, 
   PlusCircle,
-  X
+  X,
+  Cpu
 } from 'lucide-react';
 
 interface EquipmentSectionProps {
@@ -21,119 +23,121 @@ export const EquipmentSection: React.FC<EquipmentSectionProps> = ({ onOpenQuoteM
   const [selectedEquipment, setSelectedEquipment] = useState<EquipmentItem | null>(null);
 
   return (
-    <section id="equipment" className="py-20 bg-[#dbe2ea] text-slate-800 relative border-t border-slate-300">
+    <section id="equipment" className="py-20 bg-[#08080d] text-white relative border-t border-zinc-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-3">
-              <Truck className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Plant &amp; Machinery Fleet</span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/15 border border-orange-500/40 text-orange-400 text-xs font-bold uppercase tracking-wider mb-3">
+              <Truck className="w-3.5 h-3.5 text-orange-500" />
+              <span>Heavy Rig Fleet &amp; Industrial Plant</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-950 tracking-tight font-['Space_Grotesk']">
+            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight font-['Space_Grotesk']">
               Our Construction &amp; Piling Machinery
             </h2>
-            <p className="text-slate-600 text-base mt-2 max-w-2xl">
-              Equipped with heavy rotary piling rigs, excavators, cranes, transit concrete mixers, and site gensets ready for rapid deployment in West Bengal.
+            <p className="text-zinc-300 text-base mt-2 max-w-2xl">
+              Equipped with heavy rotary piling rigs, hydraulic cranes, transit concrete mixers, and site gensets ready for rapid deployment across West Bengal.
             </p>
           </div>
 
           <button
             onClick={() => onOpenQuoteModal('Equipment Deployment Support')}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm shadow-md transition-all self-start md:self-auto cursor-pointer"
+            className="btn-3d-primary inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-black text-sm shadow-md transition-all self-start md:self-auto cursor-pointer"
           >
-            <span>Inquire for Equipment Support</span>
+            <span>Mobilize Equipment Fleet</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Company Notification Banner for Equipment Customization */}
-        <div className="mb-8 p-4 rounded-xl bg-white border border-slate-200 flex items-center justify-between flex-wrap gap-3 shadow-sm">
-          <div className="flex items-center gap-2 text-xs text-slate-700">
-            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+        {/* Company Fleet Telemetry Banner */}
+        <div className="mb-8 p-4 rounded-2xl bg-[#0f0f16] border border-zinc-800 shadow-xl flex items-center justify-between flex-wrap gap-3">
+          <div className="flex items-center gap-2 text-xs text-zinc-300">
+            <span className="w-2.5 h-2.5 rounded-full bg-orange-500 animate-ping" />
             <span>
-              <strong className="text-slate-900">Fleet Specifications:</strong> Equipment list includes active placeholders for company asset records. Custom machinery mobilization available for project-term requirements.
+              <strong className="text-white">Active Machinery Fleet:</strong> Rotary piling rigs (Mait HR-180, Bauer BG-28), crawler cranes, batching plants, and bentonite pumps stationed in West Bengal.
             </span>
           </div>
-          <span className="text-xs font-bold text-emerald-800">
-            Haldia Central Maintenance Yard
-          </span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-orange-950/60 border border-orange-500/40 text-xs font-bold text-orange-300">
+            <Cpu className="w-3.5 h-3.5 text-orange-400" />
+            <span>Haldia Central Maintenance Depot</span>
+          </div>
         </div>
 
-        {/* Equipment Cards Grid (6 core items required) */}
+        {/* Equipment Cards Grid with 3D Tilt */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {EQUIPMENT_FLEET.map((item) => (
-            <div
-              key={item.id}
-              id={`equipment-card-${item.id}`}
-              className="rounded-xl bg-slate-100 border border-slate-300 hover:border-emerald-400 hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between group shadow-md"
-            >
-              {/* Photo Area */}
-              <div className="relative h-48 bg-slate-200 overflow-hidden">
-                <img
-                  src={item.imageUrl}
-                  alt={item.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-black/20" />
+            <Card3D key={item.id} intensity={15} depth={22} className="h-full">
+              <div
+                id={`equipment-card-${item.id}`}
+                className="card-3d-bevel rounded-2xl overflow-hidden flex flex-col justify-between group h-full"
+              >
+                {/* Photo Area */}
+                <div className="relative h-48 bg-black overflow-hidden">
+                  <img
+                    src={item.imageUrl}
+                    alt={item.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e14] via-black/30 to-transparent" />
 
-                {/* Category Pill */}
-                <div className="absolute top-3 left-3">
-                  <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-slate-950/80 backdrop-blur-sm text-emerald-400 border border-emerald-500/30">
-                    {item.category}
-                  </span>
-                </div>
-
-                {/* Status Indicator */}
-                <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-950/80 text-emerald-300 text-[11px] font-bold border border-emerald-500/40 backdrop-blur-sm">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span>{item.status}</span>
-                </div>
-              </div>
-
-              {/* Machinery Details */}
-              <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-                <div>
-                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-emerald-700 transition-colors font-['Space_Grotesk']">
-                    {item.name}
-                  </h3>
-
-                  <div className="space-y-1.5 mt-3 pt-3 border-t border-slate-200 text-xs">
-                    <div className="text-slate-800">
-                      <span className="text-slate-600 font-medium">Specs: </span>
-                      <span>{item.specification}</span>
-                    </div>
-                    <div className="text-slate-800">
-                      <span className="text-slate-600 font-medium">Capacity: </span>
-                      <span className="font-bold text-emerald-700">{item.capacity}</span>
-                    </div>
+                  {/* Category Pill */}
+                  <div className="absolute top-3 left-3">
+                    <span className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-lg bg-black/80 backdrop-blur-sm text-orange-400 border border-orange-500/40">
+                      {item.category}
+                    </span>
                   </div>
 
-                  <p className="text-slate-700 text-xs mt-3 leading-relaxed">
-                    {item.description}
-                  </p>
+                  {/* Status Indicator */}
+                  <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/80 text-emerald-300 text-[11px] font-bold border border-emerald-500/40 backdrop-blur-sm">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>{item.status}</span>
+                  </div>
                 </div>
 
-                {/* Action Buttons */}
-                <div className="grid grid-cols-2 gap-2 pt-3 border-t border-slate-200">
-                  <button
-                    onClick={() => setSelectedEquipment(item)}
-                    className="w-full py-2 px-3 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold transition-colors cursor-pointer border border-slate-300"
-                  >
-                    View Specs
-                  </button>
-                  <button
-                    onClick={() => onOpenQuoteModal(`Machinery Support: ${item.name}`)}
-                    className="w-full py-2 px-3 rounded-lg bg-emerald-500/15 hover:bg-emerald-600 text-emerald-900 hover:text-white border border-emerald-500/30 text-xs font-bold transition-all flex items-center justify-center gap-1 cursor-pointer"
-                  >
-                    <span>Request Unit</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
+                {/* Machinery Details */}
+                <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                  <div>
+                    <h3 className="text-lg font-bold text-white group-hover:text-orange-400 transition-colors font-['Space_Grotesk']">
+                      {item.name}
+                    </h3>
+
+                    <div className="space-y-1.5 mt-3 pt-3 border-t border-zinc-800 text-xs">
+                      <div className="text-zinc-300">
+                        <span className="text-zinc-400 font-medium">Specs: </span>
+                        <span>{item.specification}</span>
+                      </div>
+                      <div className="text-zinc-300">
+                        <span className="text-zinc-400 font-medium">Capacity: </span>
+                        <span className="font-bold text-orange-400">{item.capacity}</span>
+                      </div>
+                    </div>
+
+                    <p className="text-zinc-400 text-xs mt-3 leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="grid grid-cols-2 gap-2 pt-3 border-t border-zinc-800">
+                    <button
+                      onClick={() => setSelectedEquipment(item)}
+                      className="btn-3d-dark w-full py-2.5 px-3 rounded-xl text-white text-xs font-bold transition-colors cursor-pointer"
+                    >
+                      View Specs
+                    </button>
+                    <button
+                      onClick={() => onOpenQuoteModal(`Machinery Support: ${item.name}`)}
+                      className="btn-3d-primary w-full py-2.5 px-3 rounded-xl text-white text-xs font-bold transition-all flex items-center justify-center gap-1 cursor-pointer"
+                    >
+                      <span>Request Unit</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Card3D>
           ))}
         </div>
 
@@ -141,64 +145,64 @@ export const EquipmentSection: React.FC<EquipmentSectionProps> = ({ onOpenQuoteM
 
       {/* Equipment Specs Modal */}
       {selectedEquipment && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white border border-slate-200 rounded-2xl max-w-xl w-full p-6 relative shadow-2xl text-slate-800">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="bg-[#0e0e14] border-2 border-zinc-800 rounded-2xl max-w-xl w-full p-6 relative shadow-2xl text-white">
             <button
               onClick={() => setSelectedEquipment(null)}
-              className="absolute top-4 right-4 p-2 rounded-lg bg-slate-100 text-slate-500 hover:text-slate-900 hover:bg-slate-200 cursor-pointer"
+              className="absolute top-4 right-4 p-2 rounded-lg bg-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-700 cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-3 rounded-xl bg-emerald-600 text-white">
+              <div className="p-3 rounded-xl bg-gradient-to-br from-orange-500 to-amber-600 text-white shadow-lg">
                 <Truck className="w-6 h-6" />
               </div>
               <div>
-                <span className="text-xs font-bold text-emerald-700 uppercase">
+                <span className="text-xs font-bold text-orange-400 uppercase">
                   {selectedEquipment.category}
                 </span>
-                <h3 className="text-xl font-black text-slate-950 font-['Space_Grotesk']">
+                <h3 className="text-xl font-black text-white font-['Space_Grotesk']">
                   {selectedEquipment.name}
                 </h3>
               </div>
             </div>
 
             <div className="space-y-4 my-4">
-              <div className="p-3.5 rounded-lg bg-[#f0f4f8] border border-slate-200 text-xs space-y-2">
+              <div className="p-4 rounded-xl bg-[#14141d] border border-zinc-800 text-xs space-y-2.5">
                 <div>
-                  <span className="text-slate-500 uppercase font-bold">Technical Specifications:</span>
-                  <p className="text-sm font-medium text-slate-900 mt-0.5">{selectedEquipment.specification}</p>
+                  <span className="text-zinc-400 uppercase font-bold">Technical Specifications:</span>
+                  <p className="text-sm font-medium text-white mt-0.5">{selectedEquipment.specification}</p>
                 </div>
                 <div>
-                  <span className="text-slate-500 uppercase font-bold">Operational Capacity:</span>
-                  <p className="text-sm font-black text-emerald-700 mt-0.5">{selectedEquipment.capacity}</p>
+                  <span className="text-zinc-400 uppercase font-bold">Operational Capacity:</span>
+                  <p className="text-sm font-black text-orange-400 mt-0.5">{selectedEquipment.capacity}</p>
                 </div>
                 <div>
-                  <span className="text-slate-500 uppercase font-bold">Deployment Status:</span>
-                  <p className="text-sm font-bold text-emerald-700 mt-0.5">{selectedEquipment.status}</p>
+                  <span className="text-zinc-400 uppercase font-bold">Deployment Status:</span>
+                  <p className="text-sm font-bold text-emerald-400 mt-0.5">{selectedEquipment.status}</p>
                 </div>
               </div>
 
-              <p className="text-slate-600 text-sm leading-relaxed">
+              <p className="text-zinc-300 text-sm leading-relaxed">
                 {selectedEquipment.description}
               </p>
             </div>
 
-            <div className="flex gap-3 pt-4 border-t border-slate-200">
+            <div className="flex gap-3 pt-4 border-t border-zinc-800">
               <button
                 onClick={() => {
                   const eqName = selectedEquipment.name;
                   setSelectedEquipment(null);
                   onOpenQuoteModal(`Equipment Requirement: ${eqName}`);
                 }}
-                className="flex-1 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs uppercase tracking-wider cursor-pointer"
+                className="flex-1 py-3 rounded-xl btn-3d-primary text-white font-black text-xs uppercase tracking-wider cursor-pointer"
               >
                 Inquire Deployment
               </button>
               <button
                 onClick={() => setSelectedEquipment(null)}
-                className="px-4 py-2.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold cursor-pointer"
+                className="px-5 py-3 rounded-xl btn-3d-dark text-zinc-300 text-xs font-semibold cursor-pointer"
               >
                 Close
               </button>
@@ -209,3 +213,4 @@ export const EquipmentSection: React.FC<EquipmentSectionProps> = ({ onOpenQuoteM
     </section>
   );
 };
+

@@ -36,7 +36,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal, onOpenAdminMod
     { name: 'Services', href: '#services' },
     { name: 'Clients', href: '#clients' },
     { name: 'Projects', href: '#projects' },
-    { name: 'Maps & Photos', href: '#maps-photos' },
+    { name: 'Equipment', href: '#equipment' },
     { name: 'Careers', href: '#careers' },
     { name: 'Contact', href: '#contact' },
   ];

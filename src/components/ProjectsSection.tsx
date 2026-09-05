@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { PROJECTS, MAJOR_CLIENTS } from '../data/companyData';
 import { CompanyLogo } from './ClientLogos';
+import { Card3D } from './Card3D';
 import { 
   Building, 
   MapPin, 
   Tag, 
   CheckCircle2, 
-  ArrowRight,
-  ShieldCheck,
-  Award,
-  Zap,
-  Check,
-  Activity,
-  Flame
+  ArrowRight, 
+  ShieldCheck, 
+  Award, 
+  Zap, 
+  Check, 
+  Activity, 
+  Flame,
+  Sparkles
 } from 'lucide-react';
 
 interface ProjectsSectionProps {
@@ -41,7 +43,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenQuoteMod
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-orange-500/15 border border-orange-500/30 text-orange-400 text-xs font-bold uppercase tracking-wider mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/15 border border-orange-500/30 text-orange-400 text-xs font-bold uppercase tracking-wider mb-3">
               <Building className="w-3.5 h-3.5 text-orange-400" />
               <span>Executed &amp; Active Project Portfolio</span>
             </div>
@@ -66,9 +68,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenQuoteMod
               <button
                 key={tab.id}
                 onClick={() => setFilter(tab.id as ProjectFilter)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer shadow-xs ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer shadow-xs ${
                   filter === tab.id
-                    ? 'bg-orange-600 text-white ring-2 ring-orange-500/40 shadow-sm border border-orange-500'
+                    ? 'btn-3d-primary text-white'
                     : 'bg-[#121218] text-zinc-300 hover:text-white hover:bg-zinc-800 border border-zinc-800'
                 }`}
               >
@@ -111,117 +113,118 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenQuoteMod
           </div>
         </div>
 
-        {/* Project Cards Grid */}
+        {/* Project Cards Grid with 3D Tilt */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project) => (
-            <div
-              key={project.id}
-              id={`project-card-${project.id}`}
-              className={`rounded-2xl bg-[#0e0e13] border transition-all duration-300 overflow-hidden flex flex-col justify-between group shadow-lg ${
-                project.status === 'Ongoing' ? 'border-orange-500/80 ring-1 ring-orange-500/20' : 'border-zinc-800'
-              } hover:border-orange-500 hover:shadow-xl`}
-            >
-              {/* Image & Badges */}
-              <div className="relative h-48 bg-black overflow-hidden">
-                <img
-                  src={project.imageUrl}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-85"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e13] via-black/40 to-transparent" />
+            <Card3D key={project.id} intensity={14} depth={20} className="h-full">
+              <div
+                id={`project-card-${project.id}`}
+                className={`card-3d-bevel rounded-2xl overflow-hidden flex flex-col justify-between group h-full ${
+                  project.status === 'Ongoing' ? 'border-orange-500/80 shadow-[0_0_20px_rgba(249,115,22,0.15)]' : ''
+                }`}
+              >
+                {/* Image & Badges */}
+                <div className="relative h-48 bg-black overflow-hidden">
+                  <img
+                    src={project.imageUrl}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-85"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0e0e13] via-black/40 to-transparent" />
 
-                {/* Status Badge */}
-                <div className="absolute top-3 left-3 flex items-center gap-2">
-                  <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border backdrop-blur-xs flex items-center gap-1.5 ${
-                    project.status === 'Ongoing'
-                      ? 'bg-orange-950/90 text-orange-300 border-orange-500/60 shadow-xs'
-                      : 'bg-black/90 text-orange-400 border-zinc-700'
-                  }`}>
-                    {project.status === 'Ongoing' && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-ping" />
-                    )}
-                    <span>{project.status === 'Ongoing' ? 'Current Project' : 'Major Completed'}</span>
-                  </span>
-                </div>
-
-                {/* Year / Timeline Badge */}
-                <div className="absolute top-3 right-3">
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-black/80 text-zinc-300 border border-zinc-700 backdrop-blur-xs">
-                    {project.year}
-                  </span>
-                </div>
-
-                {/* Client / Authority Badge */}
-                {project.client && (
-                  <div className="absolute bottom-3 left-3 right-3">
-                    <span className="inline-block text-[11px] font-black tracking-wide uppercase px-2.5 py-1 rounded-md bg-black/90 text-orange-400 border border-orange-500/40 shadow-sm truncate max-w-full">
-                      Client: {project.client}
+                  {/* Status Badge */}
+                  <div className="absolute top-3 left-3 flex items-center gap-2">
+                    <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border backdrop-blur-xs flex items-center gap-1.5 ${
+                      project.status === 'Ongoing'
+                        ? 'bg-orange-950/90 text-orange-300 border-orange-500/60 shadow-xs'
+                        : 'bg-black/90 text-orange-400 border-zinc-700'
+                    }`}>
+                      {project.status === 'Ongoing' && (
+                        <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-ping" />
+                      )}
+                      <span>{project.status === 'Ongoing' ? 'Current Project' : 'Major Completed'}</span>
                     </span>
                   </div>
-                )}
-              </div>
 
-              {/* Project Card Content */}
-              <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-                <div>
-                  <h3 className="text-lg font-black text-white group-hover:text-orange-400 transition-colors font-['Space_Grotesk'] leading-snug">
-                    {project.title}
-                  </h3>
-
-                  {/* Location & Type */}
-                  <div className="space-y-1.5 mt-3 pt-3 border-t border-zinc-800 text-xs">
-                    <div className="flex items-center gap-2 text-zinc-300 font-semibold">
-                      <MapPin className="w-3.5 h-3.5 text-orange-400 shrink-0" />
-                      <span>{project.location}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-zinc-400">
-                      <Tag className="w-3.5 h-3.5 text-orange-400 shrink-0" />
-                      <span className="font-medium truncate">{project.typeOfWork}</span>
-                    </div>
+                  {/* Year / Timeline Badge */}
+                  <div className="absolute top-3 right-3">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-black/80 text-zinc-300 border border-zinc-700 backdrop-blur-xs">
+                      {project.year}
+                    </span>
                   </div>
 
-                  <p className="text-zinc-300 text-xs sm:text-sm mt-3 leading-relaxed">
-                    {project.description}
-                  </p>
-
-                  {/* Technical Highlights Tags */}
-                  {project.highlights && project.highlights.length > 0 && (
-                    <div className="mt-4 pt-3 border-t border-zinc-800 flex flex-wrap gap-1.5">
-                      {project.highlights.map((hl, i) => (
-                        <span 
-                          key={i} 
-                          className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded bg-[#14141a] text-zinc-300 border border-zinc-800"
-                        >
-                          <Check className="w-3 h-3 text-orange-400 shrink-0" />
-                          <span>{hl}</span>
-                        </span>
-                      ))}
+                  {/* Client / Authority Badge */}
+                  {project.client && (
+                    <div className="absolute bottom-3 left-3 right-3">
+                      <span className="inline-block text-[11px] font-black tracking-wide uppercase px-2.5 py-1 rounded-md bg-black/90 text-orange-400 border border-orange-500/40 shadow-sm truncate max-w-full">
+                        Client: {project.client}
+                      </span>
                     </div>
                   )}
                 </div>
 
-                {/* Card Footer */}
-                <div className="pt-3 border-t border-zinc-800 flex items-center justify-between">
-                  <span className="text-[10px] text-orange-400 font-bold uppercase tracking-wider">
-                    SRI SJ CONSTRUCTIONS PVT LTD
-                  </span>
-                  <button
-                    onClick={onOpenQuoteModal}
-                    className="inline-flex items-center gap-1 text-xs font-black text-orange-400 hover:text-orange-300 transition-colors cursor-pointer"
-                  >
-                    <span>Request Quote</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
+                {/* Project Card Content */}
+                <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                  <div>
+                    <h3 className="text-lg font-black text-white group-hover:text-orange-400 transition-colors font-['Space_Grotesk'] leading-snug">
+                      {project.title}
+                    </h3>
+
+                    {/* Location & Type */}
+                    <div className="space-y-1.5 mt-3 pt-3 border-t border-zinc-800 text-xs">
+                      <div className="flex items-center gap-2 text-zinc-300 font-semibold">
+                        <MapPin className="w-3.5 h-3.5 text-orange-400 shrink-0" />
+                        <span>{project.location}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-zinc-400">
+                        <Tag className="w-3.5 h-3.5 text-orange-400 shrink-0" />
+                        <span className="font-medium truncate">{project.typeOfWork}</span>
+                      </div>
+                    </div>
+
+                    <p className="text-zinc-300 text-xs sm:text-sm mt-3 leading-relaxed">
+                      {project.description}
+                    </p>
+
+                    {/* Technical Highlights Tags */}
+                    {project.highlights && project.highlights.length > 0 && (
+                      <div className="mt-4 pt-3 border-t border-zinc-800 flex flex-wrap gap-1.5">
+                        {project.highlights.map((hl, i) => (
+                          <span 
+                            key={i} 
+                            className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded bg-[#14141a] text-zinc-300 border border-zinc-800"
+                          >
+                            <Check className="w-3 h-3 text-orange-400 shrink-0" />
+                            <span>{hl}</span>
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Card Footer */}
+                  <div className="pt-3 border-t border-zinc-800 flex items-center justify-between">
+                    <span className="text-[10px] text-orange-400 font-bold uppercase tracking-wider">
+                      SRI SJ CONSTRUCTIONS PVT LTD
+                    </span>
+                    <button
+                      onClick={onOpenQuoteModal}
+                      className="inline-flex items-center gap-1 text-xs font-black text-orange-400 hover:text-orange-300 transition-colors cursor-pointer"
+                    >
+                      <span>Request Quote</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Card3D>
           ))}
         </div>
 
         {/* Bottom CTA */}
-        <div className="mt-12 text-center p-8 rounded-2xl bg-[#0e0e13] border border-zinc-800 text-white shadow-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-orange-500/20 border border-orange-500/30 text-orange-400 text-xs font-bold uppercase tracking-wider mb-3">
+        <div className="mt-12 text-center p-8 rounded-3xl bg-[#0e0e14] border-2 border-orange-500/30 text-white shadow-2xl relative overflow-hidden">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 border border-orange-500/40 text-orange-400 text-xs font-bold uppercase tracking-wider mb-3">
             <Zap className="w-3.5 h-3.5" />
             <span>Ready for Immediate Site Mobilization Across India</span>
           </div>
@@ -234,7 +237,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenQuoteMod
           <div className="mt-5 flex flex-col sm:flex-row items-center justify-center gap-3">
             <button
               onClick={onOpenQuoteModal}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-black text-sm shadow-lg shadow-orange-600/30 cursor-pointer transition-all border border-orange-400/40"
+              className="btn-3d-primary inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-white font-black text-sm cursor-pointer transition-all"
             >
               <span>Submit Project Requirement &amp; BOQ</span>
               <ArrowRight className="w-4 h-4" />
@@ -249,4 +252,5 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenQuoteMod
     </section>
   );
 };
+
 

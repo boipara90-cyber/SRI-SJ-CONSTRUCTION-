@@ -1,47 +1,28 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { COMPANY_INFO } from '../data/companyData';
+import React, { useState, useEffect } from 'react';
 import { OfficialCompanyEmblem } from './Logo';
-import { TOP_BACKGROUND_PHOTOS, TopBackgroundSlide } from '../data/heroSlidesData';
+import { TOP_BACKGROUND_PHOTOS } from '../data/heroSlidesData';
 import riverPilingHero from '../assets/images/river_piling_hero_1788334233850.jpg';
-import { 
-  getStoredPhotosMap, 
-  batchSaveOriginalPhotos, 
-  saveOriginalPhoto, 
-  fileToDataUrl 
-} from '../services/photoStorageService';
+import { getStoredPhotosMap } from '../services/photoStorageService';
 import { useSiteContent } from '../services/siteContentService';
+import { Card3D } from './Card3D';
 import { 
-  ShieldCheck, 
   ArrowRight, 
-  PhoneCall, 
-  Drill, 
   Building2, 
-  CheckCircle2, 
-  MapPin, 
+  SlidersHorizontal,
   Award,
+  ShieldCheck,
+  Zap,
+  Layers,
+  Camera,
   ChevronLeft,
   ChevronRight,
-  Play,
-  Pause,
-  Layers,
-  Radio,
-  Clock,
-  Sparkles,
-  Maximize2,
-  X,
-  Gauge,
-  Camera,
-  UploadCloud,
-  Check,
-  SlidersHorizontal,
-  Edit3,
-  Plus,
-  FolderPlus,
-  Image as ImageIcon
+  MapPin,
+  CheckCircle2,
+  HardHat
 } from 'lucide-react';
 
 interface HeroProps {
-  onOpenQuoteModal: () => void;
+  onOpenQuoteModal: (serviceTitle?: string) => void;
   onOpenPhotosModal?: () => void;
   onOpenWebsiteEditor?: () => void;
 }
@@ -49,20 +30,7 @@ interface HeroProps {
 export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal, onOpenWebsiteEditor }) => {
   const { content } = useSiteContent();
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isHovered, setIsHovered] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [slideDuration, setSlideDuration] = useState<number>(4500); // 4.5s per photo for smooth transitions and Ken Burns zoom effect
-  const [fullscreenPhoto, setFullscreenPhoto] = useState<TopBackgroundSlide | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [customPhotosMap, setCustomPhotosMap] = useState<Record<string, string>>({});
-  const [uploadToastMsg, setUploadToastMsg] = useState<string | null>(null);
-  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
-  const thumbnailScrollRef = useRef<HTMLDivElement>(null);
-  const heroFileInputRef = useRef<HTMLInputElement>(null);
-  const heroSingleSlotInputRef = useRef<HTMLInputElement>(null);
-
-  const PROGRESS_INTERVAL = 40; // update progress smoothly every 40ms
 
   // Load custom stored photos from IndexedDB
   const loadStoredPhotos = async () => {
@@ -97,115 +65,18 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal,
     };
   });
 
-  const displaySlides = selectedCategory === 'all' 
-    ? baseSlides 
-    : baseSlides.filter(s => s.category === selectedCategory);
+  const displaySlides = baseSlides;
 
-  const activeSlide = displaySlides[currentSlideIndex] || displaySlides[0] || baseSlides[0];
-
-  // Auto-slide effect with 2-second timer (or custom duration)
+  // Ambient auto-slide rotation for background crossfade
   useEffect(() => {
-    if (!isPlaying || isHovered) return;
+    if (displaySlides.length === 0) return;
 
-    const progressTimer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          setCurrentSlideIndex((curr) => (curr + 1) % displaySlides.length);
-          return 0;
-        }
-        return prev + (PROGRESS_INTERVAL / slideDuration) * 100;
-      });
-    }, PROGRESS_INTERVAL);
+    const timer = setInterval(() => {
+      setCurrentSlideIndex((curr) => (curr + 1) % displaySlides.length);
+    }, 5500);
 
-    return () => clearInterval(progressTimer);
-  }, [isPlaying, isHovered, currentSlideIndex, slideDuration, displaySlides.length]);
-
-  // Keep thumbnail in view when slide changes
-  useEffect(() => {
-    if (thumbnailScrollRef.current) {
-      const activeThumb = thumbnailScrollRef.current.children[currentSlideIndex] as HTMLElement;
-      if (activeThumb) {
-        activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      }
-    }
-  }, [currentSlideIndex]);
-
-  const handleNext = () => {
-    setCurrentSlideIndex((prev) => (prev + 1) % displaySlides.length);
-    setProgress(0);
-  };
-
-  const handlePrev = () => {
-    setCurrentSlideIndex((prev) => (prev - 1 + displaySlides.length) % displaySlides.length);
-    setProgress(0);
-  };
-
-  const handleSelectSlide = (index: number) => {
-    setCurrentSlideIndex(index);
-    setProgress(0);
-  };
-
-  const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category);
-    setCurrentSlideIndex(0);
-    setProgress(0);
-  };
-
-  // Direct batch / multi-photo upload from Hero slider
-  const handleHeroPhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
-
-    try {
-      setIsUploadingPhoto(true);
-      const itemsToSave: { id: string; dataUrl: string }[] = [];
-
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const dataUrl = await fileToDataUrl(file);
-        // Map to current slide slot or next available slots
-        const targetIndex = (currentSlideIndex + i) % displaySlides.length;
-        const targetId = displaySlides[targetIndex]?.id || `photo-${i + 1}`;
-        itemsToSave.push({ id: targetId, dataUrl });
-      }
-
-      await batchSaveOriginalPhotos(itemsToSave);
-      await loadStoredPhotos();
-      setUploadToastMsg(`Added ${itemsToSave.length} original photo${itemsToSave.length > 1 ? 's' : ''} to slider!`);
-      setTimeout(() => setUploadToastMsg(null), 4000);
-    } catch (err) {
-      console.error('Failed to upload photo:', err);
-      setUploadToastMsg('Could not upload photo. Please try again.');
-      setTimeout(() => setUploadToastMsg(null), 3000);
-    } finally {
-      setIsUploadingPhoto(false);
-      if (heroFileInputRef.current) heroFileInputRef.current.value = '';
-    }
-  };
-
-  // Upload/replace specific active slide photo
-  const handleHeroSingleSlotUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
-
-    try {
-      setIsUploadingPhoto(true);
-      const file = files[0];
-      const dataUrl = await fileToDataUrl(file);
-      const targetId = activeSlide.id;
-      await saveOriginalPhoto(targetId, dataUrl);
-      await loadStoredPhotos();
-      setUploadToastMsg(`Replaced photo for Step ${activeSlide.stepNumber} with your real photo!`);
-      setTimeout(() => setUploadToastMsg(null), 4000);
-    } catch (err) {
-      console.error('Failed to replace photo:', err);
-      setUploadToastMsg('Failed to update photo.');
-      setTimeout(() => setUploadToastMsg(null), 3000);
-    } finally {
-      setIsUploadingPhoto(false);
-      if (heroSingleSlotInputRef.current) heroSingleSlotInputRef.current.value = '';
-    }
-  };
+    return () => clearInterval(timer);
+  }, [displaySlides.length]);
 
   return (
     <section id="home" className="relative min-h-screen pt-28 sm:pt-32 pb-16 flex flex-col justify-between overflow-hidden bg-black text-white">
@@ -218,13 +89,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal,
             <div
               key={slide.id}
               className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                isCurrent ? 'opacity-40' : 'opacity-0'
+                isCurrent ? 'opacity-35' : 'opacity-0'
               }`}
             >
               <img
                 src={slide.imageUrl}
                 alt={slide.title}
-                className={`w-full h-full object-cover object-center filter contrast-125 brightness-95 ${
+                className={`w-full h-full object-cover object-center filter contrast-125 brightness-90 ${
                   isCurrent ? (isZoomIn ? 'animate-kenburns-in' : 'animate-kenburns-out') : 'scale-100'
                 }`}
                 loading={index < 4 ? "eager" : "lazy"}
@@ -234,73 +105,27 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal,
         })}
         
         {/* Deep Black Gradient Overlays for pristine text contrast */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-black/75" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/80" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-orange-950/20 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-black/75" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/80" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-orange-950/30 via-transparent to-transparent" />
         
-        {/* Industrial Precision Grid Overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#f9731610_1px,transparent_1px),linear-gradient(to_bottom,#f9731610_1px,transparent_1px)] bg-[size:36px_36px]" />
-        
-
+        {/* Industrial Precision 3D Grid Overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#f9731612_1px,transparent_1px),linear-gradient(to_bottom,#f9731612_1px,transparent_1px)] bg-[size:40px_40px]" />
       </div>
 
-      {/* Top Background Live Status Bar Banner */}
-      <div className="hidden relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-1 pb-3 w-full">
-        <div className="hidden flex flex-wrap items-center justify-between gap-3 p-2.5 sm:px-4 rounded-xl bg-black/60 border border-zinc-800 backdrop-blur-md">
-          
-          <div className="flex items-center gap-2.5 flex-wrap">
-            <span className="flex h-2.5 w-2.5 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-orange-500" />
-            </span>
-            <span className="text-xs font-black uppercase text-orange-400 font-['Space_Grotesk'] tracking-wider">
-              TOP BACKGROUND SLIDESHOW:
-            </span>
-            <span className="text-xs font-bold text-white">
-              Step {String(currentSlideIndex + 1).padStart(2, '0')} of {String(displaySlides.length).padStart(2, '0')}
-            </span>
-            <span className="hidden md:inline-block text-zinc-600">•</span>
-            <span className="hidden md:inline-block text-xs font-medium text-zinc-300 truncate max-w-md">
-              {activeSlide.title} ({activeSlide.location})
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            {/* Speed Badge / Toggle (2s Default) */}
-            <div className="flex items-center gap-1 text-[11px] font-bold text-zinc-300 bg-zinc-900/90 px-2.5 py-1 rounded-lg border border-zinc-800">
-              <Clock className="w-3 h-3 text-orange-400" />
-              <span className="text-orange-400 font-black">2.0s</span>
-              <span className="text-zinc-400">/step</span>
-            </div>
-
-            {/* Play / Pause */}
-            <button
-              onClick={() => setIsPlaying(!isPlaying)}
-              className="px-2.5 py-1 rounded-lg bg-orange-500/15 hover:bg-orange-500 text-orange-400 hover:text-black text-xs font-bold transition-all border border-orange-500/40 flex items-center gap-1 cursor-pointer"
-              title={isPlaying ? "Pause auto-rotation" : "Resume 2s rotation"}
-            >
-              {isPlaying ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
-              <span>{isPlaying ? 'Pause' : 'Play'}</span>
-            </button>
-          </div>
-
-        </div>
-      </div>
-
-      {/* Main Hero Content */}
+      {/* Main Hero Content: High-Impact 3D Split Layout */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 md:pt-4 w-full">
-        
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
           
-          {/* Left Column: Brand Header, Tagline, Introduction Narrative, Actions, Clients & Footer details */}
-          <div className="lg:col-span-7 space-y-6 text-left">
+          {/* Left Column: Brand & Headlines */}
+          <div className="lg:col-span-6 space-y-6 text-left">
             
-            {/* Company Brand Header */}
-            <div className="flex items-center gap-3.5 p-3 sm:p-3.5 rounded-xl bg-[#0e0e12] border border-zinc-800 shadow-xl backdrop-blur-sm max-w-xl">
-              <div className="relative w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-lg bg-white shadow-sm border border-zinc-700 p-1 overflow-hidden">
+            {/* Company Brand Header with 3D Bevel */}
+            <div className="flex items-center gap-3.5 p-3 sm:p-3.5 rounded-2xl bg-[#0e0e14] border border-zinc-800/80 shadow-[0_10px_25px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.15)] backdrop-blur-md max-w-xl">
+              <div className="relative w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-xl bg-white shadow-md border border-zinc-700 p-1 overflow-hidden">
                 <OfficialCompanyEmblem className="w-full h-full" />
               </div>
-              <div className="space-y-0.5">
+              <div className="space-y-0.5 flex-1 min-w-0">
                 <div className="flex items-center gap-1.5 flex-wrap">
                   <h2 className="text-base sm:text-lg font-black text-white font-['Space_Grotesk'] leading-none">
                     SRI <span className="text-orange-500">SJ</span> CONSTRUCTIONS
@@ -320,50 +145,51 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal,
                     </button>
                   )}
                 </div>
-                <p className="text-xs text-zinc-400 font-medium">
+                <p className="text-xs text-zinc-400 font-medium truncate">
                   {content.company.fullAddress} • GSTIN: <span className="font-mono font-bold text-orange-400">{content.company.gstNumber}</span>
                 </p>
               </div>
             </div>
 
-            {/* Headline Tagline */}
+            {/* Headline Tagline with 3D Industrial Underlay */}
             <div className="relative py-2 max-w-2xl select-none">
-              {/* Premium Construction Industrial Underlay Accent */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black via-[#0d0d12]/80 to-transparent rounded-2xl border border-zinc-800/80 -z-10 shadow-2xl flex items-center overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-black via-[#0d0d14]/90 to-transparent rounded-2xl border border-zinc-800/80 -z-10 shadow-2xl flex items-center overflow-hidden">
                 {/* Industrial grid details */}
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,#f9731606_1px,transparent_1px),linear-gradient(to_bottom,#f9731606_1px,transparent_1px)] bg-[size:10px_10px]" />
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#f9731608_1px,transparent_1px),linear-gradient(to_bottom,#f9731608_1px,transparent_1px)] bg-[size:12px_12px]" />
                 {/* Glowing Left Steel Pillar */}
-                <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-orange-500 via-amber-400 to-orange-600" />
+                <div className="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-orange-500 via-amber-400 to-orange-600 shadow-[0_0_12px_#f97316]" />
               </div>
               
-              <div className="pl-5 pr-4 py-4 sm:py-5 space-y-2">
-                <span className="text-[11px] sm:text-xs font-black tracking-[0.2em] text-orange-400 uppercase block leading-tight">
-                  {content.hero.specialistBadge}
-                </span>
-                <h1 className="text-3xl sm:text-4xl lg:text-[2.85rem] font-black tracking-tight leading-[1.2] font-['Space_Grotesk'] text-white">
-                  <span className="relative inline-flex items-center px-4 py-2 rounded-xl border-2 border-orange-500/80 shadow-[0_10px_35px_rgba(249,115,22,0.35)] mr-2 overflow-hidden align-middle group">
-                    {/* Construction Site Background Photo Under The Letters */}
+              <div className="pl-6 pr-4 py-4 sm:py-5 space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] sm:text-xs font-black tracking-[0.2em] text-orange-400 uppercase block leading-tight">
+                    {content.hero.specialistBadge}
+                  </span>
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-black bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                    <ShieldCheck className="w-3 h-3" /> ISO 9001:2015
+                  </span>
+                </div>
+
+                <h1 className="text-3xl sm:text-4xl lg:text-[2.65rem] font-black tracking-tight leading-[1.2] font-['Space_Grotesk'] text-white">
+                  <span className="relative inline-flex items-center px-4 py-1.5 rounded-xl border-2 border-orange-500/90 shadow-[0_10px_35px_rgba(249,115,22,0.4)] mr-2 overflow-hidden align-middle group">
                     <span
                       className="absolute inset-0 bg-cover bg-center scale-105 transition-transform duration-700 group-hover:scale-110 filter brightness-[0.45] contrast-125 saturate-125 pointer-events-none"
                       style={{ backgroundImage: `url(${riverPilingHero})` }}
                       aria-hidden="true"
                     />
-                    {/* High-contrast semi-transparent protective dark scrim */}
                     <span
                       className="absolute inset-0 bg-gradient-to-r from-black/85 via-zinc-950/75 to-orange-950/80 pointer-events-none"
                       aria-hidden="true"
                     />
-                    {/* Industrial hazard safety tape trim under the letters */}
                     <span
                       className="absolute bottom-0 inset-x-0 h-1 bg-[repeating-linear-gradient(45deg,#f97316,#f97316_8px,#09090b_8px,#09090b_16px)] opacity-95 pointer-events-none"
                       aria-hidden="true"
                     />
-                    {/* Crisp high-contrast lettering */}
                     <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-amber-200 to-orange-400 font-black tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
                       {content.hero.headline1}
                     </span>
                   </span>
-                  <span className="block mt-2 text-zinc-100 font-extrabold text-2xl sm:text-3xl lg:text-[2.25rem] tracking-tight leading-none">
+                  <span className="block mt-2 text-zinc-100 font-extrabold text-2xl sm:text-3xl lg:text-[2.15rem] tracking-tight leading-none">
                     {content.hero.headline2}
                   </span>
                 </h1>
@@ -375,12 +201,12 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal,
               {content.hero.intro}
             </p>
 
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
+            {/* High-Impact 3D Action Buttons */}
+            <div className="flex flex-wrap items-center gap-4 pt-2">
               <button
-                onClick={onOpenQuoteModal}
+                onClick={() => onOpenQuoteModal()}
                 id="hero-quote-btn"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-orange-600 via-orange-500 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-black text-sm sm:text-base shadow-lg shadow-orange-600/30 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer border border-orange-400/40"
+                className="btn-3d-primary inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl text-white font-black text-sm sm:text-base cursor-pointer tracking-wide"
               >
                 <span>{content.hero.quoteBtnText || 'Get a Quote'}</span>
                 <ArrowRight className="w-4 h-4 text-white" />
@@ -389,261 +215,165 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal,
               <a
                 href="#projects"
                 id="hero-projects-btn"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white font-bold text-sm sm:text-base border border-zinc-700 hover:border-orange-500 shadow-sm transition-all duration-200"
+                className="btn-3d-dark inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-white font-bold text-sm sm:text-base cursor-pointer"
               >
                 <Building2 className="w-4 h-4 text-orange-400" />
                 <span>{content.hero.projectsBtnText || 'View Done Projects'}</span>
               </a>
-
-              <a
-                href="#maps-photos"
-                id="hero-photos-btn"
-                className="inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl bg-zinc-950 hover:bg-zinc-900 text-zinc-300 hover:text-white font-semibold text-sm sm:text-base border border-zinc-800 hover:border-zinc-700 transition-all duration-200"
-              >
-                <Camera className="w-4 h-4 text-orange-400" />
-                <span>{content.hero.galleryBtnText || 'Project Gallery (27 Photos)'}</span>
-              </a>
             </div>
 
-            {/* Registered Name Proper End of Point */}
-            <div className="flex items-center gap-2 text-[11px] text-zinc-400 font-semibold pt-4 border-t border-zinc-900">
-              <span>All operations executed by <strong className="text-white">{content.company.name}</strong></span>
+            {/* Industrial Verification Badges */}
+            <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-zinc-900/80 text-xs text-zinc-400">
+              <div className="flex items-center gap-1.5 text-zinc-300 font-semibold">
+                <Zap className="w-4 h-4 text-orange-400" />
+                <span>Rig Fleet: <strong>Mait, Bauer &amp; Casagrande</strong></span>
+              </div>
+              <div className="flex items-center gap-1.5 text-zinc-300 font-semibold">
+                <Layers className="w-4 h-4 text-amber-400" />
+                <span>Pile Diameter: <strong>600mm to 2000mm</strong></span>
+              </div>
             </div>
 
           </div>
 
-          {/* Right Column: Big Formatting Company Construction Photo Showcase Slider */}
-          <div className="lg:col-span-5 w-full flex flex-col justify-center">
-            
-            {/* Hidden File Inputs for Direct Photo Uploads */}
-            <input
-              ref={heroFileInputRef}
-              type="file"
-              accept="image/*"
-              multiple
-              className="hidden"
-              onChange={handleHeroPhotoUpload}
-            />
-            <input
-              ref={heroSingleSlotInputRef}
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={handleHeroSingleSlotUpload}
-            />
-
-            <div 
-              className="relative aspect-video sm:aspect-[4/3] w-full rounded-2xl overflow-hidden border-2 border-zinc-800 bg-[#121217] shadow-2xl group transition-all duration-300 hover:border-orange-500/50"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              {/* Toast Notification Alert inside Slider */}
-              {uploadToastMsg && (
-                <div className="absolute top-3 left-1/2 -translate-x-1/2 z-30 px-3.5 py-1.5 rounded-lg bg-emerald-500 text-slate-950 font-bold text-xs shadow-2xl flex items-center gap-1.5 animate-in fade-in slide-in-from-top-2">
-                  <CheckCircle2 className="w-4 h-4 text-slate-950" />
-                  <span>{uploadToastMsg}</span>
-                </div>
-              )}
-
-              {/* Active Photo with Ken Burns Zoom & smooth crossfade */}
-              <div className="absolute inset-0 z-0 overflow-hidden bg-black">
-                {displaySlides.map((slide, idx) => {
-                  const isCurrent = idx === currentSlideIndex;
-                  const isZoomIn = idx % 2 === 0;
-                  return (
-                    <div
-                      key={`showcase-${slide.id}`}
-                      className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-                        isCurrent ? 'opacity-100 scale-100 z-10' : 'opacity-0 scale-95 z-0'
-                      }`}
-                    >
-                      <img
-                        src={slide.imageUrl}
-                        alt={slide.title}
-                        className={`w-full h-full object-cover object-center ${
-                          isCurrent ? (isZoomIn ? 'animate-kenburns-in' : 'animate-kenburns-out') : 'scale-100'
-                        }`}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Slider Top Bar: Add Photo CTA, Photo Hub and Counter */}
-              <div className="absolute inset-x-0 top-0 bg-gradient-to-b from-black/80 via-black/40 to-transparent p-3 sm:p-4 z-20 flex items-center justify-between gap-2">
+          {/* Right Column: Live Project Execution & Site Machinery Showcase */}
+          <div className="lg:col-span-6 w-full">
+            <div className="relative rounded-3xl bg-[#0d0d14]/95 border-2 border-zinc-800 shadow-[0_20px_50px_rgba(0,0,0,0.85)] p-5 sm:p-6 backdrop-blur-md overflow-hidden">
+              {/* Decorative top accent border */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 via-amber-400 to-orange-600" />
+              
+              {/* Header inside card */}
+              <div className="flex items-center justify-between gap-2 pb-4 border-b border-zinc-800/80">
                 <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => heroFileInputRef.current?.click()}
-                    id="hero-slider-add-photo-btn"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-black text-xs shadow-lg shadow-orange-600/40 transition-all hover:scale-105 active:scale-95 cursor-pointer border border-orange-400"
-                    title="Add or upload original construction photos"
-                  >
-                    <Plus className="w-3.5 h-3.5 text-white" />
-                    <span>+ Add Photo</span>
-                  </button>
-
-                  {onOpenPhotosModal && (
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-xs font-black uppercase tracking-wider text-orange-400 font-['Space_Grotesk']">
+                    Live Site Spotlight
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] font-mono font-bold text-zinc-400 bg-zinc-900/80 px-2 py-0.5 rounded border border-zinc-800">
+                    Photo {currentSlideIndex + 1} / {displaySlides.length}
+                  </span>
+                  <div className="flex items-center gap-1">
                     <button
                       type="button"
-                      onClick={onOpenPhotosModal}
-                      id="hero-slider-hub-btn"
-                      className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-black/60 hover:bg-zinc-800 text-zinc-300 hover:text-white text-xs font-semibold backdrop-blur-sm border border-zinc-700 transition-colors cursor-pointer"
-                      title="Open 27 Photo Management Hub"
+                      onClick={() => setCurrentSlideIndex(prev => (prev - 1 + displaySlides.length) % displaySlides.length)}
+                      className="p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 transition-colors cursor-pointer"
+                      title="Previous site photo"
+                      aria-label="Previous site photo"
                     >
-                      <Camera className="w-3 h-3 text-orange-400" />
-                      <span>Photo Hub</span>
+                      <ChevronLeft className="w-4 h-4" />
                     </button>
-                  )}
-                </div>
-
-                <div className="flex items-center gap-2">
-                  {activeSlide.isOriginalCustom && (
-                    <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-500/60 text-emerald-400 text-[10px] font-bold">
-                      <CheckCircle2 className="w-2.5 h-2.5 text-emerald-400" />
-                      <span>Custom Photo</span>
-                    </span>
-                  )}
-                  <span className="text-[11px] font-bold text-zinc-300 font-mono bg-black/60 px-2.5 py-1 rounded-full backdrop-blur-sm border border-zinc-800">
-                    {String(currentSlideIndex + 1).padStart(2, '0')} / {String(displaySlides.length).padStart(2, '0')}
-                  </span>
+                    <button
+                      type="button"
+                      onClick={() => setCurrentSlideIndex(prev => (prev + 1) % displaySlides.length)}
+                      className="p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 transition-colors cursor-pointer"
+                      title="Next site photo"
+                      aria-label="Next site photo"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              {/* Slider Interactive Navigation Controls */}
-              <div className="absolute inset-y-0 inset-x-2 flex items-center justify-between z-20 pointer-events-none">
-                <button
-                  onClick={handlePrev}
-                  className="p-2 rounded-lg bg-black/60 hover:bg-orange-500 text-zinc-300 hover:text-black transition-all border border-zinc-800/80 pointer-events-auto cursor-pointer"
-                  title="Previous Photo"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={handleNext}
-                  className="p-2 rounded-lg bg-black/60 hover:bg-orange-500 text-zinc-300 hover:text-black transition-all border border-zinc-800/80 pointer-events-auto cursor-pointer"
-                  title="Next Photo"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
+              {/* Main Image Viewport */}
+              <div className="relative mt-4 aspect-16/10 rounded-2xl overflow-hidden border border-zinc-700/80 shadow-inner group">
+                <img
+                  src={displaySlides[currentSlideIndex]?.imageUrl}
+                  alt={displaySlides[currentSlideIndex]?.title || 'Sri SJ Piling Site'}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter contrast-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                
+                {/* Category Pill on Image */}
+                <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-md border border-orange-500/40 text-orange-400 text-[11px] font-bold">
+                  <HardHat className="w-3 h-3 text-orange-400" />
+                  <span>{displaySlides[currentSlideIndex]?.categoryLabel || 'Hydraulic Rotary Piling'}</span>
+                </div>
 
-              {/* Active Slide Caption & Quick Replace Overlay */}
-              <div className="absolute inset-x-0 bottom-1.5 z-20 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-3 sm:p-4 flex items-end justify-between gap-3 pointer-events-auto">
-                <div className="space-y-0.5 max-w-[75%]">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-orange-400 block">
-                    Step {activeSlide.stepNumber} • {activeSlide.categoryLabel}
-                  </span>
-                  <h4 className="text-xs sm:text-sm font-bold text-white line-clamp-1 font-['Space_Grotesk']">
-                    {activeSlide.title}
-                  </h4>
-                  <p className="text-[11px] text-zinc-400 line-clamp-1 hidden sm:block">
-                    {activeSlide.location}
+                {/* Bottom title on image */}
+                <div className="absolute bottom-3 left-3 right-3 text-left">
+                  <h3 className="text-base sm:text-lg font-black text-white leading-tight font-['Space_Grotesk'] drop-shadow-md">
+                    {displaySlides[currentSlideIndex]?.title}
+                  </h3>
+                  <p className="text-xs text-zinc-300 font-medium line-clamp-1 mt-0.5 flex items-center gap-1">
+                    <MapPin className="w-3 h-3 text-orange-400 shrink-0" />
+                    <span>{displaySlides[currentSlideIndex]?.location}</span>
                   </p>
                 </div>
+              </div>
 
-                <div className="flex items-center gap-1.5 shrink-0">
-                  <button
-                    type="button"
-                    onClick={() => heroSingleSlotInputRef.current?.click()}
-                    className="p-1.5 sm:px-2.5 sm:py-1 rounded-lg bg-zinc-900/80 hover:bg-orange-500 text-zinc-300 hover:text-black text-xs font-bold border border-zinc-700 transition-colors flex items-center gap-1 cursor-pointer"
-                    title={`Replace photo for Step ${activeSlide.stepNumber}`}
-                  >
-                    <UploadCloud className="w-3.5 h-3.5" />
-                    <span className="hidden sm:inline">Replace</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setFullscreenPhoto(activeSlide)}
-                    className="p-1.5 sm:px-2 sm:py-1 rounded-lg bg-zinc-900/80 hover:bg-zinc-800 text-zinc-300 hover:text-white text-xs border border-zinc-700 transition-colors flex items-center cursor-pointer"
-                    title="View fullscreen photo"
-                  >
-                    <Maximize2 className="w-3.5 h-3.5" />
-                  </button>
+              {/* Technical Specifications Strip */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-4 pt-3 border-t border-zinc-800/80 text-left">
+                <div className="p-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800">
+                  <span className="text-[10px] uppercase font-bold text-zinc-400 block">Client / Project</span>
+                  <span className="text-xs font-black text-white truncate block mt-0.5">
+                    {displaySlides[currentSlideIndex]?.client || 'KPIL / PGCIL'}
+                  </span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800">
+                  <span className="text-[10px] uppercase font-bold text-zinc-400 block">Engineering Spec</span>
+                  <span className="text-xs font-bold text-amber-300 truncate block mt-0.5">
+                    600-2000mm Dia Piles
+                  </span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800 col-span-2 sm:col-span-1">
+                  <span className="text-[10px] uppercase font-bold text-zinc-400 block">Standard</span>
+                  <span className="text-xs font-bold text-emerald-400 truncate block mt-0.5">
+                    IS 2911 / M40 RCC
+                  </span>
                 </div>
               </div>
 
-              {/* Slider progress bar indicator (at the very bottom edge of card) */}
-              <div className="absolute bottom-0 inset-x-0 h-1 bg-zinc-800 z-20">
-                <div 
-                  className="h-full bg-gradient-to-r from-orange-500 to-amber-500 transition-all duration-75"
-                  style={{ width: `${progress}%` }}
-                />
-              </div>
-            </div>
-
-            {/* Horizontal Interactive Thumbnail Strip with "+ Add" Button */}
-            <div className="mt-3.5 space-y-1.5">
-              <div className="flex items-center justify-between px-1 text-[11px] text-zinc-400">
-                <span className="font-semibold text-zinc-300 flex items-center gap-1">
-                  <ImageIcon className="w-3 h-3 text-orange-400" />
-                  <span>Photo Slides ({displaySlides.length})</span>
-                </span>
-                <button
-                  type="button"
-                  onClick={() => heroFileInputRef.current?.click()}
-                  className="text-orange-400 hover:text-orange-300 font-bold hover:underline flex items-center gap-1 cursor-pointer"
-                >
-                  <Plus className="w-3 h-3" />
-                  <span>Add More Photos</span>
-                </button>
-              </div>
-
-              <div 
-                ref={thumbnailScrollRef}
-                className="flex items-center gap-2 overflow-x-auto py-1 px-0.5 scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent select-none"
-              >
-                {/* + Add Photo Card at start of thumbnail row */}
-                <button
-                  type="button"
-                  onClick={() => heroFileInputRef.current?.click()}
-                  id="hero-thumb-add-tile"
-                  className="shrink-0 w-13 h-10 sm:w-16 sm:h-12 rounded-xl border-2 border-dashed border-orange-500/70 hover:border-orange-400 bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 flex flex-col items-center justify-center gap-0.5 text-[10px] font-bold transition-all cursor-pointer group"
-                  title="Click to add/upload your construction photo"
-                >
-                  <Plus className="w-4 h-4 group-hover:scale-125 transition-transform" />
-                  <span className="leading-none">+ Add</span>
-                </button>
-
-                {displaySlides.map((slide, idx) => {
-                  const isSelected = idx === currentSlideIndex;
-                  return (
+              {/* Thumbnails preview & Photo Gallery Launcher */}
+              <div className="flex items-center justify-between gap-2 mt-4 pt-3 border-t border-zinc-800/80">
+                <div className="flex items-center gap-1.5 overflow-hidden">
+                  {displaySlides.slice(0, 5).map((slide, idx) => (
                     <button
-                      key={`thumb-tile-${slide.id}`}
+                      key={slide.id}
                       type="button"
-                      onClick={() => handleSelectSlide(idx)}
-                      className={`relative shrink-0 w-13 h-10 sm:w-16 sm:h-12 rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
-                        isSelected
-                          ? 'border-orange-500 ring-2 ring-orange-500/70 scale-105 shadow-md shadow-orange-500/20 z-10'
-                          : 'border-zinc-800 opacity-60 hover:opacity-100 hover:border-zinc-600'
+                      onClick={() => setCurrentSlideIndex(idx)}
+                      className={`w-10 h-8 sm:w-12 sm:h-9 rounded-lg overflow-hidden border-2 transition-all cursor-pointer shrink-0 ${
+                        idx === currentSlideIndex
+                          ? 'border-orange-500 scale-105 shadow-md shadow-orange-500/30'
+                          : 'border-zinc-800 opacity-60 hover:opacity-100'
                       }`}
-                      title={`Step ${slide.stepNumber}: ${slide.title}`}
+                      title={slide.title}
                     >
-                      <img
-                        src={slide.imageUrl}
-                        alt={slide.title}
-                        className="w-full h-full object-cover"
-                      />
-                      <span className="absolute bottom-0 inset-x-0 bg-black/70 text-[8px] font-mono text-zinc-300 text-center py-0.5 font-bold leading-none">
-                        #{slide.stepNumber}
-                      </span>
+                      <img src={slide.imageUrl} alt={slide.title} className="w-full h-full object-cover" />
                     </button>
-                  );
-                })}
+                  ))}
+                </div>
+
+                {onOpenPhotosModal && (
+                  <button
+                    type="button"
+                    onClick={onOpenPhotosModal}
+                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-xs font-bold text-zinc-200 transition-colors cursor-pointer shrink-0"
+                  >
+                    <Camera className="w-3.5 h-3.5 text-orange-400" />
+                    <span className="hidden sm:inline">All 27 Photos</span>
+                    <span className="sm:hidden">27 Photos</span>
+                  </button>
+                )}
               </div>
             </div>
-
           </div>
 
         </div>
-
       </div>
 
-      {/* CENTER POINT / MIDDLE POINT: BIG STATISTICAL HEADLINE SECTION (BLACK BACKGROUND & ORANGE/WHITE NUMBERS) */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8 md:my-12 w-full">
-        <div className="w-full bg-[#0c0c10] p-6 sm:p-8 md:p-10 rounded-3xl shadow-2xl border-2 border-orange-500/30 backdrop-blur-md">
+      {/* CENTER POINT: 3D INTERACTIVE STATISTICAL CARDS WITH REAL TILT & SPECULAR GLARE */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-8 md:my-14 w-full">
+        <div className="w-full bg-[#0a0a0f] p-6 sm:p-8 md:p-10 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.9)] border-2 border-orange-500/30 backdrop-blur-md relative overflow-hidden">
           
-          <div className="text-center mb-6">
+          {/* Background technical watermarks */}
+          <div className="absolute right-0 bottom-0 pointer-events-none opacity-5 select-none font-mono text-9xl font-black text-orange-500 translate-x-12 translate-y-12">
+            3D
+          </div>
+
+          <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-orange-500/15 border border-orange-500/40 text-orange-400 text-xs sm:text-sm font-black uppercase tracking-widest font-['Space_Grotesk'] shadow-sm">
               <span className="w-2.5 h-2.5 rounded-full bg-orange-500 animate-ping" />
               <span>COMPANY TRACK RECORD &amp; EXECUTION SCALE</span>
@@ -656,118 +386,69 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onOpenPhotosModal,
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             
             {/* 100+ Clients */}
-            <div className="bg-[#121217] hover:bg-[#181820] transition-all p-5 sm:p-6 rounded-2xl border border-zinc-800 hover:border-orange-500 text-center flex flex-col items-center justify-center shadow-lg group">
-              <div className="text-4xl sm:text-6xl md:text-7xl font-black text-orange-500 font-['Space_Grotesk'] tracking-tight drop-shadow-sm group-hover:scale-105 transition-transform">
-                100+
+            <Card3D intensity={18} depth={20}>
+              <div className="card-3d-bevel p-5 sm:p-6 rounded-2xl text-center flex flex-col items-center justify-center h-full group">
+                <div className="text-4xl sm:text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-orange-400 to-amber-500 font-['Space_Grotesk'] tracking-tight drop-shadow-[0_4px_12px_rgba(249,115,22,0.3)] group-hover:scale-105 transition-transform">
+                  100+
+                </div>
+                <div className="text-base sm:text-xl md:text-2xl font-black uppercase text-white tracking-wider mt-2 font-['Space_Grotesk']">
+                  CLIENTS
+                </div>
+                <div className="text-xs sm:text-sm text-zinc-400 font-semibold mt-1">
+                  L&amp;T, TATA, JINDAL, PGCIL
+                </div>
               </div>
-              <div className="text-base sm:text-xl md:text-2xl font-black uppercase text-white tracking-wider mt-2 font-['Space_Grotesk']">
-                CLIENTS
-              </div>
-              <div className="text-xs sm:text-sm text-zinc-300 font-semibold mt-1">
-                L&amp;T, TATA, JINDAL, PGCIL
-              </div>
-            </div>
+            </Card3D>
 
             {/* 500+ Projects */}
-            <div className="bg-[#121217] hover:bg-[#181820] transition-all p-5 sm:p-6 rounded-2xl border border-zinc-800 hover:border-orange-500 text-center flex flex-col items-center justify-center shadow-lg group">
-              <div className="text-4xl sm:text-6xl md:text-7xl font-black text-orange-500 font-['Space_Grotesk'] tracking-tight drop-shadow-sm group-hover:scale-105 transition-transform">
-                500+
+            <Card3D intensity={18} depth={20}>
+              <div className="card-3d-bevel p-5 sm:p-6 rounded-2xl text-center flex flex-col items-center justify-center h-full group">
+                <div className="text-4xl sm:text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-orange-400 to-amber-500 font-['Space_Grotesk'] tracking-tight drop-shadow-[0_4px_12px_rgba(249,115,22,0.3)] group-hover:scale-105 transition-transform">
+                  500+
+                </div>
+                <div className="text-base sm:text-xl md:text-2xl font-black uppercase text-white tracking-wider mt-2 font-['Space_Grotesk']">
+                  PROJECTS
+                </div>
+                <div className="text-xs sm:text-sm text-zinc-400 font-semibold mt-1">
+                  Completed &amp; Live Sites
+                </div>
               </div>
-              <div className="text-base sm:text-xl md:text-2xl font-black uppercase text-white tracking-wider mt-2 font-['Space_Grotesk']">
-                PROJECTS
-              </div>
-              <div className="text-xs sm:text-sm text-zinc-300 font-semibold mt-1">
-                Completed &amp; Live Sites
-              </div>
-            </div>
+            </Card3D>
 
             {/* 200+ Employees */}
-            <div className="bg-[#121217] hover:bg-[#181820] transition-all p-5 sm:p-6 rounded-2xl border border-zinc-800 hover:border-orange-500 text-center flex flex-col items-center justify-center shadow-lg group">
-              <div className="text-4xl sm:text-6xl md:text-7xl font-black text-orange-500 font-['Space_Grotesk'] tracking-tight drop-shadow-sm group-hover:scale-105 transition-transform">
-                200+
+            <Card3D intensity={18} depth={20}>
+              <div className="card-3d-bevel p-5 sm:p-6 rounded-2xl text-center flex flex-col items-center justify-center h-full group">
+                <div className="text-4xl sm:text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-orange-400 to-amber-500 font-['Space_Grotesk'] tracking-tight drop-shadow-[0_4px_12px_rgba(249,115,22,0.3)] group-hover:scale-105 transition-transform">
+                  200+
+                </div>
+                <div className="text-base sm:text-xl md:text-2xl font-black uppercase text-white tracking-wider mt-2 font-['Space_Grotesk']">
+                  EMPLOYEES
+                </div>
+                <div className="text-xs sm:text-sm text-zinc-400 font-semibold mt-1">
+                  Engineers &amp; Rig Operators
+                </div>
               </div>
-              <div className="text-base sm:text-xl md:text-2xl font-black uppercase text-white tracking-wider mt-2 font-['Space_Grotesk']">
-                EMPLOYEES
-              </div>
-              <div className="text-xs sm:text-sm text-zinc-300 font-semibold mt-1">
-                Engineers &amp; Rig Operators
-              </div>
-            </div>
+            </Card3D>
 
             {/* 10000+ Piles */}
-            <div className="bg-[#121217] hover:bg-[#181820] transition-all p-5 sm:p-6 rounded-2xl border border-zinc-800 hover:border-orange-500 text-center flex flex-col items-center justify-center shadow-lg group">
-              <div className="text-4xl sm:text-6xl md:text-7xl font-black text-orange-500 font-['Space_Grotesk'] tracking-tight drop-shadow-sm group-hover:scale-105 transition-transform">
-                10,000+
+            <Card3D intensity={18} depth={20}>
+              <div className="card-3d-bevel p-5 sm:p-6 rounded-2xl text-center flex flex-col items-center justify-center h-full group">
+                <div className="text-4xl sm:text-6xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-orange-400 to-amber-500 font-['Space_Grotesk'] tracking-tight drop-shadow-[0_4px_12px_rgba(249,115,22,0.3)] group-hover:scale-105 transition-transform">
+                  10,000+
+                </div>
+                <div className="text-base sm:text-xl md:text-2xl font-black uppercase text-white tracking-wider mt-2 font-['Space_Grotesk']">
+                  PILES
+                </div>
+                <div className="text-xs sm:text-sm text-zinc-400 font-semibold mt-1">
+                  Cast-in-situ &amp; Driven Piling
+                </div>
               </div>
-              <div className="text-base sm:text-xl md:text-2xl font-black uppercase text-white tracking-wider mt-2 font-['Space_Grotesk']">
-                PILES
-              </div>
-              <div className="text-xs sm:text-sm text-zinc-300 font-semibold mt-1">
-                Cast-in-situ &amp; Driven Piling
-              </div>
-            </div>
+            </Card3D>
 
           </div>
         </div>
       </div>
-
-      {/* Fullscreen Photo Modal */}
-      {fullscreenPhoto && (
-        <div 
-          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
-          onClick={() => setFullscreenPhoto(null)}
-        >
-          <div 
-            className="relative max-w-5xl w-full bg-[#111116] border border-orange-500/50 rounded-2xl overflow-hidden shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Modal Header */}
-            <div className="p-4 bg-black flex items-center justify-between border-b border-zinc-800">
-              <div className="space-y-0.5">
-                <span className="text-xs font-black uppercase text-orange-400 tracking-wider">
-                  Step {fullscreenPhoto.stepNumber} • {fullscreenPhoto.categoryLabel}
-                </span>
-                <h3 className="text-base sm:text-lg font-black text-white font-['Space_Grotesk']">
-                  {fullscreenPhoto.title}
-                </h3>
-              </div>
-              <button
-                onClick={() => setFullscreenPhoto(null)}
-                className="p-2 rounded-lg bg-zinc-800 hover:bg-orange-500 hover:text-black text-zinc-300 transition-colors cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Modal Image */}
-            <div className="relative max-h-[70vh] bg-black flex items-center justify-center overflow-hidden">
-              <img
-                src={fullscreenPhoto.imageUrl}
-                alt={fullscreenPhoto.title}
-                className="w-full h-auto max-h-[70vh] object-contain"
-              />
-            </div>
-
-            {/* Modal Footer Specs */}
-            <div className="p-4 bg-[#0e0e12] border-t border-zinc-800 flex flex-wrap items-center justify-between gap-3 text-xs">
-              <div className="space-y-1">
-                <p className="text-zinc-300 font-medium">{fullscreenPhoto.subtitle}</p>
-                <p className="text-orange-300 font-mono text-[11px]">Specs: {fullscreenPhoto.technicalSpecs}</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300 font-bold">
-                  {fullscreenPhoto.location}
-                </span>
-                <span className="px-2.5 py-1 rounded bg-orange-500/20 text-orange-400 border border-orange-500/40 font-bold">
-                  {fullscreenPhoto.client}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 };
-
 

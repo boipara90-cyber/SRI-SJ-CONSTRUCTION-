@@ -15,13 +15,14 @@ export const CompanyLogo: React.FC<CompanyLogoProps> = ({ company, className = '
     lg: 'h-14 max-w-[210px]'
   };
 
-  const containerClass = `flex items-center justify-center select-none ${sizeClasses[size]} ${className}`;
+  const containerClass = `flex items-center justify-center select-none cursor-pointer ${sizeClasses[size]} ${className}`;
+  const svgClass = "w-full h-full client-logo-interactive cursor-pointer";
 
   // 1. L&T / LARSEN & TOUBRO
   if (normalized.includes('L&T') || normalized.includes('LARSEN') || normalized === 'LT') {
     return (
       <div className={containerClass} title="Larsen & Toubro">
-        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 170 50" className={svgClass} fill="none" xmlns="http://www.w3.org/2000/svg">
           <g transform="translate(45, 0)">
             <circle cx="25" cy="25" r="22" stroke="#00356B" strokeWidth="3.5" fill="none" />
             <path d="M14 12 L22 36 L34 36 L26 12 Z" fill="#00356B" />
@@ -40,7 +41,7 @@ export const CompanyLogo: React.FC<CompanyLogoProps> = ({ company, className = '
   if (normalized.includes('KALPATARU') || normalized.includes('KPIL')) {
     return (
       <div className={containerClass} title="Kalpataru Projects International Limited">
-        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 170 50" className={svgClass} fill="none" xmlns="http://www.w3.org/2000/svg">
           {/* Kalpataru Circular Seal */}
           <g transform="translate(6, 0)">
             <circle cx="25" cy="25" r="23" stroke="#23A1D9" strokeWidth="4.5" fill="none" />
@@ -86,7 +87,7 @@ export const CompanyLogo: React.FC<CompanyLogoProps> = ({ company, className = '
   if (normalized.includes('RESONIA')) {
     return (
       <div className={containerClass} title="Resonia Ltd">
-        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 170 50" className={svgClass} fill="none" xmlns="http://www.w3.org/2000/svg">
           <g transform="translate(10, 6)">
             <polygon points="19,2 35,11 35,29 19,38 3,29 3,11" fill="#1E293B" />
             <polygon points="19,7 30,13 30,27 19,33 8,27 8,13" fill="#0F172A" stroke="#F97316" strokeWidth="2" />
@@ -107,7 +108,7 @@ export const CompanyLogo: React.FC<CompanyLogoProps> = ({ company, className = '
   if (normalized.includes('WILMAR') || normalized === 'ADANIWILMAR') {
     return (
       <div className={containerClass} title="Adani Wilmar Limited">
-        <svg viewBox="0 0 160 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 160 50" className={svgClass} fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="adaniWilmarGrad" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="#0079C1" />
@@ -130,7 +131,7 @@ export const CompanyLogo: React.FC<CompanyLogoProps> = ({ company, className = '
   if (normalized.includes('ADANIENERGY') || normalized.includes('ENERGYSOLUTIONS')) {
     return (
       <div className={containerClass} title="Adani Energy Solutions Ltd">
-        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 170 50" className={svgClass} fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="adaniEnergyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="#0079C1" />
@@ -154,7 +155,7 @@ export const CompanyLogo: React.FC<CompanyLogoProps> = ({ company, className = '
   if (normalized.includes('SHAPOORJI') || normalized.includes('PALLONJI') || normalized === 'SP') {
     return (
       <div className={containerClass} title="Shapoorji Pallonji">
-        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 170 50" className={svgClass} fill="none" xmlns="http://www.w3.org/2000/svg">
           <g transform="translate(16, 4)">
             {/* Shapoorji 3D Ribbon SP */}
             <polygon points="12,18 24,12 36,18 36,26 24,32 12,26" fill="#0B3C78" />
@@ -180,7 +181,7 @@ export const CompanyLogo: React.FC<CompanyLogoProps> = ({ company, className = '
   if (normalized.includes('ITC')) {
     return (
       <div className={containerClass} title="ITC Limited">
-        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 170 50" className={svgClass} fill="none" xmlns="http://www.w3.org/2000/svg">
           <g transform="translate(18, 0)">
             {/* The ITC Triangle */}
             <path d="M 23 2 L 44 42 L 2 42 Z" fill="#002B5E" />
@@ -204,7 +205,7 @@ export const CompanyLogo: React.FC<CompanyLogoProps> = ({ company, className = '
   if (normalized.includes('RUCHI')) {
     return (
       <div className={containerClass} title="Ruchi Soya Industries Limited">
-        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 170 50" className={svgClass} fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="25" y="4" width="120" height="30" rx="15" fill="#139648" />
           <g fill="#FFFFFF" transform="translate(35, 10)">
             {/* Custom stylized R */}
@@ -226,7 +227,7 @@ export const CompanyLogo: React.FC<CompanyLogoProps> = ({ company, className = '
   if (normalized.includes('JINDAL')) {
     return (
       <div className={containerClass} title="Jindal India Limited">
-        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 170 50" className={svgClass} fill="none" xmlns="http://www.w3.org/2000/svg">
           <g transform="translate(25, 2)">
             {/* Red Oval Trade Mark */}
             <ellipse cx="30" cy="18" rx="28" ry="17" stroke="#E31837" strokeWidth="2.5" fill="none" />
@@ -262,7 +263,7 @@ export const CompanyLogo: React.FC<CompanyLogoProps> = ({ company, className = '
   if (normalized.includes('EXIDE')) {
     return (
       <div className={containerClass} title="Exide Industries Limited">
-        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 170 50" className={svgClass} fill="none" xmlns="http://www.w3.org/2000/svg">
           <g transform="translate(10, 4)">
             <circle cx="21" cy="21" r="19" fill="#0A18A8" />
             <path d="M25 7 L12 21 L19 21 L16 34 L29 20 L22 20 Z" fill="#FFFFFF" />
@@ -282,7 +283,7 @@ export const CompanyLogo: React.FC<CompanyLogoProps> = ({ company, className = '
   if (normalized.includes('CERATIZIT')) {
     return (
       <div className={containerClass} title="Ceratizit Group">
-        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 170 50" className={svgClass} fill="none" xmlns="http://www.w3.org/2000/svg">
           <g transform="translate(12, 8)">
             {/* Dark Charcoal Triangle outline */}
             <polygon points="12,2 2,26 8,32 18,32 21,26 12,26 7,26 14,8 18,8" fill="#404040" />
@@ -312,7 +313,7 @@ export const CompanyLogo: React.FC<CompanyLogoProps> = ({ company, className = '
   if (normalized.includes('SHREEJI')) {
     return (
       <div className={containerClass} title="Shreeji Group">
-        <svg viewBox="0 0 170 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 170 50" className={svgClass} fill="none" xmlns="http://www.w3.org/2000/svg">
           <g transform="translate(8, 2)">
             {/* Globe Sphere */}
             <circle cx="21" cy="24" r="17" fill="#2E2469" />
@@ -350,7 +351,7 @@ export const CompanyLogo: React.FC<CompanyLogoProps> = ({ company, className = '
   if (normalized.includes('TATA')) {
     return (
       <div className={containerClass} title="Tata Projects">
-        <svg viewBox="0 0 150 50" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 150 50" className={svgClass} fill="none" xmlns="http://www.w3.org/2000/svg">
           <ellipse cx="21" cy="25" rx="19" ry="18" fill="#005A9C" />
           <path d="M21 11C21 11 21 28 21 32" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" />
           <path d="M21 11C17.5 16 11 21 8 22.5" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" />

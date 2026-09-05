@@ -41,8 +41,8 @@ export const ClientSection: React.FC = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.04 }}
-                whileHover={{ scale: 1.06, y: -3 }}
-                className="p-3 rounded-xl bg-white flex items-center justify-center shadow-md h-16 border border-zinc-200 cursor-pointer group"
+                whileHover={{ scale: 1.07, y: -3 }}
+                className="p-3 rounded-xl bg-white flex items-center justify-center shadow-md h-16 border border-zinc-200 hover:border-orange-400 hover:shadow-[0_4px_16px_rgba(249,115,22,0.18)] cursor-pointer group transition-all duration-300"
                 title={client.name}
               >
                 <CompanyLogo company={client.short} size="sm" className="w-full" />
@@ -68,7 +68,7 @@ export const ClientSection: React.FC = () => {
               
               <div className="relative z-10">
                 {/* Authentic Logo Tile */}
-                <div className="w-full h-20 rounded-2xl bg-white border border-zinc-200 flex items-center justify-center p-3 mb-5 group-hover:shadow-lg transition-all duration-300">
+                <div className="w-full h-20 rounded-2xl bg-white border border-zinc-200 flex items-center justify-center p-3 mb-5 group-hover:shadow-[0_8px_25px_rgba(249,115,22,0.18)] group-hover:border-orange-400/50 transition-all duration-300 overflow-hidden cursor-pointer">
                   <CompanyLogo company={client.short} size="md" className="w-full h-full object-contain" />
                 </div>
 
@@ -128,7 +128,7 @@ export const ClientSection: React.FC = () => {
               High-Tonnage Foundation &amp; Substructure Capability
             </h4>
             <p className="text-zinc-400 text-sm sm:text-base max-w-2xl">
-              From L&amp;T EHV river crossings and Kalpataru transmission lines to Adani Energy Solutions, Shapoorji Pallonji, Exide, Ceratizit, and Adani Wilmar facilities, Sri SJ Constructions delivers uncompromising structural durability.
+              From Kalpataru high-voltage transmission lines to Adani Energy Solutions, Shapoorji Pallonji, Exide, Ceratizit, and Adani Wilmar facilities, Sri SJ Constructions delivers uncompromising structural durability.
             </p>
           </div>
           

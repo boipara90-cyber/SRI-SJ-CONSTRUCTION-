@@ -223,12 +223,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 </div>
                 <div className="flex items-center gap-3">
                   <a
-                    href="#maps-photos"
-                    className="text-xs font-bold text-slate-700 hover:text-emerald-800 hover:underline"
-                  >
-                    View Photo Hub
-                  </a>
-                  <a
                     href="https://www.google.com/maps/search/?api=1&query=Sri+SJ+Construction+Private+Limited+Sutahata+Haldia+West+Bengal+721635"
                     target="_blank"
                     rel="noreferrer"

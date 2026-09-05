@@ -326,13 +326,6 @@ export const WHY_CHOOSE_US = [
 
 export const MAJOR_CLIENTS = [
   { 
-    name: "Larsen & Toubro Limited", 
-    short: "L&T", 
-    tagline: "Global EPC, Power Transmission & Heavy Infrastructure",
-    highlight: "River Bank Transmission Tower Piling & Substation Substructures",
-    location: "EHV Transmission Lines & River Crossing Corridors"
-  },
-  { 
     name: "Kalpataru Projects International Ltd", 
     short: "KPIL", 
     tagline: "Global Power Transmission, Oil & Gas and Infra EPC",
@@ -359,13 +352,6 @@ export const MAJOR_CLIENTS = [
     tagline: "Premier Engineering, Industrial & Mega Infrastructure",
     highlight: "Heavy Load Bored Cast-in-Situ Piling, Machine Foundations & RCC Works",
     location: "Industrial Campuses & Commercial Facilities"
-  },
-  { 
-    name: "ITC Limited", 
-    short: "ITC", 
-    tagline: "Manufacturing, Packaging & Logistics Campuses",
-    highlight: "Precision Industrial Civil Construction, PEB Footings & Floor Slabs",
-    location: "Eastern Region Manufacturing & Processing Hubs"
   },
   { 
     name: "Ruchi Industries Ltd", 
